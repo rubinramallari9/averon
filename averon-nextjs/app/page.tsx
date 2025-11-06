@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Zap, Users, Target, TrendingUp, CheckCircle, Menu, X } from 'lucide-react';
+import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen} from 'lucide-react';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -20,14 +20,14 @@ const AveronWebsite = () => {
       description: "Custom websites and web applications built with cutting-edge technologies that convert visitors into customers."
     },
     {
-      icon: <Target className="w-8 h-8" />,
-      title: "Digital Strategy",
-      description: "Data-driven strategies that align with your business goals and deliver measurable results in the digital landscape."
+      icon: <ChartNoAxesCombined className="w-8 h-8" />,
+      title: "SEO",
+      description: "We offer a comprehensive range of services designed to boost your website’s ranking and attract organic, non-paid Google search traffic."
     },
     {
-      icon: <TrendingUp className="w-8 h-8" />,
-      title: "Growth Marketing",
-      description: "Scalable marketing campaigns across Meta, Google, and TikTok that drive qualified leads and maximize ROI."
+      icon: <Terminal className="w-8 h-8" />,
+      title: "Website Redesign",
+      description: "Whether you need a design refresh or a complete website overhaul, we analyze your site’s pain points and opportunities to revitalize your digital presence. "
     },
     {
       icon: <Users className="w-8 h-8" />,

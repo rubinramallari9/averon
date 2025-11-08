@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+#__next-build-watcher,
+.__next-dev-overlay,
+nextjs-portal {
+  display: none !important;
+}

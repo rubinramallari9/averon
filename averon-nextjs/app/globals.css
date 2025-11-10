@@ -373,6 +373,29 @@ nextjs-portal {
 }
 
 /* ============================================
+   TREASURE MAP PATH ANIMATION
+   ============================================ */
+
+@keyframes dashAnimation {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.treasure-path {
+  stroke-dasharray: 10 5;
+  animation: dashAnimation 20s linear infinite;
+}
+
+.snake-path {
+  stroke-dasharray: 15 10;
+  animation: dashAnimation 25s linear infinite;
+}
+
+/* ============================================
    JAVASCRIPT FOR SCROLL ANIMATION
    Copy this to Webflow: Project Settings > Custom Code > Footer Code
    ============================================

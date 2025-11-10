@@ -38,7 +38,7 @@ const AveronWebsite = () => {
   ];
 
   const features = [
-    "Lifetime support & updates",
+    "Lifetime support & updates o kar",
     "Dedicated project manager",
     "Mobile-first responsive design",
     "SEO optimization included",
@@ -247,32 +247,79 @@ const AveronWebsite = () => {
         </div>
       </section>
 
-      {/* Process Section */}
-      <section id="process" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+      {/* Process Section - Snake Path */}
+      <section id="process" className="flex items-center py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-5xl mx-auto w-full">
+          <div className="text-center mb-12">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Process</h2>
             <p className="text-xl text-purple-200 max-w-2xl mx-auto">
               A proven methodology that delivers exceptional results every time
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { num: "01", title: "Discovery", desc: "We dive deep into your business, goals, and target audience to craft the perfect strategy." },
-              { num: "02", title: "Design & Build", desc: "Our team creates stunning designs and develops robust solutions using the latest technologies." },
-              { num: "03", title: "Launch & Grow", desc: "We launch your project and continue optimizing for maximum performance and growth." }
-            ].map((step, index) => (
-              <div key={index} className="relative group">
-                <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -left-4 group-hover:text-purple-500/20 transition-colors">
-                  {step.num}
-                </div>
-                <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                  <h3 className="text-3xl font-bold mb-4">{step.title}</h3>
-                  <p className="text-purple-200 text-lg leading-relaxed">{step.desc}</p>
+          {/* Snake Path Layout */}
+          <div className="relative">
+            {/* Animated SVG Snake Path */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{zIndex: 0}}>
+              <defs>
+                <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style={{stopColor: '#a855f7', stopOpacity: 0.6}} />
+                  <stop offset="50%" style={{stopColor: '#ec4899', stopOpacity: 0.6}} />
+                  <stop offset="100%" style={{stopColor: '#a855f7', stopOpacity: 0.6}} />
+                </linearGradient>
+              </defs>
+              <path
+                d="M 150 150 C 250 140, 350 160, 450 150 C 550 140, 620 160, 650 220 C 670 260, 660 300, 600 330 C 500 350, 350 360, 200 350 C 120 345, 80 360, 80 450 C 80 510, 100 540, 150 550"
+                stroke="url(#snakeGradient)"
+                strokeWidth="4"
+                fill="none"
+                strokeDasharray="15 10"
+                className="snake-path"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            <div className="relative space-y-12">
+              {/* Step 1 - Top Left */}
+              <div className="flex justify-start">
+                <div className="relative group w-full max-w-md">
+                  <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -left-4 group-hover:text-purple-500/20 transition-colors">
+                    01
+                  </div>
+                  <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                    <h3 className="text-3xl font-bold mb-4">Discovery</h3>
+                    <p className="text-purple-200 text-lg leading-relaxed">We dive deep into your business, goals, and target audience to craft the perfect strategy.</p>
+                  </div>
                 </div>
               </div>
-            ))}
+
+              {/* Step 2 - Middle Right */}
+              <div className="flex justify-end">
+                <div className="relative group w-full max-w-md">
+                  <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -right-4 group-hover:text-purple-500/20 transition-colors">
+                    02
+                  </div>
+                  <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                    <h3 className="text-3xl font-bold mb-4">Design & Build</h3>
+                    <p className="text-purple-200 text-lg leading-relaxed">Our team creates stunning designs and develops robust solutions using the latest technologies.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3 - Bottom Left */}
+              <div className="flex justify-start">
+                <div className="relative group w-full max-w-md">
+                  <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -left-4 group-hover:text-purple-500/20 transition-colors">
+                    03
+                  </div>
+                  <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                    <h3 className="text-3xl font-bold mb-4">Launch & Grow</h3>
+                    <p className="text-purple-200 text-lg leading-relaxed">We launch your project and continue optimizing for maximum performance and growth.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -406,23 +453,23 @@ const AveronWebsite = () => {
       </section>
 
       {/* Footer */}
-      <footer className="pt-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <footer className="pt-12 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-3xl border-t border-x border-purple-500/20 pt-12 pb-8 overflow-hidden">
+          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-3xl border-t border-x border-purple-500/20 pt-8 pb-6 overflow-hidden">
             {/* Fade effect background */}
             <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-purple-900/5 to-transparent pointer-events-none"></div>
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
 
             <div className="relative z-10 text-center px-4">
-              <div className="flex items-center justify-center mb-8">
+              <div className="flex items-center justify-center mb-6">
                 <AveronLogo className="w-40" />
               </div>
-              <p className="text-purple-200 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-purple-200 text-base mb-6 max-w-2xl mx-auto">
                 Transforming businesses through innovative digital solutions
               </p>
 
               {/* Navigation Links */}
-              <div className="flex justify-center gap-8 mb-8 text-sm">
+              <div className="flex justify-center gap-8 mb-6 text-sm">
                 <a href="#services" className="text-purple-300 hover:text-white transition">Services</a>
                 <a href="#work" className="text-purple-300 hover:text-white transition">Our Work</a>
                 <a href="#process" className="text-purple-300 hover:text-white transition">Process</a>
@@ -430,7 +477,7 @@ const AveronWebsite = () => {
               </div>
 
               {/* Instagram Button */}
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center mb-6">
                 <a
                   href="https://instagram.com"
                   target="_blank"
@@ -442,7 +489,7 @@ const AveronWebsite = () => {
                 </a>
               </div>
 
-              <div className="pt-8 border-t border-purple-500/20">
+              <div className="pt-6 border-t border-purple-500/20">
                 <p className="text-sm text-purple-400/80">
                   © 2024 Averon Digital. All rights reserved.
                 </p>

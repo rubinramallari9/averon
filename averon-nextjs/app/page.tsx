@@ -116,7 +116,7 @@ const AveronWebsite = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
+      <section className="min-h-screen flex items-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
@@ -161,7 +161,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Services Grid */}
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="services" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Services</h2>
@@ -188,7 +188,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="process" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Process</h2>
@@ -218,7 +218,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="features" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -313,7 +313,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
             Ready to Elevate Your Digital Presence?

@@ -322,11 +322,16 @@ const AveronWebsite = () => {
             Schedule a free discovery call with our team. We'll discuss your goals and create a tailored strategy to help you succeed online.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
-              className="px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400"
+              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400"
+            />
+            <textarea
+              placeholder="Tell us about your project and preferences..."
+              rows={5}
+              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 resize-none"
             />
             <button className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50">
               <span>Get Started</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen} from 'lucide-react';
+import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram} from 'lucide-react';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -55,7 +55,10 @@ const AveronWebsite = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-purple-950 to-purple-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-white overflow-x-hidden relative">
+      {/* Background fade effect */}
+      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/20 to-transparent pointer-events-none"></div>
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent pointer-events-none"></div>
       {/* Navigation */}
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] sm:w-[95%] max-w-7xl">
         <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
@@ -124,7 +127,7 @@ const AveronWebsite = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
+      <section className="min-h-screen flex items-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
@@ -169,7 +172,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Services Grid */}
-      <section id="services" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
+      <section id="services" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Services</h2>
@@ -196,7 +199,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
+      <section id="process" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Process</h2>
@@ -226,7 +229,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
+      <section id="features" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -321,7 +324,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
             Ready to Elevate Your Digital Presence?
@@ -354,17 +357,49 @@ const AveronWebsite = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-purple-500/20 bg-black/60">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center mb-6">
-            <AveronLogo className="w-40" />
+      <footer className="pt-20 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-3xl border-t border-x border-purple-500/20 pt-12 pb-8 overflow-hidden">
+            {/* Fade effect background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-purple-900/5 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+
+            <div className="relative z-10 text-center px-4">
+              <div className="flex items-center justify-center mb-8">
+                <AveronLogo className="w-40" />
+              </div>
+              <p className="text-purple-200 text-lg mb-8 max-w-2xl mx-auto">
+                Transforming businesses through innovative digital solutions
+              </p>
+
+              {/* Navigation Links */}
+              <div className="flex justify-center gap-8 mb-8 text-sm">
+                <a href="#services" className="text-purple-300 hover:text-white transition">Services</a>
+                <a href="#work" className="text-purple-300 hover:text-white transition">Our Work</a>
+                <a href="#process" className="text-purple-300 hover:text-white transition">Process</a>
+                <a href="#contact" className="text-purple-300 hover:text-white transition">Contact</a>
+              </div>
+
+              {/* Instagram Button */}
+              <div className="flex justify-center mb-8">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30"
+                >
+                  <Instagram className="w-5 h-5" />
+                  <span className="font-semibold">Follow us on Instagram</span>
+                </a>
+              </div>
+
+              <div className="pt-8 border-t border-purple-500/20">
+                <p className="text-sm text-purple-400/80">
+                  © 2024 Averon Digital. All rights reserved.
+                </p>
+              </div>
+            </div>
           </div>
-          <p className="text-purple-300 mb-4">
-            Transforming businesses through innovative digital solutions
-          </p>
-          <p className="text-sm text-purple-400">
-            © 2024 Averon Digital. All rights reserved.
-          </p>
         </div>
       </footer>
     </div>

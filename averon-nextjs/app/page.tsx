@@ -64,6 +64,7 @@ const AveronWebsite = () => {
             
             <div className="hidden lg:flex space-x-8">
               <a href="#services" className="hover:text-purple-300 transition">Services</a>
+              <a href="#work" className="hover:text-purple-300 transition">Our Work</a>
               <a href="#process" className="hover:text-purple-300 transition">Process</a>
               <a href="#features" className="hover:text-purple-300 transition">Features</a>
               <a href="#contact" className="hover:text-purple-300 transition">Contact</a>
@@ -82,29 +83,36 @@ const AveronWebsite = () => {
         {mobileMenuOpen && (
           <div className="lg:hidden bg-black/95 backdrop-blur-lg rounded-b-2xl border border-purple-500/20 border-t-0 mt-[-8px] overflow-hidden shadow-2xl shadow-purple-500/10">
             <div className="px-6 py-6 space-y-4">
-              <a 
-                href="#services" 
+              <a
+                href="#services"
                 className="block text-lg hover:text-purple-300 transition py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Services
               </a>
-              <a 
-                href="#process" 
+              <a
+                href="#work"
+                className="block text-lg hover:text-purple-300 transition py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Our Work
+              </a>
+              <a
+                href="#process"
                 className="block text-lg hover:text-purple-300 transition py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Process
               </a>
-              <a 
-                href="#features" 
+              <a
+                href="#features"
                 className="block text-lg hover:text-purple-300 transition py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Features
               </a>
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 className="block text-lg hover:text-purple-300 transition py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >

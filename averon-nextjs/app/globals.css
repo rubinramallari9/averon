@@ -8,3 +8,420 @@
 nextjs-portal {
   display: none !important;
 }
+
+/* ============================================
+   AGENCY ACCELERATOR iOS15 SECTION STYLES
+   Production-ready Webflow-style section
+
+   USAGE INSTRUCTIONS FOR WEBFLOW:
+
+   1. Copy all CSS below to your Webflow Custom Code (Project Settings > Custom Code)
+   2. Add images to your Webflow Assets:
+      - car-mockup.png (horizontal)
+      - restaurant-mockup.png (horizontal)
+      - luxury-watch-mockup.png (vertical)
+      - cigars-wine-mockup.png (vertical)
+
+   3. HTML Structure in Webflow:
+      <section class="section-ios15">
+        <div class="padding-bottom-2 padding-xhuge">
+          <div class="logo-ios15-wrapper">
+            <img src="your-logo.png" class="logo-glow">
+          </div>
+          <div class="section-ios15-grid">
+            <div class="phone-image-vertical-wrapper" data-scroll-speed="0.8">
+              <img src="luxury-watch-mockup.png" class="phone-image">
+            </div>
+            <div class="phone-image-vertical-wrapper left-corner" data-scroll-speed="1.2">
+              <img src="cigars-wine-mockup.png" class="phone-image">
+            </div>
+            <div class="phone-image-horizontal-wrapper" data-scroll-speed="0.6">
+              <img src="car-mockup.png" class="phone-image-horizontal">
+            </div>
+            <div class="phone-image-horizontal-wrapper left-corner" data-scroll-speed="1.0">
+              <img src="restaurant-mockup.png" class="phone-image-horizontal">
+            </div>
+          </div>
+        </div>
+      </section>
+
+   4. Add the JavaScript for scroll animation (see bottom of this file)
+
+   ============================================ */
+
+/* Section Container */
+.section-ios15 {
+  background: transparent;
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.padding-bottom-2 {
+  padding-bottom: 1rem;
+}
+
+.padding-xhuge {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* Logo Center with Glow Effect */
+.logo-ios15-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 5;
+  will-change: transform;
+  transition: all 0.6s ease;
+}
+
+.logo-ios15-wrapper:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.logo-glow {
+  filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
+  transition: filter 0.6s ease;
+}
+
+.logo-ios15-wrapper:hover .logo-glow {
+  filter: drop-shadow(0 0 50px rgba(168, 85, 247, 0.8));
+}
+
+/* Grid Layout - Aesthetic Scattered Placement */
+.section-ios15-grid {
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+  height: 900px;
+}
+
+/* Row containers - now absolute positioning */
+.vertical-phones-row,
+.horizontal-phones-row {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.vertical-phones-row > *,
+.horizontal-phones-row > * {
+  pointer-events: auto;
+}
+
+/* Vertical Phones - Static Aesthetic Positioning */
+.phone-image-vertical-wrapper {
+  position: absolute;
+  width: 280px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+/* First vertical phone - Top left area - Drive from LEFT */
+.vertical-phones-row .phone-image-vertical-wrapper:nth-child(1) {
+  top: 2%;
+  left: 2%;
+  transform: translateX(-150%) scale(0.5);
+}
+
+/* Second vertical phone - Bottom right area - Drive from RIGHT */
+.vertical-phones-row .phone-image-vertical-wrapper:nth-child(2) {
+  bottom: 2%;
+  right: 2%;
+  transform: translateX(150%) scale(0.5);
+}
+
+/* Horizontal Phones */
+.phone-image-horizontal-wrapper {
+  position: absolute;
+  width: 100%;
+  max-width: 520px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+/* First horizontal phone - Top right area - Drive from TOP */
+.horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(1) {
+  top: 2%;
+  right: 2%;
+  transform: translateY(-150%) scale(0.5);
+}
+
+/* Second horizontal phone - Bottom left area - Drive from BOTTOM */
+.horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(2) {
+  bottom: 2%;
+  left: 2%;
+  transform: translateY(150%) scale(0.5);
+}
+
+/* Show mockups ONLY when hovering logo - Fast drive-in animation */
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .vertical-phones-row .phone-image-vertical-wrapper:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .vertical-phones-row .phone-image-vertical-wrapper:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Phone Images */
+.phone-image,
+.phone-image-horizontal {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2.5rem;
+  box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3),
+              0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.phone-image:hover,
+.phone-image-horizontal:hover {
+  transform: scale(1.03);
+  box-shadow: 0 25px 50px rgba(168, 85, 247, 0.4),
+              0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Remove any background or borders from wrappers */
+.phone-image-vertical-wrapper,
+.phone-image-horizontal-wrapper {
+  background: transparent !important;
+  border: none !important;
+  overflow: visible;
+  box-shadow: none !important;
+}
+
+/* iPhone Mockup Frames */
+.iphone-mockup {
+  width: 100%;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.iphone-mockup.vertical {
+  aspect-ratio: 9 / 19;
+}
+
+.iphone-mockup.horizontal {
+  aspect-ratio: 19 / 9;
+}
+
+/* Vertical iPhone Frame */
+.iphone-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  border-radius: 3rem;
+  padding: 0.75rem;
+  box-shadow:
+    0 25px 60px rgba(168, 85, 247, 0.4),
+    0 15px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  transition: all 0.6s cubic-bezier(.165,.84,.44,1);
+}
+
+.iphone-frame:hover {
+  box-shadow:
+    0 35px 80px rgba(168, 85, 247, 0.6),
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  transform: scale(1.02);
+}
+
+.iphone-notch {
+  position: absolute;
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35%;
+  height: 1.5rem;
+  background: #000;
+  border-radius: 0 0 1rem 1rem;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.iphone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 2.25rem;
+  overflow: hidden;
+}
+
+.screen-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Horizontal iPhone Frame */
+.iphone-frame-horizontal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  border-radius: 2rem;
+  padding: 0.5rem;
+  box-shadow:
+    0 25px 60px rgba(168, 85, 247, 0.4),
+    0 15px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  transition: all 0.6s cubic-bezier(.165,.84,.44,1);
+}
+
+.iphone-frame-horizontal:hover {
+  box-shadow:
+    0 35px 80px rgba(168, 85, 247, 0.6),
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  transform: scale(1.02);
+}
+
+.iphone-notch-horizontal {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 25%;
+  background: #000;
+  border-radius: 0 0.75rem 0.75rem 0;
+  z-index: 10;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.iphone-screen-horizontal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .section-ios15-grid {
+    max-width: 1100px;
+    height: 750px;
+  }
+
+  .phone-image-vertical-wrapper {
+    width: 220px;
+  }
+
+  .vertical-phones-row .phone-image-vertical-wrapper:nth-child(1) {
+    top: 4%;
+    left: 3%;
+  }
+
+  .vertical-phones-row .phone-image-vertical-wrapper:nth-child(2) {
+    bottom: 4%;
+    right: 3%;
+  }
+
+  .phone-image-horizontal-wrapper {
+    max-width: 420px;
+  }
+
+  .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(1) {
+    top: 4%;
+    right: 3%;
+  }
+
+  .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(2) {
+    bottom: 4%;
+    left: 3%;
+  }
+}
+
+/* Mobile - Hide section completely */
+@media (max-width: 768px) {
+  .section-ios15 {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   JAVASCRIPT FOR SCROLL ANIMATION
+   Copy this to Webflow: Project Settings > Custom Code > Footer Code
+   ============================================
+
+<script>
+// Parallax Scroll Animation for iOS15 Section
+document.addEventListener('DOMContentLoaded', function() {
+  function handleParallaxScroll() {
+    const elements = document.querySelectorAll('[data-scroll-speed]');
+
+    elements.forEach(function(element) {
+      const speed = parseFloat(element.getAttribute('data-scroll-speed')) || 1;
+      const rect = element.getBoundingClientRect();
+      const elementTop = rect.top + window.scrollY;
+      const elementHeight = rect.height;
+      const windowHeight = window.innerHeight;
+      const scrolled = window.scrollY;
+
+      // Only animate when element is in viewport
+      if (scrolled + windowHeight > elementTop && scrolled < elementTop + elementHeight) {
+        const distance = (scrolled + windowHeight - elementTop) / (windowHeight + elementHeight);
+        const translateY = (distance - 0.5) * 100 * speed;
+
+        // Get current transform to preserve other values
+        const style = window.getComputedStyle(element);
+        const transform = style.transform;
+
+        if (transform && transform !== 'none') {
+          const matrix = new DOMMatrix(transform);
+          const scaleX = matrix.a;
+          const scaleY = matrix.d;
+          const rotateX = Math.atan2(matrix.m23, matrix.m33) * (180 / Math.PI);
+          const rotateY = Math.atan2(-matrix.m13, matrix.m33) * (180 / Math.PI);
+          const rotateZ = Math.atan2(matrix.m21, matrix.m11) * (180 / Math.PI);
+
+          element.style.transform =
+            'translate3d(' + matrix.m41 + 'px, ' + translateY + 'px, 0px) ' +
+            'scale3d(' + scaleX + ', ' + scaleY + ', 1) ' +
+            'rotateX(' + rotateX + 'deg) ' +
+            'rotateY(' + rotateY + 'deg) ' +
+            'rotateZ(' + rotateZ + 'deg)';
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleParallaxScroll);
+  handleParallaxScroll(); // Initial call
+});
+</script>
+
+   ============================================ */

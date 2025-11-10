@@ -13,6 +13,7 @@ const AveronWebsite = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
   const services = [
     {
       icon: <Zap className="w-8 h-8" />,
@@ -194,6 +195,54 @@ const AveronWebsite = () => {
                 <p className="text-purple-200 leading-relaxed">{service.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Agency Accelerator iOS15 Style Section */}
+      <section id="work" className="section-ios15 relative z-10 overflow-hidden">
+        <div className="padding-bottom-2 padding-xhuge">
+          {/* Logo with glow effect */}
+          <div className="logo-ios15-wrapper">
+            <AveronLogo className="logo-glow" />
+          </div>
+
+          <div className="section-ios15-grid">
+            {/* Vertical Phones Row */}
+            <div className="vertical-phones-row">
+              <div className="phone-image-vertical-wrapper">
+                <img
+                  src="/images/luxury-watch-mockup.png"
+                  alt="Luxury Watch"
+                  className="phone-image"
+                />
+              </div>
+              <div className="phone-image-vertical-wrapper">
+                <img
+                  src="/images/cigars-wine-mockup.png"
+                  alt="Cigars & Wine"
+                  className="phone-image"
+                />
+              </div>
+            </div>
+
+            {/* Horizontal Phones Row */}
+            <div className="horizontal-phones-row">
+              <div className="phone-image-horizontal-wrapper">
+                <img
+                  src="/images/car-mockup.png"
+                  alt="Luxury Car"
+                  className="phone-image-horizontal"
+                />
+              </div>
+              <div className="phone-image-horizontal-wrapper">
+                <img
+                  src="/images/restaurant-mockup.png"
+                  alt="Fine Dining"
+                  className="phone-image-horizontal"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

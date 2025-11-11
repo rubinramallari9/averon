@@ -90,98 +90,128 @@ nextjs-portal {
   filter: drop-shadow(0 0 50px rgba(168, 85, 247, 0.8));
 }
 
-/* Grid Layout - Aesthetic Scattered Placement */
+/* Grid Layout - 2 Row Layout with Center Logo Space */
 .section-ios15-grid {
   max-width: 1600px;
   margin: 0 auto;
   position: relative;
   height: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 40px;
 }
 
-/* Row containers - now absolute positioning */
-.vertical-phones-row,
-.horizontal-phones-row {
-  position: absolute;
+/* Row containers */
+.phones-row-1,
+.phones-row-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 100%;
+  gap: 20px;
   pointer-events: none;
 }
 
-.vertical-phones-row > *,
-.horizontal-phones-row > * {
+.phones-row-1 {
+  margin-bottom: 50px;
+}
+
+.phones-row-2 {
+  margin-top: 50px;
+}
+
+/* All phone wrappers - base size */
+.phone-wrapper {
+  position: relative;
+  width: 300px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: none !important;
+  padding: 0;
+  margin: 0;
   pointer-events: auto;
 }
 
-/* Vertical Phones - Static Aesthetic Positioning */
-.phone-image-vertical-wrapper {
-  position: absolute;
-  width: 280px;
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background: none !important;
-  padding: 0;
-  margin: 0;
+/* Make landscape images bigger */
+.phone-wrapper:has(.phone-image-horizontal) {
+  width: 380px;
 }
 
-/* First vertical phone - Top left area - Drive from LEFT */
-.vertical-phones-row .phone-image-vertical-wrapper:nth-child(1) {
-  top: 2%;
-  left: 2%;
+/* Row 1 animations */
+.phones-row-1 .phone-wrapper:nth-child(1) {
   transform: translateX(-150%) scale(0.5);
 }
 
-/* Second vertical phone - Bottom right area - Drive from RIGHT */
-.vertical-phones-row .phone-image-vertical-wrapper:nth-child(2) {
-  bottom: 2%;
-  right: 2%;
-  transform: translateX(150%) scale(0.5);
-}
-
-/* Horizontal Phones */
-.phone-image-horizontal-wrapper {
-  position: absolute;
-  width: 100%;
-  max-width: 520px;
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background: none !important;
-  padding: 0;
-  margin: 0;
-}
-
-/* First horizontal phone - Top right area - Drive from TOP */
-.horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(1) {
-  top: 2%;
-  right: 2%;
+.phones-row-1 .phone-wrapper:nth-child(2) {
   transform: translateY(-150%) scale(0.5);
 }
 
-/* Second horizontal phone - Bottom left area - Drive from BOTTOM */
-.horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(2) {
-  bottom: 2%;
-  left: 2%;
+.phones-row-1 .phone-wrapper:nth-child(3) {
+  transform: translateY(-150%) scale(0.5);
+}
+
+.phones-row-1 .phone-wrapper:nth-child(4) {
+  transform: translateX(150%) scale(0.5);
+}
+
+/* Row 2 animations */
+.phones-row-2 .phone-wrapper:nth-child(1) {
+  transform: translateX(-150%) scale(0.5);
+}
+
+.phones-row-2 .phone-wrapper:nth-child(2) {
   transform: translateY(150%) scale(0.5);
 }
 
-/* Show mockups ONLY when hovering logo - Fast drive-in animation */
-.logo-ios15-wrapper:hover ~ .section-ios15-grid .vertical-phones-row .phone-image-vertical-wrapper:nth-child(1) {
+.phones-row-2 .phone-wrapper:nth-child(3) {
+  transform: translateY(150%) scale(0.5);
+}
+
+.phones-row-2 .phone-wrapper:nth-child(4) {
+  transform: translateX(150%) scale(0.5);
+}
+
+/* Hover animations - Row 1 */
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(1) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-ios15-wrapper:hover ~ .section-ios15-grid .vertical-phones-row .phone-image-vertical-wrapper:nth-child(2) {
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(4) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-ios15-wrapper:hover ~ .section-ios15-grid .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(1) {
+/* Hover animations - Row 2 */
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(2) {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-.logo-ios15-wrapper:hover ~ .section-ios15-grid .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(2) {
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(3) {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+.logo-ios15-wrapper:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(4) {
+  opacity: 1;
+  transform: translateX(0) scale(1);
 }
 
 /* Phone Images */
@@ -332,36 +362,25 @@ nextjs-portal {
 /* Tablet */
 @media (max-width: 1024px) {
   .section-ios15-grid {
-    max-width: 1100px;
-    height: 750px;
+    max-width: 900px;
+    height: 700px;
+    padding: 15px 20px;
   }
 
-  .phone-image-vertical-wrapper {
+  .phone-wrapper {
     width: 220px;
   }
 
-  .vertical-phones-row .phone-image-vertical-wrapper:nth-child(1) {
-    top: 4%;
-    left: 3%;
+  .phone-wrapper:has(.phone-image-horizontal) {
+    width: 280px;
   }
 
-  .vertical-phones-row .phone-image-vertical-wrapper:nth-child(2) {
-    bottom: 4%;
-    right: 3%;
+  .phones-row-1 {
+    margin-bottom: 40px;
   }
 
-  .phone-image-horizontal-wrapper {
-    max-width: 420px;
-  }
-
-  .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(1) {
-    top: 4%;
-    right: 3%;
-  }
-
-  .horizontal-phones-row .phone-image-horizontal-wrapper:nth-child(2) {
-    bottom: 4%;
-    left: 3%;
+  .phones-row-2 {
+    margin-top: 40px;
   }
 }
 

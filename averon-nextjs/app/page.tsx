@@ -208,37 +208,65 @@ const AveronWebsite = () => {
           </div>
 
           <div className="section-ios15-grid">
-            {/* Vertical Phones Row */}
-            <div className="vertical-phones-row">
-              <div className="phone-image-vertical-wrapper">
+            {/* Row 1: landscape(new), vertical(old), landscape(old), vertical(new) */}
+            <div className="phones-row-1">
+              <div className="phone-wrapper">
+                <img
+                  src="/images/jewelry-mockup.png"
+                  alt="Jewelry Store"
+                  className="phone-image-horizontal"
+                />
+              </div>
+              <div className="phone-wrapper">
                 <img
                   src="/images/luxury-watch-mockup.png"
                   alt="Luxury Watch"
                   className="phone-image"
                 />
               </div>
-              <div className="phone-image-vertical-wrapper">
-                <img
-                  src="/images/cigars-wine-mockup.png"
-                  alt="Cigars & Wine"
-                  className="phone-image"
-                />
-              </div>
-            </div>
-
-            {/* Horizontal Phones Row */}
-            <div className="horizontal-phones-row">
-              <div className="phone-image-horizontal-wrapper">
+              <div className="phone-wrapper">
                 <img
                   src="/images/car-mockup.png"
                   alt="Luxury Car"
                   className="phone-image-horizontal"
                 />
               </div>
-              <div className="phone-image-horizontal-wrapper">
+              <div className="phone-wrapper">
+                <img
+                  src="/images/construction-mockup.png"
+                  alt="Construction"
+                  className="phone-image"
+                />
+              </div>
+            </div>
+
+            {/* Row 2: vertical(new), landscape(old), vertical(old), landscape(new) - CHECKERBOARD PATTERN */}
+            <div className="phones-row-2">
+              <div className="phone-wrapper">
+                <img
+                  src="/images/realestate-mockup.png"
+                  alt="Real Estate"
+                  className="phone-image"
+                />
+              </div>
+              <div className="phone-wrapper">
                 <img
                   src="/images/restaurant-mockup.png"
                   alt="Fine Dining"
+                  className="phone-image-horizontal"
+                />
+              </div>
+              <div className="phone-wrapper">
+                <img
+                  src="/images/cigars-wine-mockup.png"
+                  alt="Cigars & Wine"
+                  className="phone-image"
+                />
+              </div>
+              <div className="phone-wrapper">
+                <img
+                  src="/images/computerstore-mockup.png"
+                  alt="Computer Store"
                   className="phone-image-horizontal"
                 />
               </div>

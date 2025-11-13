@@ -17,7 +17,8 @@ const AveronWebsite = () => {
   const services = [
     {
       icon: <Zap className="w-8 h-8" />,
-      title: "Web Development",
+
+      
       description: "Custom websites and web applications built with cutting-edge technologies that convert visitors into customers."
     },
     {
@@ -202,25 +203,28 @@ const AveronWebsite = () => {
       {/* Agency Accelerator iOS15 Style Section */}
       <section id="work" className="section-ios15 relative z-10 overflow-hidden">
         <div className="padding-bottom-2 padding-xhuge">
-          {/* Logo with glow effect */}
-          <div className="logo-ios15-wrapper">
-            <AveronLogo className="logo-glow" />
+          {/* Circular hover area */}
+          <div className="logo-hover-area">
+            {/* Logo with glow effect */}
+            <div className="logo-ios15-wrapper">
+              <AveronLogo className="logo-glow w-96 sm:w-[480px] lg:w-[560px]" />
+            </div>
           </div>
 
           <div className="section-ios15-grid">
-            {/* Row 1: landscape(new), vertical(old), landscape(old), vertical(new) */}
+            {/* Row 1 (Top arc): vertical, vertical, horizontal, horizontal */}
             <div className="phones-row-1">
-              <div className="phone-wrapper">
-                <img
-                  src="/images/jewelry-mockup.png"
-                  alt="Jewelry Store"
-                  className="phone-image-horizontal"
-                />
-              </div>
               <div className="phone-wrapper">
                 <img
                   src="/images/luxury-watch-mockup.png"
                   alt="Luxury Watch"
+                  className="phone-image"
+                />
+              </div>
+              <div className="phone-wrapper">
+                <img
+                  src="/images/construction-mockup.png"
+                  alt="Construction"
                   className="phone-image"
                 />
               </div>
@@ -233,26 +237,26 @@ const AveronWebsite = () => {
               </div>
               <div className="phone-wrapper">
                 <img
-                  src="/images/construction-mockup.png"
-                  alt="Construction"
-                  className="phone-image"
+                  src="/images/jewelry-mockup.png"
+                  alt="Jewelry Store"
+                  className="phone-image-horizontal"
                 />
               </div>
             </div>
 
-            {/* Row 2: vertical(new), landscape(old), vertical(old), landscape(new) - CHECKERBOARD PATTERN */}
+            {/* Row 2 (Bottom arc): horizontal, horizontal, vertical, vertical */}
             <div className="phones-row-2">
-              <div className="phone-wrapper">
-                <img
-                  src="/images/realestate-mockup.png"
-                  alt="Real Estate"
-                  className="phone-image"
-                />
-              </div>
               <div className="phone-wrapper">
                 <img
                   src="/images/restaurant-mockup.png"
                   alt="Fine Dining"
+                  className="phone-image-horizontal"
+                />
+              </div>
+              <div className="phone-wrapper">
+                <img
+                  src="/images/computerstore-mockup.png"
+                  alt="Computer Store"
                   className="phone-image-horizontal"
                 />
               </div>
@@ -265,9 +269,9 @@ const AveronWebsite = () => {
               </div>
               <div className="phone-wrapper">
                 <img
-                  src="/images/computerstore-mockup.png"
-                  alt="Computer Store"
-                  className="phone-image-horizontal"
+                  src="/images/realestate-mockup.png"
+                  alt="Real Estate"
+                  className="phone-image"
                 />
               </div>
             </div>

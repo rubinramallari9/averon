@@ -605,7 +605,92 @@ const AveronWebsite = () => {
 
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
-              <div className="relative bg-gradient-to-br from-purple-900/40 to-black/60 backdrop-blur-sm rounded-3xl border border-purple-500/30 p-8 sm:p-12">
+
+              {/* React Atomic Orbital Animation */}
+              <div
+                className="react-orbit-wrapper absolute pointer-events-none"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 'calc(100% + 80px)',
+                  height: 'calc(100% + 80px)',
+                  zIndex: 0
+                }}
+              >
+                <svg
+                  className="w-full h-full"
+                  viewBox="0 0 500 500"
+                  style={{ overflow: 'visible' }}
+                >
+                  <defs>
+                    <filter id="orbitGlow">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                    <linearGradient id="orbitGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{stopColor: '#ff77cc', stopOpacity: 0.8}} />
+                      <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.8}} />
+                    </linearGradient>
+                    <linearGradient id="orbitGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style={{stopColor: '#c778ff', stopOpacity: 0.7}} />
+                      <stop offset="100%" style={{stopColor: '#ff77cc', stopOpacity: 0.7}} />
+                    </linearGradient>
+                    <linearGradient id="orbitGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" style={{stopColor: '#ff77cc', stopOpacity: 0.75}} />
+                      <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.75}} />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Orbit A - Clockwise 12s */}
+                  <g className="orbit-a">
+                    <ellipse
+                      cx="250"
+                      cy="250"
+                      rx="240"
+                      ry="100"
+                      fill="none"
+                      stroke="url(#orbitGradient1)"
+                      strokeWidth="3"
+                      filter="url(#orbitGlow)"
+                    />
+                  </g>
+
+                  {/* Orbit B - Counter-clockwise 18s */}
+                  <g className="orbit-b">
+                    <ellipse
+                      cx="250"
+                      cy="250"
+                      rx="240"
+                      ry="100"
+                      fill="none"
+                      stroke="url(#orbitGradient2)"
+                      strokeWidth="3.5"
+                      filter="url(#orbitGlow)"
+                    />
+                  </g>
+
+                  {/* Orbit C - Clockwise 24s */}
+                  <g className="orbit-c">
+                    <ellipse
+                      cx="250"
+                      cy="250"
+                      rx="240"
+                      ry="100"
+                      fill="none"
+                      stroke="url(#orbitGradient3)"
+                      strokeWidth="3"
+                      filter="url(#orbitGlow)"
+                    />
+                  </g>
+                </svg>
+              </div>
+
+              <div className="relative bg-gradient-to-br from-purple-900/40 to-black/60 backdrop-blur-sm rounded-3xl border border-purple-500/30 p-8 sm:p-12" style={{ zIndex: 5 }}>
                 <h3 className="text-2xl font-bold mb-8 text-center">Technologies We Master</h3>
                 
                 {/* Tech Stack Grid */}

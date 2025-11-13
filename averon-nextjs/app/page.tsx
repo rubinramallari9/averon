@@ -287,11 +287,23 @@ const AveronWebsite = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50">
+              <button
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  contactSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"
+              >
                 <span>Start Your Project</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="px-8 py-4 border-2 border-purple-500/50 rounded-lg font-semibold hover:bg-purple-500/10 transition-all">
+              <button
+                onClick={() => {
+                  const workSection = document.getElementById('work');
+                  workSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-8 py-4 border-2 border-purple-500/50 rounded-lg font-semibold hover:bg-purple-500/10 transition-all"
+              >
                 View Our Work
               </button>
             </div>

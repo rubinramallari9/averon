@@ -1,17 +1,127 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram} from 'lucide-react';
+import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const path = document.getElementById('processPath') as unknown as SVGPathElement;
+    const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
+    const mobileMarker = document.getElementById('mobileEndMarker');
+    const section = document.getElementById('process-section');
+
+    if (!section) return;
+
+    // Desktop path animation
+    if (path) {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+
+      const handleScroll = () => {
+        setScrollY(window.scrollY);
+
+        const scrollY = window.scrollY;
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+
+        let progress = (scrollY - sectionTop + window.innerHeight * 0.5) / sectionHeight;
+        progress = Math.min(Math.max(progress, 0), 1);
+
+        const easedProgress = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+        const draw = length * easedProgress;
+        path.style.strokeDashoffset = `${length - draw}`;
+
+      };
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+
+    // Mobile path animation
+    if (mobilePath && mobileMarker) {
+      const mobileLength = mobilePath.getTotalLength();
+      mobilePath.style.strokeDasharray = `${mobileLength}`;
+      mobilePath.style.strokeDashoffset = `${mobileLength}`;
+
+      const handleMobileScroll = () => {
+        setScrollY(window.scrollY);
+
+        const scrollY = window.scrollY;
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+
+        let progress = (scrollY - sectionTop + window.innerHeight * 0.3) / sectionHeight;
+        progress = Math.min(Math.max(progress, 0), 1);
+
+        const easedProgress = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+        const draw = mobileLength * easedProgress;
+        mobilePath.style.strokeDashoffset = `${mobileLength - draw}`;
+
+        // Animate dots
+        const dots = document.querySelectorAll('.timeline-dot');
+        dots.forEach((dot, index) => {
+          const dotProgress = (index + 1) / 3;
+          if (easedProgress >= dotProgress - 0.1) {
+            (dot as HTMLElement).style.opacity = '1';
+            (dot as HTMLElement).style.transform = 'scale(1)';
+          } else {
+            (dot as HTMLElement).style.opacity = '0.3';
+            (dot as HTMLElement).style.transform = 'scale(0.8)';
+          }
+        });
+
+        // X marker appears when fully drawn
+        if (easedProgress >= 0.98) {
+          mobileMarker.style.opacity = '1';
+          mobileMarker.style.transform = 'scale(1.1)';
+        } else {
+          mobileMarker.style.opacity = '0';
+          mobileMarker.style.transform = 'scale(0.9)';
+        }
+      };
+
+      handleMobileScroll();
+      window.addEventListener('scroll', handleMobileScroll);
+      return () => window.removeEventListener('scroll', handleMobileScroll);
+    }
   }, []);
+
+  const handleWorkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const workSection = document.getElementById('work');
+    if (workSection) {
+      workSection.scrollIntoView({ behavior: 'smooth' });
+
+      // After scroll completes, trigger the animation
+      setTimeout(() => {
+        const logoHoverArea = document.querySelector('.logo-hover-area') as HTMLElement;
+        const workGrid = document.getElementById('work-grid');
+
+        if (logoHoverArea && workGrid) {
+          // Manually add the hover classes to trigger animation
+          workGrid.classList.add('show-images');
+          logoHoverArea.classList.add('active');
+
+          // Remove after animation completes
+          setTimeout(() => {
+            workGrid.classList.remove('show-images');
+            logoHoverArea.classList.remove('active');
+          }, 3000);
+        }
+      }, 800);
+    }
+  };
 
 
   const services = [
@@ -69,7 +179,7 @@ const AveronWebsite = () => {
             
             <div className="hidden lg:flex space-x-8">
               <a href="#services" className="hover:text-purple-300 transition">Services</a>
-              <a href="#work" className="hover:text-purple-300 transition">Our Work</a>
+              <a href="#work" className="hover:text-purple-300 transition" onClick={handleWorkClick}>Our Work</a>
               <a href="#process" className="hover:text-purple-300 transition">Process</a>
               <a href="#features" className="hover:text-purple-300 transition">Features</a>
               <a href="#contact" className="hover:text-purple-300 transition">Contact</a>
@@ -98,7 +208,10 @@ const AveronWebsite = () => {
               <a
                 href="#work"
                 className="block text-lg hover:text-purple-300 transition py-2"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleWorkClick(e);
+                }}
               >
                 Our Work
               </a>
@@ -211,7 +324,7 @@ const AveronWebsite = () => {
             </div>
           </div>
 
-          <div className="section-ios15-grid">
+          <div className="section-ios15-grid" id="work-grid">
             {/* Row 1 (Top arc): vertical, vertical, horizontal, horizontal */}
             <div className="phones-row-1">
               <div className="phone-wrapper">
@@ -280,7 +393,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Process Section - Snake Path */}
-      <section id="process" className="flex items-center py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="process-section" className="flex items-center py-12 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto w-full">
           <div className="text-center mb-12">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Process</h2>
@@ -291,28 +404,140 @@ const AveronWebsite = () => {
 
           {/* Snake Path Layout */}
           <div className="relative">
-            {/* Animated SVG Snake Path */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{zIndex: 0}}>
+            {/* Desktop Animated SVG Snake Path */}
+            <svg
+              className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
+              style={{zIndex: 1}}
+              viewBox="0 0 800 700"
+              preserveAspectRatio="xMidYMid meet"
+            >
               <defs>
                 <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{stopColor: '#a855f7', stopOpacity: 0.6}} />
-                  <stop offset="50%" style={{stopColor: '#ec4899', stopOpacity: 0.6}} />
-                  <stop offset="100%" style={{stopColor: '#a855f7', stopOpacity: 0.6}} />
+                  <stop offset="0%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
+                  <stop offset="50%" style={{stopColor: '#ec4899', stopOpacity: 0.9}} />
+                  <stop offset="100%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
                 </linearGradient>
+                <linearGradient id="pinkPurpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor: '#ff1e99', stopOpacity: 1}} />
+                  <stop offset="50%" style={{stopColor: '#b200ff', stopOpacity: 1}} />
+                  <stop offset="100%" style={{stopColor: '#ff1e99', stopOpacity: 1}} />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
               </defs>
               <path
-                d="M 150 150 C 250 140, 350 160, 450 150 C 550 140, 620 160, 650 220 C 670 260, 660 300, 600 330 C 500 350, 350 360, 200 350 C 120 345, 80 360, 80 450 C 80 510, 100 540, 150 550"
-                stroke="url(#snakeGradient)"
-                strokeWidth="4"
+                id="processPath"
+                d="M 180 140
+                   C 280 130, 360 155, 480 145
+                   C 600 135, 680 165, 720 220
+                   S 710 305, 630 340
+                   C 520 380, 360 385, 220 365
+                   C 150 355, 100 375, 90 445
+                   C 85 495, 110 525, 220 570
+                   C 360 630, 480 670, 400 750"
+                stroke="url(#pinkPurpleGradient)"
+                strokeWidth="12"
                 fill="none"
-                strokeDasharray="15 10"
-                className="snake-path"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                filter="url(#glow)"
+                style={{
+                  transition: 'stroke-dashoffset 0.15s ease-out'
+                }}
               />
             </svg>
 
-            <div className="relative space-y-12">
+            {/* Mobile Vertical Timeline */}
+            <svg
+              className="md:hidden absolute left-4 top-0 h-full pointer-events-none"
+              style={{zIndex: 1, width: '40px'}}
+              viewBox="0 0 40 800"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style={{stopColor: '#ec4899', stopOpacity: 0.9}} />
+                  <stop offset="50%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
+                  <stop offset="100%" style={{stopColor: '#ec4899', stopOpacity: 0.9}} />
+                </linearGradient>
+              </defs>
+              <path
+                id="mobileProcessPath"
+                d="M 20 80 L 20 720"
+                stroke="url(#mobileGradient)"
+                strokeWidth="7"
+                fill="none"
+                strokeLinecap="round"
+                style={{
+                  transition: 'stroke-dashoffset 0.15s ease-out',
+                  filter: 'drop-shadow(0 0 6px rgba(168, 85, 247, 0.6))'
+                }}
+              />
+            </svg>
+
+            {/* Mobile Timeline Dots */}
+            <div className="md:hidden absolute left-[30px] top-[80px] timeline-dot" style={{
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #ec4899, #a855f7)',
+              boxShadow: '0 0 12px rgba(168, 85, 247, 0.8)',
+              opacity: 0.3,
+              transform: 'scale(0.8)',
+              transition: 'all 0.4s ease',
+              zIndex: 5
+            }}></div>
+
+            <div className="md:hidden absolute left-[30px] top-[370px] timeline-dot" style={{
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #a855f7, #ec4899)',
+              boxShadow: '0 0 12px rgba(236, 72, 153, 0.8)',
+              opacity: 0.3,
+              transform: 'scale(0.8)',
+              transition: 'all 0.4s ease',
+              zIndex: 5
+            }}></div>
+
+            <div className="md:hidden absolute left-[30px] top-[660px] timeline-dot" style={{
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #ec4899, #a855f7)',
+              boxShadow: '0 0 12px rgba(168, 85, 247, 0.8)',
+              opacity: 0.3,
+              transform: 'scale(0.8)',
+              transition: 'all 0.4s ease',
+              zIndex: 5
+            }}></div>
+
+            {/* Mobile X Marker */}
+            <div
+              id="mobileEndMarker"
+              className="md:hidden absolute pointer-events-none"
+              style={{
+                left: '40px',
+                top: '740px',
+                fontSize: '32px',
+                fontWeight: 900,
+                color: '#ff6db0',
+                opacity: 0,
+                transition: 'opacity 0.4s ease-out, transform 0.3s ease',
+                transform: 'scale(0.9)',
+                textShadow: '0 0 16px rgba(255, 109, 176, 0.9), 0 0 24px rgba(168, 85, 247, 0.5)',
+                zIndex: 20
+              }}
+            >
+              ✕
+            </div>
+
+            <div className="relative space-y-12 md:pl-0 pl-16" style={{zIndex: 5}}>
               {/* Step 1 - Top Left */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
@@ -508,16 +733,41 @@ const AveronWebsite = () => {
                 <a href="#contact" className="text-purple-300 hover:text-white transition">Contact</a>
               </div>
 
-              {/* Instagram Button */}
-              <div className="flex justify-center mb-6">
+              {/* Social Media Buttons */}
+              <div className="flex justify-center gap-4 mb-6">
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30"
+                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
                 >
-                  <Instagram className="w-5 h-5" />
-                  <span className="font-semibold">Follow us on Instagram</span>
+                  <Instagram className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://tiktok.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-blue-600/80 rounded-full hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                >
+                  <Linkedin className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-blue-700/80 rounded-full hover:from-purple-600 hover:to-blue-700 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                >
+                  <Facebook className="w-6 h-6" />
                 </a>
               </div>
 

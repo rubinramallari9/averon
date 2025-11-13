@@ -90,7 +90,8 @@ nextjs-portal {
   transition: all 0.6s ease;
 }
 
-.logo-hover-area:hover .logo-ios15-wrapper {
+.logo-hover-area:hover .logo-ios15-wrapper,
+.logo-hover-area.active .logo-ios15-wrapper {
   transform: scale(1.15);
 }
 
@@ -197,43 +198,51 @@ nextjs-portal {
 }
 
 /* Hover-triggered animations - Row 1 - all slide in horizontally */
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(1) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(1),
+.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(1) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(2) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(2),
+.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(2) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(3) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(3),
+.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(3) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(4) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(4),
+.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(4) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
 /* Hover-triggered animations - Row 2 - all slide in horizontally */
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(1) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(1),
+.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(1) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(2) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(2),
+.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(2) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(3) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(3),
+.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(3) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
 
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(4) {
+.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(4),
+.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(4) {
   opacity: 1;
   transform: translateX(0) scale(1);
 }

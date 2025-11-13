@@ -81,6 +81,40 @@ nextjs-portal {
 }
 
 /* ============================================
+   MODAL ATOMIC ORBITAL ANIMATION
+   ============================================ */
+
+/* Modal Orbit A - Clockwise rotation 12s */
+.modal-orbit-a {
+  transform-origin: center;
+  animation: orbitRotateClockwise 12s linear infinite, modalOrbitPulse 3s ease-in-out infinite;
+}
+
+/* Modal Orbit B - Counter-clockwise rotation 18s */
+.modal-orbit-b {
+  transform-origin: center;
+  animation: orbitRotateCounterClockwise 18s linear infinite, modalOrbitPulse 4s ease-in-out infinite;
+  transform: rotate(60deg);
+}
+
+/* Modal Orbit C - Clockwise rotation 24s */
+.modal-orbit-c {
+  transform-origin: center;
+  animation: orbitRotateClockwise 24s linear infinite, modalOrbitPulse 5s ease-in-out infinite;
+  transform: rotate(120deg);
+}
+
+/* Modal orbit pulse for alive effect */
+@keyframes modalOrbitPulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ============================================
    AGENCY ACCELERATOR iOS15 SECTION STYLES
    Production-ready Webflow-style section
 

@@ -2,10 +2,24 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
+
+  // Disable scrolling when service card is active
+  useEffect(() => {
+    if (activeServiceCard !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [activeServiceCard]);
 
   useEffect(() => {
     const path = document.getElementById('processPath') as unknown as SVGPathElement;
@@ -127,8 +141,7 @@ const AveronWebsite = () => {
   const services = [
     {
       icon: <Zap className="w-8 h-8" />,
-
-      
+      title: "Web Development",
       description: "Custom websites and web applications built with cutting-edge technologies that convert visitors into customers."
     },
     {
@@ -298,16 +311,19 @@ const AveronWebsite = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="group p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/20"
+                className="group p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/20 cursor-pointer"
+                onClick={() => setActiveServiceCard(index)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
                   {service.icon}
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-purple-200 leading-relaxed">{service.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -777,9 +793,14 @@ const AveronWebsite = () => {
               placeholder="Enter your email"
               className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400"
             />
+            <input
+              type="text"
+              placeholder="Company name (optional)"
+              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400"
+            />
             <textarea
               placeholder="Tell us about your project and preferences..."
-              rows={5}
+              rows={8}
               className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 resize-none"
             />
             <button className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50">
@@ -865,6 +886,149 @@ const AveronWebsite = () => {
           </div>
         </div>
       </footer>
+
+      {/* Service Card Modal with Atomic Animation */}
+      <AnimatePresence>
+        {activeServiceCard !== null && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
+              onClick={() => setActiveServiceCard(null)}
+            />
+
+            {/* Modal Card with Atomic Animation */}
+            <div className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.8, opacity: 0, y: 50 }}
+                transition={{
+                  type: "spring",
+                  damping: 25,
+                  stiffness: 300,
+                  duration: 0.5
+                }}
+                className="relative w-[70%] max-w-lg pointer-events-auto"
+              >
+                {/* Atomic Orbital Animation - Behind Card */}
+                <div
+                  className="absolute pointer-events-none"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 'calc(100% + 140px)',
+                    height: 'calc(100% + 140px)',
+                    zIndex: 0
+                  }}
+                >
+                  <motion.svg
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="w-full h-full"
+                    viewBox="0 0 600 600"
+                    style={{ overflow: 'visible' }}
+                  >
+                    <defs>
+                      <filter id="modalOrbitGlow">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                      <linearGradient id="modalOrbitGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style={{stopColor: '#ff77cc', stopOpacity: 0.9}} />
+                        <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.9}} />
+                      </linearGradient>
+                      <linearGradient id="modalOrbitGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style={{stopColor: '#c778ff', stopOpacity: 0.85}} />
+                        <stop offset="100%" style={{stopColor: '#ff77cc', stopOpacity: 0.85}} />
+                      </linearGradient>
+                      <linearGradient id="modalOrbitGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" style={{stopColor: '#ff77cc', stopOpacity: 0.9}} />
+                        <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.9}} />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Orbit A - Clockwise 12s */}
+                    <g className="modal-orbit-a">
+                      <ellipse
+                        cx="300"
+                        cy="300"
+                        rx="280"
+                        ry="120"
+                        fill="none"
+                        stroke="url(#modalOrbitGradient1)"
+                        strokeWidth="4"
+                        filter="url(#modalOrbitGlow)"
+                      />
+                    </g>
+
+                    {/* Orbit B - Counter-clockwise 18s */}
+                    <g className="modal-orbit-b">
+                      <ellipse
+                        cx="300"
+                        cy="300"
+                        rx="280"
+                        ry="120"
+                        fill="none"
+                        stroke="url(#modalOrbitGradient2)"
+                        strokeWidth="4.5"
+                        filter="url(#modalOrbitGlow)"
+                      />
+                    </g>
+
+                    {/* Orbit C - Clockwise 24s */}
+                    <g className="modal-orbit-c">
+                      <ellipse
+                        cx="300"
+                        cy="300"
+                        rx="280"
+                        ry="120"
+                        fill="none"
+                        stroke="url(#modalOrbitGradient3)"
+                        strokeWidth="4"
+                        filter="url(#modalOrbitGlow)"
+                      />
+                    </g>
+                  </motion.svg>
+                </div>
+
+                {/* Card Content */}
+                <div className="relative bg-gradient-to-br from-purple-900/95 to-black/95 backdrop-blur-xl rounded-3xl border-2 border-purple-500/50 p-8 shadow-2xl shadow-purple-500/50" style={{ zIndex: 10 }}>
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setActiveServiceCard(null)}
+                    className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center rounded-full bg-purple-500/20 hover:bg-purple-500/40 border border-purple-500/30 hover:border-purple-500/60 transition-all group"
+                  >
+                    <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                  </button>
+
+                  {/* Service Content */}
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-purple-500/50">
+                      {services[activeServiceCard].icon}
+                    </div>
+                    <h3 className="text-3xl font-bold mb-4">{services[activeServiceCard].title}</h3>
+                    <p className="text-lg text-purple-200 leading-relaxed">
+                      {services[activeServiceCard].description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

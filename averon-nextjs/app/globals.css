@@ -171,21 +171,35 @@ nextjs-portal {
   padding-bottom: 3rem;
 }
 
-/* Circular hover area around logo */
+/* Full-width rectangular hover area around logo - Invisible activation zone */
 .logo-hover-area {
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 650px;
-  height: 650px;
-  border: 2px solid transparent;
-  border-radius: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  width: 100vw;
+  height: 600px;
+  border: none;
+  background: transparent;
   z-index: 5;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Responsive hitbox vertical sizing */
+@media (max-width: 1024px) {
+  .logo-hover-area {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-hover-area {
+    height: 400px;
+  }
 }
 
 /* Logo Center with Glow Effect */

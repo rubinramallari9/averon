@@ -556,6 +556,42 @@ nextjs-portal {
 }
 
 /* ============================================
+   SCROLL ARROW ANIMATIONS
+   ============================================ */
+
+/* No animations applied to scroll arrow */
+
+/* ============================================
+   HERO TEXT SHINE ANIMATION
+   Subtle light sweep effect
+   ============================================ */
+
+@keyframes textShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-text-shine {
+  background: linear-gradient(
+    90deg,
+    #d8b4fe 0%,
+    #f0abfc 20%,
+    #ffffff 40%,
+    #f0abfc 60%,
+    #d8b4fe 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShine 6s linear infinite;
+}
+
+/* ============================================
    TREASURE MAP PATH ANIMATION
    ============================================ */
 

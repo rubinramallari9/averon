@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ScrollArrow from '@/components/ScrollArrow';
+import ServiceCardTilt from '@/components/ServiceCardTilt';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -162,7 +164,7 @@ const AveronWebsite = () => {
   ];
 
   const features = [
-    "Lifetime support & updates o kar",
+    "Lifetime support & updates",
     "Dedicated project manager",
     "Mobile-first responsive design",
     "SEO optimization included",
@@ -277,7 +279,7 @@ const AveronWebsite = () => {
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               We Build Digital
               <br />
-              <span className="bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
+              <span className="animate-text-shine">
                 Experiences That Convert
               </span>
             </h1>
@@ -309,6 +311,9 @@ const AveronWebsite = () => {
             </div>
           </div>
         </div>
+
+        {/* Scroll Arrow */}
+        <ScrollArrow />
       </section>
 
       {/* Services Grid */}
@@ -321,21 +326,21 @@ const AveronWebsite = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
             {services.map((service, index) => (
-              <motion.div
-                key={index}
-                className="group p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/20 cursor-pointer"
-                onClick={() => setActiveServiceCard(index)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                  {service.icon}
-                </div>
-                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                <p className="text-purple-200 leading-relaxed">{service.description}</p>
-              </motion.div>
+              <ServiceCardTilt key={index}>
+                <motion.div
+                  className="group h-full p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer flex flex-col"
+                  onClick={() => setActiveServiceCard(index)}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 flex-shrink-0">{service.title}</h3>
+                  <p className="text-purple-200 leading-relaxed flex-grow">{service.description}</p>
+                </motion.div>
+              </ServiceCardTilt>
             ))}
           </div>
         </div>

@@ -1,0 +1,32 @@
+# robots.txt for Averon Digital - https://averon.al
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin or private pages if any
+# Disallow: /admin
+# Disallow: /api
+
+# Sitemap location
+Sitemap: https://averon.al/sitemap.xml
+
+# Crawl delay (optional, helps manage server load)
+Crawl-delay: 0
+
+# Specific rules for common bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /

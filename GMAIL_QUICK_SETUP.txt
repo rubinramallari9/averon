@@ -1,0 +1,88 @@
+╔════════════════════════════════════════════════════════════════════════╗
+║                    GMAIL SMTP - QUICK SETUP                            ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+📧 STEP 1: Get Gmail App Password
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to: https://myaccount.google.com/apppasswords
+2. Enable 2-Step Verification if asked
+3. Select "Mail" → "Other (Custom name)" → "Django Averon Backend"
+4. Click "Generate"
+5. Copy the 16-character password (e.g., abcd efgh ijkl mnop)
+
+⚙️  STEP 2: Update Django Settings
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File: averon_backend/core/settings.py (around line 155-160)
+
+Replace these lines:
+────────────────────────────────────────────────────────────────────────
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'
+CONTACT_EMAIL_RECIPIENT = 'your-email@gmail.com'
+────────────────────────────────────────────────────────────────────────
+
+With your actual values:
+────────────────────────────────────────────────────────────────────────
+EMAIL_HOST_USER = 'youractual@gmail.com'
+EMAIL_HOST_PASSWORD = 'abcd efgh ijkl mnop'  # From Step 1
+CONTACT_EMAIL_RECIPIENT = 'youractual@gmail.com'
+────────────────────────────────────────────────────────────────────────
+
+🔄 STEP 3: Restart Django Server
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Press Ctrl+C to stop, then run:
+
+cd averon_backend
+source venv/bin/activate
+python manage.py runserver
+
+✅ STEP 4: Test It
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to: http://localhost:3000
+2. Fill out contact form
+3. Submit
+4. Check your email! (10-30 seconds)
+
+📧 Email Format You'll Receive
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Subject: New Contact Form Submission from [Name]
+
+New contact form submission received:
+
+Name: John Doe
+Email: john@example.com
+Message:
+[Their message here]
+
+---
+Submission ID: 5
+
+🔧 Quick Test Command
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To test email without using the form:
+
+cd averon_backend
+source venv/bin/activate
+python manage.py shell -c "from django.core.mail import send_mail; from django.conf import settings; send_mail('Test', 'Testing SMTP', settings.EMAIL_HOST_USER, [settings.CONTACT_EMAIL_RECIPIENT])"
+
+⚠️  Troubleshooting
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"Authentication failed"
+→ Use App Password (16 chars), not regular password
+→ Remove spaces from app password
+
+Not receiving emails
+→ Check spam folder
+→ Verify CONTACT_EMAIL_RECIPIENT is correct
+→ Check Django terminal for errors
+
+For detailed help, see: EMAIL_SETUP_GUIDE.md
+
+╚════════════════════════════════════════════════════════════════════════╝

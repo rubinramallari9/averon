@@ -5,11 +5,24 @@ import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu,
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
 import ServiceCardTilt from '@/components/ServiceCardTilt';
+import { apiClient } from '@/lib/api';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
+
+  // Contact form state
+  const [contactForm, setContactForm] = useState({
+    email: '',
+    name: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   // Disable scrolling when service card is active
   useEffect(() => {
@@ -136,6 +149,30 @@ const AveronWebsite = () => {
           }, 3000);
         }
       }, 800);
+    }
+  };
+
+  // Handle contact form submission
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await apiClient.submitContact(contactForm);
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you! We\'ll get back to you soon.',
+      });
+      // Clear form
+      setContactForm({ email: '', name: '', message: '' });
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Failed to send message. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -804,27 +841,58 @@ const AveronWebsite = () => {
             Schedule a free discovery call with our team. We'll discuss your goals and create a tailored strategy to help you succeed online.
           </p>
           
-          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
+          <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 max-w-2xl mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400"
+              value={contactForm.email}
+              onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+              required
+              disabled={isSubmitting}
+              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 disabled:opacity-50"
             />
             <input
               type="text"
-              placeholder="Company name (optional)"
-              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400"
+              placeholder="Your name"
+              value={contactForm.name}
+              onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+              required
+              disabled={isSubmitting}
+              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 disabled:opacity-50"
             />
             <textarea
               placeholder="Tell us about your project and preferences..."
               rows={8}
-              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 resize-none"
+              value={contactForm.message}
+              onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+              required
+              disabled={isSubmitting}
+              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 resize-none disabled:opacity-50"
             />
-            <button className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50">
-              <span>Get Started</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              <span>{isSubmitting ? 'Sending...' : 'Get Started'}</span>
+              {!isSubmitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
             </button>
-          </div>
+
+            {/* Success/Error Message */}
+            {submitStatus.type && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`p-4 rounded-lg text-center font-semibold ${
+                  submitStatus.type === 'success'
+                    ? 'bg-green-500/20 border border-green-500/50 text-green-300'
+                    : 'bg-red-500/20 border border-red-500/50 text-red-300'
+                }`}
+              >
+                {submitStatus.message}
+              </motion.div>
+            )}
+          </form>
 
           <p className="mt-6 text-sm text-purple-300">
             Join the list of businesses that trust Averon Digital with their online presence

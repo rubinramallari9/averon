@@ -12,11 +12,17 @@ import {
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: 'swap',  // Improve font loading performance
+  preload: true,    // Explicitly enable preloading
+  adjustFontFallback: true,  // Reduce layout shift
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
 });
 
 // SEO Metadata

@@ -1,0 +1,29 @@
+# Django Core
+Django==5.2.8
+djangorestframework==3.16.1
+
+# CORS Headers
+django-cors-headers==4.9.0
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# Database (PostgreSQL for production)
+psycopg2-binary==2.9.10
+
+# Production Server
+gunicorn==23.0.0
+
+# Security & Monitoring
+django-ratelimit==4.1.0
+
+# Testing
+pytest==8.3.5
+pytest-django==4.9.0
+
+# Code Quality
+flake8==7.1.1
+black==24.10.0
+
+# Development
+ipython==8.31.0

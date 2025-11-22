@@ -49,3 +49,79 @@ tmp/
 
 # Optional: ignore local preview data
 .vercel/
+
+# ============================================================================
+# Django Backend
+# ============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.pyc
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media
+/static
+/staticfiles
+
+# Django migrations (optional - comment out if you want to track migrations)
+# **/migrations/*.py
+# !**/migrations/__init__.py
+
+# Logs
+logs/
+*.log
+
+# Security - NEVER commit these
+.env
+.env.production
+.env.local
+*.pem
+*.key
+*.crt
+
+# Database backups
+*.sql
+*.dump
+*.backup
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Secrets
+secrets/
+credentials/

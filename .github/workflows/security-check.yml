@@ -1,0 +1,88 @@
+name: Security Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run security checks weekly
+    - cron: '0 0 * * 0'
+
+jobs:
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Python security checks
+      - name: Install Python dependencies
+        run: |
+          cd averon_backend
+          pip install -r requirements.txt
+          pip install bandit safety
+
+      - name: Run Bandit (Python security linter)
+        run: |
+          cd averon_backend
+          bandit -r . -f json -o bandit-report.json || true
+
+      - name: Check Python dependencies for vulnerabilities
+        run: |
+          cd averon_backend
+          safety check --json || true
+
+      # Node.js security checks
+      - name: Install Node.js dependencies
+        run: |
+          cd averon-nextjs
+          npm ci
+
+      - name: Run npm audit
+        run: |
+          cd averon-nextjs
+          npm audit --json || true
+
+      # Secret scanning
+      - name: TruffleHog Secret Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+
+      # Upload reports
+      - name: Upload security reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            averon_backend/bandit-report.json
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate

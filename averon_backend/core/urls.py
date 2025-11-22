@@ -14,10 +14,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
 from django.contrib import admin
 from django.urls import path, include
 
+# Customize admin site
+admin.site.site_header = "Averon Administration"
+admin.site.site_title = "Averon Admin Portal"
+admin.site.index_title = "Welcome to Averon Administration"
+
+# Use custom admin URL from environment (default: 'admin/')
+ADMIN_URL = os.environ.get('ADMIN_URL', 'admin/')
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(ADMIN_URL, admin.site.urls),
     path('api/', include('contact.urls')),
 ]

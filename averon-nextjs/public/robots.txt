@@ -4,9 +4,9 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private pages if any
-# Disallow: /admin
-# Disallow: /api
+# Disallow admin or private pages
+Disallow: /admin/
+Disallow: /api/
 
 # Sitemap location
 Sitemap: https://averon.al/sitemap.xml

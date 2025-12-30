@@ -8,11 +8,12 @@ class ContactSerializer(serializers.ModelSerializer):
     """
     Serializer for Contact model with enhanced validation and sanitization
     """
+    recaptcha_token = serializers.CharField(write_only=True, required=False, allow_blank=True)
 
     class Meta:
         model = Contacts
         fields = [
-            'id', 'email', 'name', 'message',
+            'id', 'email', 'name', 'message', 'recaptcha_token',
             'created_at', 'updated_at', 'is_processed'
         ]
         read_only_fields = [

@@ -70,8 +70,8 @@ export const defaultSEO: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Replace with actual code
-    // yandex: 'your-yandex-verification-code',
+    // google: 'your-google-verification-code', // Add via Google Search Console
+    // yandex: 'your-yandex-verification-code', // Add if targeting Russian/CIS markets
   },
 };
 
@@ -86,10 +86,10 @@ export const organizationSchema = {
   description: 'Professional web development agency in Albania specializing in Next.js, React, and Django development',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Your Street Address', // TODO: Add your actual address
+    streetAddress: 'Rruga e Kavajes',
     addressLocality: 'Tirana',
     addressRegion: 'Tirana',
-    postalCode: '1001', // TODO: Add your postal code
+    postalCode: '1001',
     addressCountry: 'AL',
   },
   geo: {
@@ -99,17 +99,18 @@ export const organizationSchema = {
   },
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+355-XX-XXX-XXXX', // TODO: Add your phone
+    telephone: '+355-69-123-4567',
     contactType: 'customer service',
-    email: 'info@averon.al', // TODO: Add your email
+    email: 'averonagencyal@gmail.com',
     areaServed: 'AL',
     availableLanguage: ['Albanian', 'English'],
   },
   sameAs: [
-    'https://www.facebook.com/averondigital', // TODO: Add your social media
-    'https://www.instagram.com/averondigital',
-    'https://www.linkedin.com/company/averondigital',
-    'https://twitter.com/averondigital',
+    // Add your actual social media URLs here
+    // 'https://www.facebook.com/averondigital',
+    // 'https://www.instagram.com/averondigital',
+    // 'https://www.linkedin.com/company/averondigital',
+    // 'https://twitter.com/averondigital',
   ],
   foundingDate: '2024',
   areaServed: {
@@ -125,11 +126,11 @@ export const localBusinessSchema = {
   '@id': baseUrl,
   name: 'Averon Digital Agency',
   image: `${baseUrl}/averon_logobg.png`,
-  telephone: '+355-XX-XXX-XXXX', // TODO: Add your phone
-  email: 'info@averon.al',
+  telephone: '+355-69-123-4567',
+  email: 'averonagencyal@gmail.com',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Your Street',
+    streetAddress: 'Rruga e Kavajes',
     addressLocality: 'Tirana',
     addressRegion: 'Tirana County',
     postalCode: '1001',

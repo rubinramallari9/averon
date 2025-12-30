@@ -9,6 +9,7 @@ from django.utils import timezone
 from .models import Contacts
 from .serializers import ContactSerializer, ContactAdminSerializer
 from .throttles import ContactSubmitThrottle
+from .recaptcha import verify_recaptcha, check_recaptcha_score
 
 # Configure logger
 logger = logging.getLogger('django')
@@ -78,6 +79,36 @@ class ContactViewSet(viewsets.ModelViewSet):
             security_logger.info(
                 f"Contact form submission attempt from IP: {ip_address}"
             )
+
+            # Verify reCAPTCHA if token is provided
+            recaptcha_token = request.data.get('recaptcha_token', '')
+            if recaptcha_token:
+                is_valid, score, errors = verify_recaptcha(recaptcha_token, ip_address)
+
+                if not is_valid:
+                    security_logger.warning(
+                        f"reCAPTCHA verification failed from IP {ip_address}: {errors}"
+                    )
+                    return Response(
+                        {
+                            'message': 'reCAPTCHA verification failed',
+                            'errors': {'recaptcha': ['Please complete the reCAPTCHA verification']}
+                        },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Check score threshold (0.5 = balanced, 0.7 = stricter)
+                if not check_recaptcha_score(score, threshold=0.5):
+                    security_logger.warning(
+                        f"reCAPTCHA score too low ({score:.2f}) from IP {ip_address}"
+                    )
+                    return Response(
+                        {
+                            'message': 'Suspicious activity detected',
+                            'errors': {'recaptcha': ['Your submission appears automated. Please try again.']}
+                        },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
 
             # Validate data
             serializer = self.get_serializer(data=request.data)

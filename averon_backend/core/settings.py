@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'corsheaders',
+    'drf_spectacular',
 
     # Added apps
     'contact'
@@ -239,6 +240,47 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    # API Documentation
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# ==============================================================================
+# API DOCUMENTATION (drf-spectacular)
+# ==============================================================================
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Averon Digital API',
+    'DESCRIPTION': 'RESTful API for Averon Digital web agency platform. Includes contact form management and business operations.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'CONTACT': {
+        'name': 'Averon Digital',
+        'email': 'averonagencyal@gmail.com',
+        'url': 'https://averon.al',
+    },
+    'LICENSE': {
+        'name': 'Proprietary',
+    },
+    'SERVERS': [
+        {
+            'url': 'https://averon.al',
+            'description': 'Production server',
+        },
+        {
+            'url': 'http://localhost:8000',
+            'description': 'Development server',
+        },
+    ],
+    'TAGS': [
+        {'name': 'Contacts', 'description': 'Contact form submission and management'},
+    ],
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/api',
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+    },
 }
 
 # ==============================================================================
@@ -270,6 +312,15 @@ if DEBUG:
 
 # Email recipient for contact form submissions
 CONTACT_EMAIL_RECIPIENT = os.environ.get('CONTACT_EMAIL_RECIPIENT', EMAIL_HOST_USER)
+
+# ==============================================================================
+# RECAPTCHA CONFIGURATION
+# ==============================================================================
+
+# Google reCAPTCHA v3 keys
+# Get your keys from: https://www.google.com/recaptcha/admin
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')
 
 # ==============================================================================
 # LOGGING CONFIGURATION
@@ -338,3 +389,43 @@ LOGGING = {
         },
     },
 }
+
+# ==============================================================================
+# SENTRY ERROR TRACKING
+# ==============================================================================
+
+# Initialize Sentry for error tracking and performance monitoring
+SENTRY_DSN = os.environ.get('SENTRY_DSN', '')
+SENTRY_ENVIRONMENT = os.environ.get('SENTRY_ENVIRONMENT', 'development')
+SENTRY_TRACES_SAMPLE_RATE = float(os.environ.get('SENTRY_TRACES_SAMPLE_RATE', '0.1'))
+
+if SENTRY_DSN:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.logging import LoggingIntegration
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[
+            DjangoIntegration(),
+            LoggingIntegration(
+                level=None,  # Capture all logs
+                event_level='WARNING'  # Only send warnings and errors as events
+            ),
+        ],
+        environment=SENTRY_ENVIRONMENT,
+
+        # Performance monitoring
+        traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
+
+        # Send default PII (personally identifiable information)
+        send_default_pii=False,  # Set to False for privacy
+
+        # Additional options
+        debug=DEBUG,
+        attach_stacktrace=True,
+        request_bodies='medium',  # Capture request bodies
+
+        # Release tracking (optional - uncomment and set in production)
+        # release="averon@1.0.0",
+    )

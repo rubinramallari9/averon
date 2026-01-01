@@ -219,10 +219,15 @@ const AveronWebsite = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#2d1b4e] via-[#1a0f2e] to-black text-white overflow-x-hidden relative w-full">
-      {/* Background fade effect */}
-      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent pointer-events-none"></div>
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-transparent pointer-events-none"></div>
+    <div className="min-h-screen text-white overflow-x-hidden relative w-full">
+      {/* Global Continuous Gradient Background */}
+      <div className="fixed inset-0 bg-gradient-to-b from-[#2d1b4e] via-[#1a0f2e] via-[#0f0f12] to-black pointer-events-none"></div>
+
+      {/* Radial Glow Behind Hero Headline */}
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center_top,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent pointer-events-none"></div>
+
+      {/* Subtle Ambient Overlay */}
+      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none"></div>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-4">
         <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
@@ -295,9 +300,6 @@ const AveronWebsite = () => {
 
       {/* Hero Section - Payking Style */}
       <section className="min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Deep Purple/Navy Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2d1b4e] via-[#3d2667] to-[#2d1b4e] z-0"></div>
-
         {/* Ambient Glow Orbs - Subtle */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
@@ -398,12 +400,12 @@ const AveronWebsite = () => {
             </div>
           </motion.div>
 
-          {/* Dashboard Preview - Glassmorphism */}
+          {/* Dashboard Preview - Glassmorphism with Floating Shadow */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="relative max-w-6xl mx-auto"
+            className="relative max-w-6xl mx-auto shadow-2xl shadow-purple-900/50"
           >
             {/* Browser Window Frame */}
             <div className="bg-gradient-to-b from-purple-400/30 to-purple-500/30 backdrop-blur-xl rounded-t-2xl border border-white/20 p-3">
@@ -471,7 +473,7 @@ const AveronWebsite = () => {
         <ScrollArrow />
       </section>
 
-      {/* Services Grid */}
+      {/* Services Grid - Transparent Background for Seamless Blend */}
       <section id="services" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Remove all default margins and padding */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 
 #__next-build-watcher,
 .__next-dev-overlay,
@@ -157,9 +165,11 @@ nextjs-portal {
 /* Section Container */
 .section-ios15 {
   background: transparent;
-  padding: 60px 20px;
+  padding: 60px 0;
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .padding-bottom-2 {
@@ -225,7 +235,7 @@ nextjs-portal {
 
 /* Grid Layout - Circular Pattern Around Logo */
 .section-ios15-grid {
-  max-width: 1800px;
+  width: 100%;
   margin: 0 auto;
   position: relative;
   height: 950px;

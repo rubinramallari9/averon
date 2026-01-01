@@ -219,12 +219,12 @@ const AveronWebsite = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-white overflow-x-hidden relative">
+    <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-white overflow-x-hidden relative w-full">
       {/* Background fade effect */}
       <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/20 to-transparent pointer-events-none"></div>
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent pointer-events-none"></div>
       {/* Navigation */}
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] sm:w-[95%] max-w-7xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-4">
         <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
           <div className="flex justify-between items-center h-14 sm:h-16">
             <AveronLogo className="w-28 sm:w-32 lg:w-40" />

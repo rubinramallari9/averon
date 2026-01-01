@@ -336,15 +336,59 @@ const AveronWebsite = () => {
           </div>
         </motion.div>
 
-        {/* Hand-drawn Arrow */}
+        {/* Hand-drawn Whimsical Arrow */}
         <motion.div
-          className="absolute top-64 left-[10%] hidden lg:block z-10"
-          animate={{ rotate: [0, 5, 0], x: [0, 10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[45%] left-[8%] hidden lg:block z-10"
+          animate={{
+            rotate: [0, 2, -1, 0],
+            x: [0, 5, -3, 0],
+            y: [0, -3, 2, 0]
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <path d="M10 30 Q 20 20, 35 25 T 60 35" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="4 4"/>
-            <path d="M55 30 L60 35 L55 40" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round"/>
+          <svg width="140" height="100" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Hand-drawn wobbly path - marker sketch style */}
+            <path
+              d="M 15 50
+                 Q 20 45, 28 48
+                 T 40 52
+                 Q 48 54, 55 51
+                 T 68 48
+                 Q 78 46, 88 49
+                 T 105 52
+                 Q 115 53, 122 50"
+              stroke="#c4b5fd"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="6 8"
+              opacity="0.45"
+              fill="none"
+            />
+
+            {/* Simple V-shaped arrowhead - hand-drawn style */}
+            <path
+              d="M 115 45 L 122 50 L 117 55"
+              stroke="#c4b5fd"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity="0.45"
+              fill="none"
+            />
+
+            {/* Optional subtle second wobble line for extra sketch effect */}
+            <path
+              d="M 15 51
+                 Q 21 46, 29 49
+                 T 41 53"
+              stroke="#c4b5fd"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeDasharray="3 6"
+              opacity="0.25"
+              fill="none"
+            />
           </svg>
         </motion.div>
 

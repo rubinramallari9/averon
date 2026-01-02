@@ -553,11 +553,11 @@ const AveronWebsite = () => {
           {/* Circular hover area */}
           <div className="logo-hover-area">
             {/* Logo with glow effect */}
-            <div className="logo-ios15-wrapper">
+            <div className="logo-ios15-wrapper flex flex-col items-center">
               <AveronLogo className="logo-glow w-96 sm:w-[480px] lg:w-[560px]" />
               <a
                 href="/work"
-                className="mt-6 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"
+                className="mt-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"
               >
                 <span>View Our Work</span>
                 <ArrowRight className="w-5 h-5" />

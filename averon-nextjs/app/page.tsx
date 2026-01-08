@@ -300,7 +300,7 @@ const AveronWebsite = () => {
       </nav>
 
       {/* Hero Section - Payking Style */}
-      <section className="min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="min-h-screen flex flex-col items-center justify-center pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Ambient Glow Orbs - Subtle */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
@@ -412,7 +412,7 @@ const AveronWebsite = () => {
             transition={{ duration: 0.8 }}
           >
             {/* Main Heading - Payking Style */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-8 leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-6 sm:mb-8 leading-tight tracking-tight">
               <span className="text-white">Control Your</span>
               <br />
               <span className="text-white">Development With </span>
@@ -420,13 +420,13 @@ const AveronWebsite = () => {
             </h1>
 
             {/* CTA Buttons - Payking Style */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 sm:mb-16 w-full sm:w-auto px-4 sm:px-0">
               <button
                 onClick={() => {
                   const contactSection = document.getElementById('contact');
                   contactSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group px-8 py-4 bg-emerald-400 hover:bg-emerald-500 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-emerald-500/50 text-lg"
+                className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-emerald-400 hover:bg-emerald-500 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/50 text-base sm:text-lg"
               >
                 <span>Contact</span>
               </button>
@@ -435,7 +435,7 @@ const AveronWebsite = () => {
                   const workSection = document.getElementById('work');
                   workSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center space-x-2 text-lg"
+                className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center justify-center space-x-2 text-base sm:text-lg"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
@@ -519,7 +519,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Services Grid - Transparent Background for Seamless Blend */}
-      <section id="services" className="min-h-screen flex items-center pt-20 pb-8 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="services" className="min-h-screen flex items-center pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Services</h2>

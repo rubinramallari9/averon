@@ -165,7 +165,7 @@ nextjs-portal {
 /* Section Container */
 .section-ios15 {
   background: transparent;
-  padding: 60px 0;
+  padding: 0;
   position: relative;
   overflow: hidden;
   overflow-x: hidden;
@@ -173,12 +173,12 @@ nextjs-portal {
 }
 
 .padding-bottom-2 {
-  padding-bottom: 1rem;
+  padding-bottom: 0.25rem;
 }
 
 .padding-xhuge {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 /* Full-width rectangular hover area around logo - Invisible activation zone */

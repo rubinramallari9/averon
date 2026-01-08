@@ -519,7 +519,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Services Grid - Transparent Background for Seamless Blend */}
-      <section id="services" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="services" className="min-h-screen flex items-center pt-20 pb-8 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Services</h2>

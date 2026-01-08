@@ -525,18 +525,22 @@ const AveronWebsite = () => {
           <div className="w-full h-24 sm:h-32 lg:h-40">
             <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-24 h-full">
               <div className="flex items-center justify-center h-full">
-                <img
-                  src="/trusted_logos/rasimramalogo.png"
-                  alt="Trusted Partner"
-                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-                />
+                <a href="https://rasimrama.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center">
+                  <img
+                    src="/trusted_logos/rasimramalogo.png"
+                    alt="Rasim Rama"
+                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  />
+                </a>
               </div>
               <div className="flex items-center justify-center h-full">
-                <img
-                  src="/trusted_logos/rubin-logo.svg"
-                  alt="Trusted Partner"
-                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-                />
+                <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center">
+                  <img
+                    src="/trusted_logos/rubin-logo.svg"
+                    alt="Rubin Ramallari"
+                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  />
+                </a>
               </div>
             </div>
           </div>

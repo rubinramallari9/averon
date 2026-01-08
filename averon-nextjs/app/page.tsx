@@ -518,6 +518,31 @@ const AveronWebsite = () => {
         <ScrollArrow />
       </section>
 
+      {/* Logo Section */}
+      <section className="relative z-10 py-16 w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          {/* Logo Container */}
+          <div className="w-full h-24 sm:h-32 lg:h-40">
+            <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-24 h-full">
+              <div className="flex items-center justify-center h-full">
+                <img
+                  src="/trusted_logos/rasimramalogo.png"
+                  alt="Trusted Partner"
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                />
+              </div>
+              <div className="flex items-center justify-center h-full">
+                <img
+                  src="/trusted_logos/rubin-logo.svg"
+                  alt="Trusted Partner"
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Grid - Transparent Background for Seamless Blend */}
       <section id="services" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">

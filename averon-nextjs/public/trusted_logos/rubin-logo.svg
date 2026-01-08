@@ -1,0 +1,25 @@
+<svg width="400" height="120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Glow filter for the brackets -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background (optional - transparent) -->
+  <rect width="400" height="120" fill="transparent"/>
+
+  <!-- Logo text -->
+  <text x="200" y="75" font-family="monospace" font-size="48" font-weight="bold" text-anchor="middle">
+    <!-- Opening bracket < with blue glow -->
+    <tspan fill="#60a5fa" filter="url(#glow)">&lt;</tspan>
+    <!-- "Rubin" text in slate gray -->
+    <tspan fill="#94a3b8">Rubin</tspan>
+    <!-- Closing bracket /> with blue glow -->
+    <tspan fill="#60a5fa" filter="url(#glow)"> /&gt;</tspan>
+  </text>
+</svg>

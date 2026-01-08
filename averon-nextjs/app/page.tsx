@@ -253,50 +253,64 @@ const AveronWebsite = () => {
           </div>
         </div>
 
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-black/95 backdrop-blur-lg rounded-b-2xl border border-purple-500/20 border-t-0 mt-[-8px] overflow-hidden shadow-2xl shadow-purple-500/10">
-            <div className="px-6 py-6 space-y-4">
-              <a
-                href="#services"
-                className="block text-lg hover:text-purple-300 transition py-2"
-                onClick={() => setMobileMenuOpen(false)}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="lg:hidden bg-black/95 backdrop-blur-xl rounded-b-2xl border border-purple-500/20 border-t-0 mt-[-8px] overflow-hidden shadow-2xl shadow-purple-500/10"
+            >
+              <motion.div
+                initial={{ y: -20 }}
+                animate={{ y: 0 }}
+                exit={{ y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="px-6 py-6 space-y-2"
               >
-                Services
-              </a>
-              <a
-                href="#work"
-                className="block text-lg hover:text-purple-300 transition py-2"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleWorkClick(e);
-                }}
-              >
-                Our Work
-              </a>
-              <a
-                href="#process"
-                className="block text-lg hover:text-purple-300 transition py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Process
-              </a>
-              <a
-                href="#features"
-                className="block text-lg hover:text-purple-300 transition py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Features
-              </a>
-              <a
-                href="#contact"
-                className="block text-lg hover:text-purple-300 transition py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact
-              </a>
-            </div>
-          </div>
-        )}
+                <a
+                  href="#services"
+                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Services
+                </a>
+                <a
+                  href="#work"
+                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    handleWorkClick(e);
+                  }}
+                >
+                  Our Work
+                </a>
+                <a
+                  href="#process"
+                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Process
+                </a>
+                <a
+                  href="#features"
+                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Features
+                </a>
+                <a
+                  href="#contact"
+                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Contact
+                </a>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section - Payking Style */}

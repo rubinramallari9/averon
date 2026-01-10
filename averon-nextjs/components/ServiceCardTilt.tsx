@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 interface ServiceCardTiltProps {
   children: React.ReactNode;
@@ -9,9 +9,22 @@ interface ServiceCardTiltProps {
 const ServiceCardTilt: React.FC<ServiceCardTiltProps> = ({ children }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tiltStyle, setTiltStyle] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 📱 Detect mobile to disable tilt
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    // 🚫 Disable on mobile/tablet
+    if (isMobile || !cardRef.current) return;
 
     const card = cardRef.current;
     const rect = card.getBoundingClientRect();
@@ -23,20 +36,23 @@ const ServiceCardTilt: React.FC<ServiceCardTiltProps> = ({ children }) => {
     const mouseX = e.clientX - cardCenterX;
     const mouseY = e.clientY - cardCenterY;
 
-    // Calculate tilt angles (max 6deg)
-    const rotateY = (mouseX / (rect.width / 2)) * 6;
-    const rotateX = -(mouseY / (rect.height / 2)) * 6;
+    // 🎯 REFINED: Reduced to 3deg (was 6deg) for subtle luxury feel
+    const maxTilt = 3;
+    const rotateY = (mouseX / (rect.width / 2)) * maxTilt;
+    const rotateX = -(mouseY / (rect.height / 2)) * maxTilt;
 
+    // ✨ PREMIUM: Add smooth easing + minimal scale
     setTiltStyle({
-      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
-      transition: 'transform 0.1s ease-out',
+      transform: `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`,
+      transition: 'transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)', // Apple easing
     });
   };
 
   const handleMouseLeave = () => {
+    // 🎯 Smooth return to original position
     setTiltStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
-      transition: 'transform 0.5s ease-out',
+      transform: 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+      transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)', // Slower return
     });
   };
 

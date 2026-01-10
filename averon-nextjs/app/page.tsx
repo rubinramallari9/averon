@@ -12,6 +12,8 @@ const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
+  const [activeSection, setActiveSection] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Contact form state
   const [contactForm, setContactForm] = useState({
@@ -36,6 +38,31 @@ const AveronWebsite = () => {
       document.body.style.overflow = 'unset';
     };
   }, [activeServiceCard]);
+
+  // 🎯 Track scroll position for navbar behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 50);
+
+      // Track active section
+      const sections = ['services', 'work', 'process', 'features', 'contact'];
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const path = document.getElementById('processPath') as unknown as SVGPathElement;
@@ -230,87 +257,88 @@ const AveronWebsite = () => {
       {/* Subtle Ambient Overlay */}
       <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none"></div>
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-4">
-        <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
-          <div className="flex justify-between items-center h-14 sm:h-16">
-            <AveronLogo className="w-28 sm:w-32 lg:w-40" />
-            
-            <div className="hidden lg:flex space-x-8">
-              <a href="#services" className="hover:text-purple-300 transition">Services</a>
-              <a href="#work" className="hover:text-purple-300 transition" onClick={handleWorkClick}>Our Work</a>
-              <a href="#process" className="hover:text-purple-300 transition">Process</a>
-              <a href="#features" className="hover:text-purple-300 transition">Features</a>
-              <a href="#contact" className="hover:text-purple-300 transition">Contact</a>
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-6">
+        <div className="max-w-7xl mx-auto backdrop-blur-xl bg-black/70 border border-purple-500/20 rounded-2xl px-4 sm:px-6 lg:px-8 shadow-xl">
+          <div className="flex justify-between items-center h-16">
+            <AveronLogo className="w-32 sm:w-36 lg:w-44" />
+
+            {/* Desktop Links */}
+            <div className="hidden lg:flex items-center gap-8">
+              <a href="#services" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Services
+              </a>
+              <a href="#work" onClick={handleWorkClick} className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Our Work
+              </a>
+              <a href="#process" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Process
+              </a>
+              <a href="#features" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Features
+              </a>
+              <a href="#contact" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Contact
+              </a>
             </div>
 
-            <button 
-              className="lg:hidden p-2"
+            {/* Mobile Menu Button */}
+            <button
+              className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" strokeWidth={2.5} style={{ strokeLinecap: 'round' }} />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6 text-white" />
+              ) : (
+                <Menu className="w-6 h-6 text-white" />
+              )}
             </button>
           </div>
-        </div>
 
-        <AnimatePresence>
+          {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="lg:hidden bg-black/95 backdrop-blur-xl rounded-b-2xl border border-purple-500/20 border-t-0 mt-[-8px] overflow-hidden shadow-2xl shadow-purple-500/10"
-            >
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                exit={{ y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="px-6 py-6 space-y-2"
+            <div className="lg:hidden py-4 space-y-2 border-t border-purple-500/20 mt-2">
+              <a
+                href="#services"
+                className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <a
-                  href="#services"
-                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Services
-                </a>
-                <a
-                  href="#work"
-                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
-                  onClick={(e) => {
-                    setMobileMenuOpen(false);
-                    handleWorkClick(e);
-                  }}
-                >
-                  Our Work
-                </a>
-                <a
-                  href="#process"
-                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Process
-                </a>
-                <a
-                  href="#features"
-                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Features
-                </a>
-                <a
-                  href="#contact"
-                  className="block text-lg hover:text-purple-300 hover:bg-purple-500/10 transition-all py-4 px-4 rounded-lg active:bg-purple-500/20"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Contact
-                </a>
-              </motion.div>
-            </motion.div>
+                Services
+              </a>
+              <a
+                href="#work"
+                className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleWorkClick(e);
+                }}
+              >
+                Our Work
+              </a>
+              <a
+                href="#process"
+                className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Process
+              </a>
+              <a
+                href="#features"
+                className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Features
+              </a>
+              <a
+                href="#contact"
+                className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </a>
+            </div>
           )}
-        </AnimatePresence>
+        </div>
       </nav>
 
       {/* Hero Section - Payking Style */}
@@ -533,28 +561,28 @@ const AveronWebsite = () => {
       </section>
 
       {/* Services Grid - Transparent Background for Seamless Blend */}
-      <section id="services" className="min-h-screen flex items-center pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="services" className="min-h-screen flex items-center pt-16 sm:pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Services</h2>
-            <p className="text-xl text-purple-200 max-w-2xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">Our Services</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto px-4">
               Comprehensive digital solutions tailored to accelerate your business growth
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-fr">
             {services.map((service, index) => (
               <ServiceCardTilt key={index}>
                 <motion.div
-                  className="group h-full p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer flex flex-col"
+                  className="group h-full p-6 sm:p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer flex flex-col active:scale-95"
                   onClick={() => setActiveServiceCard(index)}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                     {service.icon}
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 flex-shrink-0">{service.title}</h3>
-                  <p className="text-purple-200 leading-relaxed flex-grow">{service.description}</p>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 flex-shrink-0">{service.title}</h3>
+                  <p className="text-purple-200 leading-relaxed text-sm sm:text-base flex-grow">{service.description}</p>
                 </motion.div>
               </ServiceCardTilt>
             ))}

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Zap, Users, Target, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
+import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
 import ServiceCardTilt from '@/components/ServiceCardTilt';
@@ -389,62 +389,6 @@ const AveronWebsite = () => {
           </div>
         </motion.div>
 
-        {/* Hand-drawn Whimsical Arrow */}
-        <motion.div
-          className="absolute top-[45%] left-[8%] hidden lg:block z-10"
-          animate={{
-            rotate: [0, 2, -1, 0],
-            x: [0, 5, -3, 0],
-            y: [0, -3, 2, 0]
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <svg width="140" height="100" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Hand-drawn wobbly path - marker sketch style */}
-            <path
-              d="M 15 50
-                 Q 20 45, 28 48
-                 T 40 52
-                 Q 48 54, 55 51
-                 T 68 48
-                 Q 78 46, 88 49
-                 T 105 52
-                 Q 115 53, 122 50"
-              stroke="#c4b5fd"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="6 8"
-              opacity="0.45"
-              fill="none"
-            />
-
-            {/* Simple V-shaped arrowhead - hand-drawn style */}
-            <path
-              d="M 115 45 L 122 50 L 117 55"
-              stroke="#c4b5fd"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.45"
-              fill="none"
-            />
-
-            {/* Optional subtle second wobble line for extra sketch effect */}
-            <path
-              d="M 15 51
-                 Q 21 46, 29 49
-                 T 41 53"
-              stroke="#c4b5fd"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeDasharray="3 6"
-              opacity="0.25"
-              fill="none"
-            />
-          </svg>
-        </motion.div>
-
         {/* Floating Code Icon */}
         <motion.div
           className="absolute top-40 right-[12%] hidden lg:block z-10"
@@ -453,27 +397,6 @@ const AveronWebsite = () => {
         >
           <div className="bg-purple-500/20 backdrop-blur-md rounded-xl p-3 border border-purple-400/30">
             <div className="text-emerald-400 font-mono text-xs">{"</>"}</div>
-          </div>
-        </motion.div>
-
-        {/* Additional Floating Elements */}
-        <motion.div
-          className="absolute bottom-40 left-[8%] hidden lg:block z-10"
-          animate={{ y: [0, -12, 0], x: [0, 8, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="bg-emerald-500/20 backdrop-blur-md rounded-lg p-2.5 border border-emerald-400/30">
-            <Zap className="w-5 h-5 text-emerald-400" />
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="absolute top-[60%] right-[15%] hidden lg:block z-10"
-          animate={{ y: [0, 18, 0], rotate: [0, 8, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="bg-purple-500/20 backdrop-blur-md rounded-full p-2.5 border border-purple-400/30">
-            <Target className="w-5 h-5 text-purple-400" />
           </div>
         </motion.div>
 

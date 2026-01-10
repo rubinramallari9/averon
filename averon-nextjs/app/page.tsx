@@ -214,12 +214,12 @@ const AveronWebsite = () => {
     {
       icon: <ChartNoAxesCombined className="w-8 h-8" />,
       title: "SEO",
-      description: "We offer a comprehensive range of services designed to boost your website’s ranking and attract organic, non-paid Google search traffic."
+      description: "We offer a comprehensive range of services designed to boost your website's ranking and attract organic, non-paid Google search traffic."
     },
     {
       icon: <Terminal className="w-8 h-8" />,
       title: "Website Redesign",
-      description: "Whether you need a design refresh or a complete website overhaul, we analyze your site’s pain points and opportunities to revitalize your digital presence. "
+      description: "Whether you need a design refresh or a complete website overhaul, we analyze your site's pain points and opportunities to revitalize your digital presence. "
     },
     {
       icon: <Users className="w-8 h-8" />,
@@ -342,7 +342,7 @@ const AveronWebsite = () => {
       </nav>
 
       {/* Hero Section - Payking Style */}
-      <section className="min-h-screen flex flex-col items-center justify-center pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Ambient Glow Orbs - Subtle */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
@@ -357,6 +357,16 @@ const AveronWebsite = () => {
             animate={{ scale: [1, 1.3, 1], opacity: [0.25, 0.35, 0.25] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
+
+          {/* Abstract Tech Mesh Background */}
+          <motion.div
+            className="absolute inset-0 opacity-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            transition={{ duration: 2 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-transparent to-emerald-600/20" />
+          </motion.div>
         </div>
 
         {/* Floating Decorative Elements */}
@@ -446,6 +456,27 @@ const AveronWebsite = () => {
           </div>
         </motion.div>
 
+        {/* Additional Floating Elements */}
+        <motion.div
+          className="absolute bottom-40 left-[8%] hidden lg:block z-10"
+          animate={{ y: [0, -12, 0], x: [0, 8, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="bg-emerald-500/20 backdrop-blur-md rounded-lg p-2.5 border border-emerald-400/30">
+            <Zap className="w-5 h-5 text-emerald-400" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="absolute top-[60%] right-[15%] hidden lg:block z-10"
+          animate={{ y: [0, 18, 0], rotate: [0, 8, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="bg-purple-500/20 backdrop-blur-md rounded-full p-2.5 border border-purple-400/30">
+            <Target className="w-5 h-5 text-purple-400" />
+          </div>
+        </motion.div>
+
         {/* Main Content */}
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div
@@ -454,21 +485,21 @@ const AveronWebsite = () => {
             transition={{ duration: 0.8 }}
           >
             {/* Main Heading - Payking Style */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-6 sm:mb-8 leading-tight tracking-tight">
-              <span className="text-white">Control Your</span>
-              <br />
-              <span className="text-white">Development With </span>
-              <span className="text-emerald-400">Averon</span>
+            <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 sm:mb-8 leading-[1.1] sm:leading-tight tracking-tight px-2 sm:px-0">
+              <span className="text-white block sm:inline">Control Your</span>
+              <br className="hidden sm:block" />
+              <span className="text-white block sm:inline">Development With </span>
+              <span className="text-emerald-400 block sm:inline">Averon</span>
             </h1>
 
             {/* CTA Buttons - Payking Style */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 sm:mb-16 w-full sm:w-auto px-4 sm:px-0">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-16 w-full max-w-sm sm:max-w-none sm:w-auto px-2 sm:px-0">
               <button
                 onClick={() => {
                   const contactSection = document.getElementById('contact');
                   contactSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-emerald-400 hover:bg-emerald-500 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/50 text-base sm:text-lg"
+                className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-emerald-400 hover:bg-emerald-500 active:bg-emerald-600 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/50 text-base sm:text-lg"
               >
                 <span>Contact</span>
               </button>
@@ -477,7 +508,7 @@ const AveronWebsite = () => {
                   const workSection = document.getElementById('work');
                   workSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center justify-center space-x-2 text-base sm:text-lg"
+                className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center justify-center space-x-2 text-base sm:text-lg"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
@@ -492,24 +523,24 @@ const AveronWebsite = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="relative max-w-6xl mx-auto shadow-2xl shadow-purple-900/50"
+            className="relative max-w-6xl mx-auto shadow-2xl shadow-purple-900/50 px-2 sm:px-0"
           >
             {/* Browser Window Frame */}
-            <div className="bg-gradient-to-b from-purple-400/30 to-purple-500/30 backdrop-blur-xl rounded-t-2xl border border-white/20 p-3">
+            <div className="bg-gradient-to-b from-purple-400/30 to-purple-500/30 backdrop-blur-xl rounded-t-xl sm:rounded-t-2xl border border-white/20 p-2 sm:p-3">
               <div className="flex items-center gap-2">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <div className="flex gap-1.5 sm:gap-2">
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500"></div>
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <div className="bg-white/10 px-4 py-1 rounded-md text-white/60 text-sm font-mono">www</div>
+                  <div className="bg-white/10 px-3 sm:px-4 py-0.5 sm:py-1 rounded-md text-white/60 text-xs sm:text-sm font-mono">www</div>
                 </div>
               </div>
             </div>
 
             {/* Dashboard Content */}
-            <div className="bg-[#2d1b4e]/50 backdrop-blur-xl border-x border-b border-white/20 rounded-b-2xl overflow-hidden shadow-2xl">
+            <div className="bg-[#2d1b4e]/50 backdrop-blur-xl border-x border-b border-white/20 rounded-b-xl sm:rounded-b-2xl overflow-hidden shadow-2xl">
               <div className="flex">
                 {/* Sidebar */}
                 <div className="w-48 bg-[#1e1433]/80 p-4 border-r border-white/10 hidden md:block">
@@ -530,25 +561,25 @@ const AveronWebsite = () => {
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 p-6 bg-gradient-to-br from-white/5 to-white/10">
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-white text-xl font-bold">Welcome Dashboard</h2>
-                    <div className="flex gap-2">
-                      <div className="w-8 h-8 bg-white/10 rounded-lg"></div>
-                      <div className="w-8 h-8 bg-white/10 rounded-lg"></div>
+                <div className="flex-1 p-4 sm:p-6 bg-gradient-to-br from-white/5 to-white/10">
+                  <div className="flex justify-between items-center mb-4 sm:mb-6">
+                    <h2 className="text-white text-base sm:text-xl font-bold">Welcome Dashboard</h2>
+                    <div className="flex gap-1.5 sm:gap-2">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-lg"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-lg"></div>
                     </div>
                   </div>
 
-                  <div className="mb-4">
-                    <div className="text-white/60 text-sm mb-1">Active Projects:</div>
-                    <div className="text-white text-3xl font-bold">24</div>
+                  <div className="mb-3 sm:mb-4">
+                    <div className="text-white/60 text-xs sm:text-sm mb-1">Active Projects:</div>
+                    <div className="text-white text-2xl sm:text-3xl font-bold">24</div>
                   </div>
 
-                  <div className="text-white/40 text-xs mb-4">Recent Activity</div>
+                  <div className="text-white/40 text-xs mb-3 sm:mb-4">Recent Activity</div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-emerald-400/90 rounded-2xl p-4 h-24"></div>
-                    <div className="bg-purple-400/90 rounded-2xl p-4 h-24"></div>
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    <div className="bg-emerald-400/90 rounded-xl sm:rounded-2xl p-3 sm:p-4 h-20 sm:h-24"></div>
+                    <div className="bg-purple-400/90 rounded-xl sm:rounded-2xl p-3 sm:p-4 h-20 sm:h-24"></div>
                   </div>
                 </div>
               </div>
@@ -561,28 +592,38 @@ const AveronWebsite = () => {
       </section>
 
       {/* Services Grid - Transparent Background for Seamless Blend */}
-      <section id="services" className="min-h-screen flex items-center pt-16 sm:pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">Our Services</h2>
-            <p className="text-base sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto px-4">
+      <section id="services" className="min-h-screen flex items-center pt-12 sm:pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 px-2">Our Services</h2>
+            <p className="text-sm sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto px-4 sm:px-6 leading-relaxed">
               Comprehensive digital solutions tailored to accelerate your business growth
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-fr">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-fr px-2 sm:px-0">
             {services.map((service, index) => (
               <ServiceCardTilt key={index}>
                 <motion.div
-                  className="group h-full p-6 sm:p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer flex flex-col active:scale-95"
+                  className="group h-full p-5 sm:p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer flex flex-col active:scale-95 relative overflow-hidden"
                   onClick={() => setActiveServiceCard(index)}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
-                    {service.icon}
+                  {/* Background Pattern Overlay */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/30 via-purple-500/20 to-transparent" />
+                    <div className="absolute inset-0" style={{
+                      backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)',
+                    }} />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 flex-shrink-0">{service.title}</h3>
-                  <p className="text-purple-200 leading-relaxed text-sm sm:text-base flex-grow">{service.description}</p>
+
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg sm:rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4 flex-shrink-0">{service.title}</h3>
+                    <p className="text-purple-200 leading-relaxed text-sm sm:text-base flex-grow">{service.description}</p>
+                  </div>
                 </motion.div>
               </ServiceCardTilt>
             ))}
@@ -594,10 +635,10 @@ const AveronWebsite = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mt-16"
+            className="mt-12 sm:mt-16"
           >
-            <div className="w-full h-16 sm:h-20 lg:h-24">
-              <div className="flex items-center justify-center gap-8 sm:gap-12 lg:gap-16 h-full">
+            <div className="w-full h-12 sm:h-20 lg:h-24">
+              <div className="flex items-center justify-center gap-6 sm:gap-12 lg:gap-16 h-full px-4">
                 <a href="https://rasimrama.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center">
                   <img
                     src="/trusted_logos/rasimramalogo.png"
@@ -705,11 +746,11 @@ const AveronWebsite = () => {
       </section>
 
       {/* Process Section - Snake Path */}
-      <section id="process-section" className="flex items-center py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="process-section" className="flex items-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto w-full">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Our Process</h2>
-            <p className="text-xl text-purple-200 max-w-2xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4 px-2">Our Process</h2>
+            <p className="text-sm sm:text-xl text-purple-200 max-w-2xl mx-auto px-4 leading-relaxed">
               A proven methodology that delivers exceptional results every time
             </p>
           </div>
@@ -849,16 +890,29 @@ const AveronWebsite = () => {
               ✕
             </div>
 
-            <div className="relative space-y-12 md:pl-0 pl-16" style={{zIndex: 5}}>
+            <div className="relative space-y-8 sm:space-y-12 md:pl-0 pl-12 sm:pl-16" style={{zIndex: 5}}>
               {/* Step 1 - Top Left */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
-                  <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -left-4 group-hover:text-purple-500/20 transition-colors">
+                  <div className="text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
                     01
                   </div>
-                  <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                    <h3 className="text-3xl font-bold mb-4">Discovery</h3>
-                    <p className="text-purple-200 text-lg leading-relaxed">We dive deep into your business, goals, and target audience to craft the perfect strategy.</p>
+                  <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
+                    {/* Discovery Illustration */}
+                    <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="2" className="text-emerald-400"/>
+                        <path d="M50 25 L50 50 L65 65" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-purple-400"/>
+                        <circle cx="50" cy="50" r="4" fill="currentColor" className="text-emerald-400"/>
+                        <circle cx="30" cy="30" r="3" fill="currentColor" className="text-purple-400" opacity="0.6"/>
+                        <circle cx="70" cy="35" r="2" fill="currentColor" className="text-emerald-400" opacity="0.4"/>
+                        <circle cx="65" cy="70" r="2.5" fill="currentColor" className="text-purple-400" opacity="0.5"/>
+                      </svg>
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-4">Discovery</h3>
+                      <p className="text-purple-200 text-sm sm:text-lg leading-relaxed">We dive deep into your business, goals, and target audience to craft the perfect strategy.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -866,12 +920,25 @@ const AveronWebsite = () => {
               {/* Step 2 - Middle Right */}
               <div className="flex justify-end">
                 <div className="relative group w-full max-w-md">
-                  <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -right-4 group-hover:text-purple-500/20 transition-colors">
+                  <div className="text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -right-2 sm:-right-4 group-hover:text-purple-500/20 transition-colors">
                     02
                   </div>
-                  <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                    <h3 className="text-3xl font-bold mb-4">Design & Build</h3>
-                    <p className="text-purple-200 text-lg leading-relaxed">Our team creates stunning designs and develops robust solutions using the latest technologies.</p>
+                  <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
+                    {/* Design & Build Illustration */}
+                    <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="25" width="60" height="50" rx="4" stroke="currentColor" strokeWidth="2" className="text-purple-400"/>
+                        <rect x="25" y="30" width="20" height="15" rx="2" fill="currentColor" className="text-emerald-400" opacity="0.6"/>
+                        <rect x="48" y="30" width="27" height="15" rx="2" fill="currentColor" className="text-purple-400" opacity="0.5"/>
+                        <rect x="25" y="48" width="50" height="8" rx="1" fill="currentColor" className="text-emerald-400" opacity="0.4"/>
+                        <rect x="25" y="59" width="35" height="8" rx="1" fill="currentColor" className="text-purple-400" opacity="0.3"/>
+                        <path d="M35 85 L50 70 L65 85" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"/>
+                      </svg>
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-4">Design & Build</h3>
+                      <p className="text-purple-200 text-sm sm:text-lg leading-relaxed">Our team creates stunning designs and develops robust solutions using the latest technologies.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -879,12 +946,27 @@ const AveronWebsite = () => {
               {/* Step 3 - Bottom Left */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
-                  <div className="text-8xl font-bold text-purple-500/10 absolute -top-8 -left-4 group-hover:text-purple-500/20 transition-colors">
+                  <div className="text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
                     03
                   </div>
-                  <div className="relative z-10 p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                    <h3 className="text-3xl font-bold mb-4">Launch & Grow</h3>
-                    <p className="text-purple-200 text-lg leading-relaxed">We launch your project and continue optimizing for maximum performance and growth.</p>
+                  <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
+                    {/* Launch & Grow Illustration */}
+                    <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 20 L55 40 L50 45 L45 40 Z" fill="currentColor" className="text-emerald-400" opacity="0.7"/>
+                        <path d="M45 45 L30 75 L35 75 L50 50 L65 75 L70 75 L55 45 Z" fill="currentColor" className="text-purple-400" opacity="0.6"/>
+                        <circle cx="50" cy="45" r="6" fill="currentColor" className="text-emerald-400"/>
+                        <path d="M42 55 Q35 50 30 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-emerald-400" opacity="0.5"/>
+                        <path d="M58 55 Q65 50 70 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-emerald-400" opacity="0.5"/>
+                        <path d="M20 80 L80 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-purple-400"/>
+                        <circle cx="25" cy="75" r="2" fill="currentColor" className="text-emerald-400" opacity="0.6"/>
+                        <circle cx="75" cy="75" r="2" fill="currentColor" className="text-emerald-400" opacity="0.6"/>
+                      </svg>
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-4">Launch & Grow</h3>
+                      <p className="text-purple-200 text-sm sm:text-lg leading-relaxed">We launch your project and continue optimizing for maximum performance and growth.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -894,28 +976,44 @@ const AveronWebsite = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+      <section id="features" className="min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="px-2 sm:px-0">
+              <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6">
                 Everything You Need to Succeed Online
               </h2>
-              <p className="text-xl text-purple-200 mb-8 leading-relaxed">
+              <p className="text-sm sm:text-xl text-purple-200 mb-6 sm:mb-8 leading-relaxed">
                 We provide comprehensive digital solutions with ongoing support to ensure your long-term success in the digital landscape.
               </p>
-              
-              <div className="space-y-4">
+
+              <div className="space-y-3 sm:space-y-4">
                 {features.map((feature, index) => (
                   <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="w-6 h-6 text-purple-400 flex-shrink-0" />
-                    <span className="text-lg">{feature}</span>
+                    <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 flex-shrink-0" />
+                    <span className="text-sm sm:text-lg">{feature}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="relative">
+              {/* Decorative Background Pattern */}
+              <div className="absolute inset-0 overflow-hidden rounded-3xl opacity-10">
+                <div className="absolute top-0 left-0 w-full h-full">
+                  <svg className="w-full h-full" viewBox="0 0 400 400">
+                    <defs>
+                      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-purple-400"/>
+                      </pattern>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#grid)" />
+                    <circle cx="100" cy="100" r="50" fill="currentColor" className="text-emerald-400" opacity="0.1"/>
+                    <circle cx="300" cy="300" r="70" fill="currentColor" className="text-purple-400" opacity="0.1"/>
+                  </svg>
+                </div>
+              </div>
+
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
 
               {/* React Atomic Orbital Animation */}
@@ -1002,69 +1100,69 @@ const AveronWebsite = () => {
                 </svg>
               </div>
 
-              <div className="relative bg-gradient-to-br from-purple-900/40 to-black/60 backdrop-blur-sm rounded-3xl border border-purple-500/30 p-8 sm:p-12" style={{ zIndex: 5 }}>
-                <h3 className="text-2xl font-bold mb-8 text-center">Technologies We Master</h3>
-                
+              <div className="relative bg-gradient-to-br from-purple-900/40 to-black/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-purple-500/30 p-6 sm:p-12 mx-2 sm:mx-0" style={{ zIndex: 5 }}>
+                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center">Technologies We Master</h3>
+
                 {/* Tech Stack Grid */}
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid grid-cols-3 gap-3 sm:gap-6">
                   {/* Python */}
-                  <div className="group flex flex-col items-center justify-center p-6 bg-black/40 rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105">
-                    <img 
-                      src="https://code.visualstudio.com/assets/home/language-python.png" 
-                      alt="Python" 
-                      className="w-16 h-16 mb-3 object-contain"
+                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <img
+                      src="https://code.visualstudio.com/assets/home/language-python.png"
+                      alt="Python"
+                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
                     />
-                    <span className="text-sm font-semibold text-purple-200">Python</span>
+                    <span className="text-xs sm:text-sm font-semibold text-purple-200">Python</span>
                   </div>
 
                   {/* TypeScript */}
-                  <div className="group flex flex-col items-center justify-center p-6 bg-black/40 rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105">
-                    <img 
-                      src="https://code.visualstudio.com/assets/home/language-ts.png" 
-                      alt="TypeScript" 
-                      className="w-16 h-16 mb-3 object-contain"
+                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <img
+                      src="https://code.visualstudio.com/assets/home/language-ts.png"
+                      alt="TypeScript"
+                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
                     />
-                    <span className="text-sm font-semibold text-purple-200">TypeScript</span>
+                    <span className="text-xs sm:text-sm font-semibold text-purple-200">TypeScript</span>
                   </div>
 
                   {/* JavaScript */}
-                  <div className="group flex flex-col items-center justify-center p-6 bg-black/40 rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105">
-                    <img 
-                      src="https://code.visualstudio.com/assets/home/language-js.png" 
-                      alt="JavaScript" 
-                      className="w-16 h-16 mb-3 object-contain"
+                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <img
+                      src="https://code.visualstudio.com/assets/home/language-js.png"
+                      alt="JavaScript"
+                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
                     />
-                    <span className="text-sm font-semibold text-purple-200">JavaScript</span>
+                    <span className="text-xs sm:text-sm font-semibold text-purple-200">JavaScript</span>
                   </div>
 
                   {/* C++ */}
-                  <div className="group flex flex-col items-center justify-center p-6 bg-black/40 rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105">
-                    <img 
-                      src="https://code.visualstudio.com/assets/home/language-cpp.png" 
-                      alt="C++" 
-                      className="w-16 h-16 mb-3 object-contain"
+                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <img
+                      src="https://code.visualstudio.com/assets/home/language-cpp.png"
+                      alt="C++"
+                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
                     />
-                    <span className="text-sm font-semibold text-purple-200">C++</span>
+                    <span className="text-xs sm:text-sm font-semibold text-purple-200">C++</span>
                   </div>
 
                   {/* C# */}
-                  <div className="group flex flex-col items-center justify-center p-6 bg-black/40 rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105">
-                    <img 
-                      src="https://code.visualstudio.com/assets/home/language-cs.png" 
-                      alt="C#" 
-                      className="w-16 h-16 mb-3 object-contain"
+                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <img
+                      src="https://code.visualstudio.com/assets/home/language-cs.png"
+                      alt="C#"
+                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
                     />
-                    <span className="text-sm font-semibold text-purple-200">C#</span>
+                    <span className="text-xs sm:text-sm font-semibold text-purple-200">C#</span>
                   </div>
 
                   {/* Java */}
-                  <div className="group flex flex-col items-center justify-center p-6 bg-black/40 rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105">
-                    <img 
-                      src="https://code.visualstudio.com/assets/home/language-java.png" 
-                      alt="Java" 
-                      className="w-16 h-16 mb-3 object-contain"
+                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <img
+                      src="https://code.visualstudio.com/assets/home/language-java.png"
+                      alt="Java"
+                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
                     />
-                    <span className="text-sm font-semibold text-purple-200">Java</span>
+                    <span className="text-xs sm:text-sm font-semibold text-purple-200">Java</span>
                   </div>
                 </div>
               </div>
@@ -1074,16 +1172,44 @@ const AveronWebsite = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+      <section id="contact" className="min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative z-10 overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/4 -left-20 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-emerald-600/20 rounded-full blur-3xl" />
+
+          {/* Decorative Shapes */}
+          <motion.div
+            className="absolute top-20 right-[15%] hidden lg:block"
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+              <rect x="10" y="10" width="40" height="40" rx="8" stroke="currentColor" strokeWidth="2" className="text-purple-400" opacity="0.4"/>
+              <circle cx="30" cy="30" r="8" fill="currentColor" className="text-emerald-400" opacity="0.3"/>
+            </svg>
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-32 left-[10%] hidden lg:block"
+            animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+              <polygon points="25,5 45,40 5,40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" opacity="0.4" fill="none"/>
+            </svg>
+          </motion.div>
+        </div>
+
+        <div className="max-w-4xl mx-auto text-center w-full relative z-10">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 px-2">
             Ready to Elevate Your Digital Presence?
           </h2>
-          <p className="text-xl text-purple-200 mb-12 leading-relaxed">
+          <p className="text-sm sm:text-xl text-purple-200 mb-8 sm:mb-12 leading-relaxed px-2">
             Schedule a free discovery call with our team. We'll discuss your goals and create a tailored strategy to help you succeed online.
           </p>
-          
-          <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 max-w-2xl mx-auto">
+
+          <form onSubmit={handleContactSubmit} className="flex flex-col gap-3 sm:gap-4 max-w-2xl mx-auto px-2">
             <input
               type="email"
               placeholder="Enter your email"
@@ -1091,7 +1217,7 @@ const AveronWebsite = () => {
               onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
               required
               disabled={isSubmitting}
-              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 disabled:opacity-50"
+              className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300 text-sm sm:text-base disabled:opacity-50"
             />
             <input
               type="text"
@@ -1100,21 +1226,21 @@ const AveronWebsite = () => {
               onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
               required
               disabled={isSubmitting}
-              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 disabled:opacity-50"
+              className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300 text-sm sm:text-base disabled:opacity-50"
             />
             <textarea
               placeholder="Tell us about your project and preferences..."
-              rows={8}
+              rows={6}
               value={contactForm.message}
               onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
               required
               disabled={isSubmitting}
-              className="w-full px-6 py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-400 resize-none disabled:opacity-50"
+              className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300 text-sm sm:text-base resize-none disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
             >
               <span>{isSubmitting ? 'Sending...' : 'Get Started'}</span>
               {!isSubmitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
@@ -1125,7 +1251,7 @@ const AveronWebsite = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`p-4 rounded-lg text-center font-semibold ${
+                className={`p-3 sm:p-4 rounded-lg text-center font-semibold text-sm sm:text-base ${
                   submitStatus.type === 'success'
                     ? 'bg-green-500/20 border border-green-500/50 text-green-300'
                     : 'bg-red-500/20 border border-red-500/50 text-red-300'
@@ -1136,53 +1262,53 @@ const AveronWebsite = () => {
             )}
           </form>
 
-          <p className="mt-6 text-sm text-purple-300">
+          <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-purple-300 px-4">
             Join the list of businesses that trust Averon Digital with their online presence
           </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="pt-12 px-4 sm:px-6 lg:px-8 relative z-10">
+      <footer className="pt-8 sm:pt-12 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-3xl border-t border-x border-purple-500/20 pt-8 pb-6 overflow-hidden">
+          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-2xl sm:rounded-t-3xl border-t border-x border-purple-500/20 pt-6 sm:pt-8 pb-5 sm:pb-6 overflow-hidden">
             {/* Fade effect background */}
             <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-purple-900/5 to-transparent pointer-events-none"></div>
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
 
-            <div className="relative z-10 text-center px-4">
-              <div className="flex items-center justify-center mb-6">
-                <AveronLogo className="w-40" />
+            <div className="relative z-10 text-center px-3 sm:px-4">
+              <div className="flex items-center justify-center mb-4 sm:mb-6">
+                <AveronLogo className="w-32 sm:w-40" />
               </div>
-              <p className="text-purple-200 text-base mb-6 max-w-2xl mx-auto">
+              <p className="text-purple-200 text-xs sm:text-base mb-5 sm:mb-6 max-w-2xl mx-auto">
                 Transforming businesses through innovative digital solutions
               </p>
 
               {/* Navigation Links */}
-              <div className="flex justify-center gap-8 mb-6 text-sm">
-                <a href="#services" className="text-purple-300 hover:text-white transition">Services</a>
-                <a href="#work" className="text-purple-300 hover:text-white transition">Our Work</a>
-                <a href="#process" className="text-purple-300 hover:text-white transition">Process</a>
-                <a href="#contact" className="text-purple-300 hover:text-white transition">Contact</a>
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-5 sm:mb-6 text-xs sm:text-sm">
+                <a href="#services" className="text-purple-300 hover:text-white active:text-white transition">Services</a>
+                <a href="#work" className="text-purple-300 hover:text-white active:text-white transition">Our Work</a>
+                <a href="#process" className="text-purple-300 hover:text-white active:text-white transition">Process</a>
+                <a href="#contact" className="text-purple-300 hover:text-white active:text-white transition">Contact</a>
               </div>
 
               {/* Social Media Buttons */}
-              <div className="flex justify-center gap-4 mb-6">
+              <div className="flex justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 active:from-purple-700 active:to-pink-700 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
                 >
-                  <Instagram className="w-6 h-6" />
+                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 <a
                   href="https://tiktok.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 active:from-purple-700 active:to-pink-700 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
                 >
-                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
                   </svg>
                 </a>
@@ -1190,22 +1316,22 @@ const AveronWebsite = () => {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-blue-600/80 rounded-full hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-blue-600/80 rounded-full hover:from-purple-600 hover:to-blue-600 active:from-purple-700 active:to-blue-700 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
                 >
-                  <Linkedin className="w-6 h-6" />
+                  <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 <a
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600/80 to-blue-700/80 rounded-full hover:from-purple-600 hover:to-blue-700 transition-all transform hover:scale-110 shadow-lg shadow-purple-500/30"
+                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-blue-700/80 rounded-full hover:from-purple-600 hover:to-blue-700 active:from-purple-700 active:to-blue-800 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
                 >
-                  <Facebook className="w-6 h-6" />
+                  <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
               </div>
 
-              <div className="pt-6 border-t border-purple-500/20">
-                <p className="text-sm text-purple-400/80">
+              <div className="pt-5 sm:pt-6 border-t border-purple-500/20">
+                <p className="text-xs sm:text-sm text-purple-400/80">
                   © 2024 Averon Digital. All rights reserved.
                 </p>
               </div>
@@ -1229,7 +1355,7 @@ const AveronWebsite = () => {
             />
 
             {/* Modal Card with Atomic Animation */}
-            <div className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none">
+            <div className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none px-4">
               <motion.div
                 initial={{ scale: 0.8, opacity: 0, y: 50 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -1240,7 +1366,7 @@ const AveronWebsite = () => {
                   stiffness: 300,
                   duration: 0.5
                 }}
-                className="relative w-[70%] max-w-lg pointer-events-auto"
+                className="relative w-full sm:w-[80%] md:w-[70%] max-w-lg pointer-events-auto"
               >
                 {/* Atomic Orbital Animation - Behind Card */}
                 <div
@@ -1331,22 +1457,22 @@ const AveronWebsite = () => {
                 </div>
 
                 {/* Card Content */}
-                <div className="relative bg-gradient-to-br from-purple-900/95 to-black/95 backdrop-blur-xl rounded-3xl border-2 border-purple-500/50 p-8 shadow-2xl shadow-purple-500/50" style={{ zIndex: 10 }}>
+                <div className="relative bg-gradient-to-br from-purple-900/95 to-black/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl border-2 border-purple-500/50 p-6 sm:p-8 shadow-2xl shadow-purple-500/50" style={{ zIndex: 10 }}>
                   {/* Close Button */}
                   <button
                     onClick={() => setActiveServiceCard(null)}
-                    className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center rounded-full bg-purple-500/20 hover:bg-purple-500/40 border border-purple-500/30 hover:border-purple-500/60 transition-all group"
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-purple-500/20 hover:bg-purple-500/40 active:bg-purple-500/50 border border-purple-500/30 hover:border-purple-500/60 transition-all group"
                   >
-                    <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                    <X className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
                   </button>
 
                   {/* Service Content */}
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-purple-500/50">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-purple-500/50">
                       {services[activeServiceCard].icon}
                     </div>
-                    <h3 className="text-3xl font-bold mb-4">{services[activeServiceCard].title}</h3>
-                    <p className="text-lg text-purple-200 leading-relaxed">
+                    <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">{services[activeServiceCard].title}</h3>
+                    <p className="text-base sm:text-lg text-purple-200 leading-relaxed">
                       {services[activeServiceCard].description}
                     </p>
                   </div>

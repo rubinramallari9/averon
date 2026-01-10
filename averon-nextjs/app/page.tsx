@@ -867,17 +867,6 @@ const AveronWebsite = () => {
                     02
                   </div>
                   <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
-                    {/* Design & Build Illustration */}
-                    <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
-                      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="20" y="25" width="60" height="50" rx="4" stroke="currentColor" strokeWidth="2" className="text-purple-400"/>
-                        <rect x="25" y="30" width="20" height="15" rx="2" fill="currentColor" className="text-emerald-400" opacity="0.6"/>
-                        <rect x="48" y="30" width="27" height="15" rx="2" fill="currentColor" className="text-purple-400" opacity="0.5"/>
-                        <rect x="25" y="48" width="50" height="8" rx="1" fill="currentColor" className="text-emerald-400" opacity="0.4"/>
-                        <rect x="25" y="59" width="35" height="8" rx="1" fill="currentColor" className="text-purple-400" opacity="0.3"/>
-                        <path d="M35 85 L50 70 L65 85" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400"/>
-                      </svg>
-                    </div>
                     <div className="relative z-10">
                       <h3 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-4">Design & Build</h3>
                       <p className="text-purple-200 text-sm sm:text-lg leading-relaxed">Our team creates stunning designs and develops robust solutions using the latest technologies.</p>
@@ -1120,28 +1109,6 @@ const AveronWebsite = () => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-1/4 -left-20 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-emerald-600/20 rounded-full blur-3xl" />
-
-          {/* Decorative Shapes */}
-          <motion.div
-            className="absolute top-20 right-[15%] hidden lg:block"
-            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-              <rect x="10" y="10" width="40" height="40" rx="8" stroke="currentColor" strokeWidth="2" className="text-purple-400" opacity="0.4"/>
-              <circle cx="30" cy="30" r="8" fill="currentColor" className="text-emerald-400" opacity="0.3"/>
-            </svg>
-          </motion.div>
-
-          <motion.div
-            className="absolute bottom-32 left-[10%] hidden lg:block"
-            animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-              <polygon points="25,5 45,40 5,40" stroke="currentColor" strokeWidth="2" className="text-emerald-400" opacity="0.4" fill="none"/>
-            </svg>
-          </motion.div>
         </div>
 
         <div className="max-w-4xl mx-auto text-center w-full relative z-10">

@@ -10,6 +10,146 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Typography Enhancements - Dual Typography System */
+@layer base {
+  /* Base defaults - Typography B (Elegant) */
+  h1, h2 {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    letter-spacing: -0.03em;
+  }
+
+  h1 {
+    letter-spacing: -0.035em;
+    font-weight: 700;
+  }
+
+  h2 {
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+  }
+
+  body {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.011em;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  p {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.011em;
+    font-weight: 400;
+  }
+
+  button {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  nav a {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* TERTIARY (10%) - Sora accent utilities for special moments */
+.font-accent {
+  font-family: var(--font-sora), system-ui, sans-serif;
+  letter-spacing: -0.025em;
+}
+
+/* BRAND SIGNATURE - Balanced Sophistication "Averon" */
+.brand-averon {
+  font-family: var(--font-lora), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  font-style: italic;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   DUAL TYPOGRAPHY SYSTEM
+   ============================================ */
+
+/* TYPOGRAPHY A - Bold & Aggressive (Hero, Process, Contact) */
+.typography-a h1 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.045em !important;
+  font-weight: 700;
+  line-height: 0.95;
+}
+
+.typography-a h2 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.04em !important;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.typography-a h3 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.025em !important;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.typography-a p {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.typography-a button {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  text-transform: none;
+}
+
+/* TYPOGRAPHY B - Elegant & Spacious (Services, Work, Features) */
+.typography-b h1 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.015em !important;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.typography-b h2 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: -0.01em !important;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.typography-b h3 {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: 0em !important;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.typography-b p {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.typography-b button {
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
 
 #__next-build-watcher,
 .__next-dev-overlay,

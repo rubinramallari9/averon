@@ -6,7 +6,15 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'primary': ['var(--font-inter)', 'system-ui', 'sans-serif'],        // 60% - body text
+        'secondary': ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'], // 30% - headings
+        'accent': ['var(--font-sora)', 'system-ui', 'sans-serif'],          // 10% - special moments
+        'brand': ['var(--font-lora)', 'Georgia', 'serif'],                  // Brand signature - balanced sophistication
+        'sans': ['var(--font-inter)', 'system-ui', 'sans-serif'],           // default
+      },
+    },
   },
   plugins: [],
 }

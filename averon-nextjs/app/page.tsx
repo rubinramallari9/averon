@@ -247,20 +247,20 @@ const AveronWebsite = () => {
   );
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden relative w-full">
-      {/* Global Continuous Gradient Background */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#2d1b4e] via-[#1a0f2e] via-[#0f0f12] to-black pointer-events-none"></div>
-
-      {/* Radial Glow Behind Hero Headline */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center_top,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent pointer-events-none"></div>
-
-      {/* Subtle Ambient Overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none"></div>
+    <div className="min-h-screen text-white overflow-x-hidden relative w-full" style={{
+      background: 'radial-gradient(ellipse at center top, #2d1b4e, #261841, #201538, #1a122f, #140f26, #0f0b1e, #0a0816, #05050e, #000000), linear-gradient(to bottom, rgba(168, 85, 247, 0.1) 0%, transparent 30%)',
+      backgroundBlendMode: 'normal, lighten'
+    }}>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-6">
         <div className="max-w-7xl mx-auto backdrop-blur-xl bg-black/70 border border-purple-500/20 rounded-2xl px-4 sm:px-6 lg:px-8 shadow-xl">
           <div className="flex justify-between items-center h-16">
-            <AveronLogo className="w-32 sm:w-36 lg:w-44" />
+            <div
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="cursor-pointer"
+            >
+              <AveronLogo className="w-32 sm:w-36 lg:w-44" />
+            </div>
 
             {/* Desktop Links */}
             <div className="hidden lg:flex items-center gap-8">
@@ -270,7 +270,15 @@ const AveronWebsite = () => {
               <a href="#work" onClick={handleWorkClick} className="text-sm font-medium text-white/80 hover:text-white transition-colors">
                 Our Work
               </a>
-              <a href="#process" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+              <a
+                href="#process-section"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const processSection = document.getElementById('process-section');
+                  processSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-sm font-medium text-white/80 hover:text-white transition-colors"
+              >
                 Process
               </a>
               <a href="#features" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
@@ -316,9 +324,14 @@ const AveronWebsite = () => {
                 Our Work
               </a>
               <a
-                href="#process"
+                href="#process-section"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileMenuOpen(false);
+                  const processSection = document.getElementById('process-section');
+                  processSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
                 Process
               </a>
@@ -342,7 +355,7 @@ const AveronWebsite = () => {
       </nav>
 
       {/* Hero Section - Payking Style */}
-      <section className="min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
         {/* Ambient Glow Orbs - Subtle */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
@@ -384,7 +397,7 @@ const AveronWebsite = () => {
               <svg width="30" height="20" viewBox="0 0 30 20" fill="none">
                 <path d="M2 18 L8 12 L14 15 L20 8 L28 2" stroke="#10b981" strokeWidth="2" fill="none"/>
               </svg>
-              <span className="text-emerald-400 font-bold text-lg">+342%</span>
+              <span className="font-accent text-emerald-400 font-bold text-lg">+342%</span>
             </div>
           </div>
         </motion.div>
@@ -412,7 +425,7 @@ const AveronWebsite = () => {
               <span className="text-white block sm:inline">Control Your</span>
               <br className="hidden sm:block" />
               <span className="text-white block sm:inline">Development With </span>
-              <span className="text-emerald-400 block sm:inline">Averon</span>
+              <span className="brand-averon text-emerald-400 block sm:inline">Averon</span>
             </h1>
 
             {/* CTA Buttons - Payking Style */}
@@ -495,7 +508,7 @@ const AveronWebsite = () => {
 
                   <div className="mb-3 sm:mb-4">
                     <div className="text-white/60 text-xs sm:text-sm mb-1">Active Projects:</div>
-                    <div className="text-white text-2xl sm:text-3xl font-bold">24</div>
+                    <div className="font-accent text-white text-2xl sm:text-3xl font-bold">24</div>
                   </div>
 
                   <div className="text-white/40 text-xs mb-3 sm:mb-4">Recent Activity</div>
@@ -512,10 +525,17 @@ const AveronWebsite = () => {
 
         {/* Scroll Arrow */}
         <ScrollArrow />
+
+        {/* Smooth transition overlay - positioned at bottom of hero */}
+        <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none" style={{
+          background: 'linear-gradient(to bottom, transparent 0%, #0f0b1e 50%, transparent 100%)',
+          mixBlendMode: 'multiply',
+          opacity: 0.8
+        }}></div>
       </section>
 
       {/* Services Grid - Transparent Background for Seamless Blend */}
-      <section id="services" className="min-h-screen flex items-center pt-12 sm:pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="services" className="typography-b min-h-screen flex items-center pt-12 sm:pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 px-2">Our Services</h2>
@@ -583,7 +603,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Agency Accelerator iOS15 Style Section */}
-      <section id="work" className="section-ios15 relative z-10 overflow-hidden">
+      <section id="work" className="typography-b section-ios15 relative overflow-hidden">
         <div className="padding-bottom-2 padding-xhuge">
           {/* Circular hover area */}
           <div className="logo-hover-area">
@@ -669,7 +689,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Process Section - Snake Path */}
-      <section id="process-section" className="flex items-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="process-section" className="typography-a flex items-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-5xl mx-auto w-full">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4 px-2">Our Process</h2>
@@ -817,7 +837,7 @@ const AveronWebsite = () => {
               {/* Step 1 - Top Left */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
-                  <div className="text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
+                  <div className="font-accent text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
                     01
                   </div>
                   <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
@@ -843,7 +863,7 @@ const AveronWebsite = () => {
               {/* Step 2 - Middle Right */}
               <div className="flex justify-end">
                 <div className="relative group w-full max-w-md">
-                  <div className="text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -right-2 sm:-right-4 group-hover:text-purple-500/20 transition-colors">
+                  <div className="font-accent text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -right-2 sm:-right-4 group-hover:text-purple-500/20 transition-colors">
                     02
                   </div>
                   <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
@@ -869,7 +889,7 @@ const AveronWebsite = () => {
               {/* Step 3 - Bottom Left */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
-                  <div className="text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
+                  <div className="font-accent text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
                     03
                   </div>
                   <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
@@ -899,7 +919,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="features" className="typography-b min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div className="px-2 sm:px-0">
@@ -1095,7 +1115,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative z-10 overflow-hidden">
+      <section id="contact" className="typography-a min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-1/4 -left-20 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl" />

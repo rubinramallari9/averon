@@ -1178,72 +1178,128 @@ const AveronWebsite = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="pt-8 sm:pt-12 px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Footer - Professional Multi-Column Layout */}
+      <footer className="pt-12 sm:pt-16 px-4 sm:px-6 lg:px-8 relative z-10 mt-20">
         <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-2xl sm:rounded-t-3xl border-t border-x border-purple-500/20 pt-6 sm:pt-8 pb-5 sm:pb-6 overflow-hidden">
-            {/* Fade effect background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-purple-900/5 to-transparent pointer-events-none"></div>
+          <div className="relative bg-gradient-to-b from-purple-900/30 via-purple-950/40 to-black/90 backdrop-blur-xl rounded-t-2xl sm:rounded-t-3xl border-t border-x border-purple-500/20 pt-10 sm:pt-12 pb-6 overflow-hidden">
+            {/* Subtle top border glow */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
 
-            <div className="relative z-10 text-center px-3 sm:px-4">
-              <div className="flex items-center justify-center mb-4 sm:mb-6">
-                <AveronLogo className="w-32 sm:w-40" />
-              </div>
-              <p className="text-purple-200 text-xs sm:text-base mb-5 sm:mb-6 max-w-2xl mx-auto">
-                Transforming businesses through innovative digital solutions
-              </p>
+            <div className="relative z-10 px-6 sm:px-8 lg:px-12">
+              {/* Main Footer Content - Grid Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
 
-              {/* Navigation Links */}
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-5 sm:mb-6 text-xs sm:text-sm">
-                <a href="#services" className="text-purple-300 hover:text-white active:text-white transition">Services</a>
-                <a href="#work" className="text-purple-300 hover:text-white active:text-white transition">Our Work</a>
-                <a href="#process" className="text-purple-300 hover:text-white active:text-white transition">Process</a>
-                <a href="#contact" className="text-purple-300 hover:text-white active:text-white transition">Contact</a>
+                {/* Company Info Column */}
+                <div className="lg:col-span-2">
+                  <AveronLogo className="w-36 sm:w-40 mb-4" />
+                  <p className="text-purple-200/80 text-sm leading-relaxed mb-6 max-w-md">
+                    Empowering businesses with cutting-edge digital solutions. From web development to brand identity, we transform your vision into reality.
+                  </p>
+
+                  {/* Social Links */}
+                  <div className="flex gap-3">
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="w-5 h-5" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Quick Links Column */}
+                <div>
+                  <h3 className="text-white font-semibold text-base mb-4">Quick Links</h3>
+                  <ul className="space-y-3">
+                    <li>
+                      <a href="#services" className="text-purple-200/70 hover:text-white text-sm transition-colors">
+                        Services
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#work" className="text-purple-200/70 hover:text-white text-sm transition-colors">
+                        Our Work
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#process-section" className="text-purple-200/70 hover:text-white text-sm transition-colors">
+                        Process
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#features" className="text-purple-200/70 hover:text-white text-sm transition-colors">
+                        Features
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Contact Column */}
+                <div>
+                  <h3 className="text-white font-semibold text-base mb-4">Get in Touch</h3>
+                  <ul className="space-y-3 text-sm">
+                    <li>
+                      <a
+                        href="#contact"
+                        className="text-purple-200/70 hover:text-white transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Contact Us
+                      </a>
+                    </li>
+                    <li className="text-purple-200/70">
+                      <span className="block">Available for projects</span>
+                    </li>
+                    <li>
+                      <a
+                        href="#contact"
+                        className="inline-block mt-2 px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg text-sm font-medium transition-colors border border-emerald-500/30"
+                      >
+                        Start Project
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
-              {/* Social Media Buttons */}
-              <div className="flex justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 active:from-purple-700 active:to-pink-700 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
-                >
-                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
-                </a>
-                <a
-                  href="https://tiktok.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-pink-600/80 rounded-full hover:from-purple-600 hover:to-pink-600 active:from-purple-700 active:to-pink-700 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                  </svg>
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-blue-600/80 rounded-full hover:from-purple-600 hover:to-blue-600 active:from-purple-700 active:to-blue-700 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
-                >
-                  <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
-                </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600/80 to-blue-700/80 rounded-full hover:from-purple-600 hover:to-blue-700 active:from-purple-700 active:to-blue-800 transition-all transform hover:scale-110 active:scale-95 shadow-lg shadow-purple-500/30"
-                >
-                  <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
-                </a>
-              </div>
-
-              <div className="pt-5 sm:pt-6 border-t border-purple-500/20">
-                <p className="text-xs sm:text-sm text-purple-400/80">
-                  © 2024 Averon Digital. All rights reserved.
-                </p>
+              {/* Bottom Bar */}
+              <div className="pt-6 border-t border-purple-500/20">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  <p className="text-xs sm:text-sm text-purple-400/70">
+                    © {new Date().getFullYear()} Averon Digital. All rights reserved.
+                  </p>
+                  <div className="flex gap-6 text-xs sm:text-sm">
+                    <a href="#" className="text-purple-400/70 hover:text-white transition-colors">
+                      Privacy Policy
+                    </a>
+                    <a href="#" className="text-purple-400/70 hover:text-white transition-colors">
+                      Terms of Service
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

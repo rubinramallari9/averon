@@ -10,6 +10,22 @@ const OurWorkPage = () => {
   const projects = [
     {
       id: 1,
+      title: "Rasim Rama",
+      description: "Personal portfolio website showcasing professional work and achievements",
+      image: "/trusted_logos/rasimramalogo.png",
+      tech: ["React", "Next.js", "Tailwind"],
+      link: "https://rasimrama.com"
+    },
+    {
+      id: 2,
+      title: "Rubin Ramallari",
+      description: "Professional portfolio website with modern design and smooth animations",
+      image: "/trusted_logos/rubin-logo.svg",
+      tech: ["Next.js", "TypeScript", "Framer Motion"],
+      link: "https://rubinramallari.com"
+    },
+    {
+      id: 3,
       title: "Luxury Watch E-commerce",
       description: "Premium timepiece marketplace with real-time inventory and secure checkout",
       image: "/images/luxury-watch-mockup.png",
@@ -17,7 +33,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 2,
+      id: 4,
       title: "Construction Company Site",
       description: "Modern portfolio showcasing projects with interactive galleries",
       image: "/images/construction-mockup.png",
@@ -25,7 +41,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 3,
+      id: 5,
       title: "Luxury Car Dealership",
       description: "Immersive automotive experience with 3D vehicle showcases",
       image: "/images/car-mockup.png",
@@ -33,7 +49,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 4,
+      id: 6,
       title: "Fine Jewelry Store",
       description: "Elegant online boutique with custom product configurator",
       image: "/images/jewelry-mockup.png",
@@ -41,7 +57,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 5,
+      id: 7,
       title: "Fine Dining Restaurant",
       description: "Reservation system with dynamic menu and event management",
       image: "/images/restaurant-mockup.png",
@@ -49,7 +65,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 6,
+      id: 8,
       title: "Computer Store",
       description: "Tech retailer with advanced filtering and comparison tools",
       image: "/images/computerstore-mockup.png",
@@ -57,7 +73,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 7,
+      id: 9,
       title: "Cigars & Wine Collection",
       description: "Curated marketplace for premium cigars and fine wines",
       image: "/images/cigars-wine-mockup.png",
@@ -65,7 +81,7 @@ const OurWorkPage = () => {
       link: "#"
     },
     {
-      id: 8,
+      id: 10,
       title: "Real Estate Platform",
       description: "Property listings with virtual tours and mortgage calculators",
       image: "/images/realestate-mockup.png",
@@ -165,21 +181,28 @@ const OurWorkPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <motion.div
+              <motion.a
                 key={project.id}
+                href={project.link}
+                target={project.link !== "#" ? "_blank" : "_self"}
+                rel={project.link !== "#" ? "noopener noreferrer" : ""}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative"
+                className="group relative block"
               >
                 {/* Glassmorphism Card */}
-                <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02]">
+                <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer">
                   {/* Project Thumbnail */}
-                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30">
+                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className={`${
+                        project.id === 2
+                          ? 'w-1/2 h-auto object-contain group-hover:scale-110'
+                          : 'w-full h-full object-cover group-hover:scale-110'
+                      } transition-transform duration-500`}
                       onError={(e) => {
                         // Fallback gradient if image doesn't load
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -217,7 +240,7 @@ const OurWorkPage = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </div>

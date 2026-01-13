@@ -197,7 +197,8 @@ const OurWorkPage = () => {
                   <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
                     <img
                       src={project.image}
-                      alt={project.title}
+                      alt={`${project.title} - ${project.description} by Averon Digital`}
+                      loading="lazy"
                       className={`${
                         project.id === 2
                           ? 'w-1/2 h-auto object-contain group-hover:scale-110'

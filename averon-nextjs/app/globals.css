@@ -656,8 +656,93 @@ nextjs-portal {
    RESPONSIVE DESIGN
    ============================================ */
 
-/* Tablet */
-@media (max-width: 1024px) {
+/* Large Desktop (1440px and up) - Larger images */
+@media (min-width: 1440px) {
+  .phone-wrapper {
+    width: 380px;
+  }
+
+  .phone-wrapper:has(.phone-image-horizontal) {
+    width: 700px;
+  }
+
+  .section-ios15-grid {
+    height: 1050px;
+  }
+}
+
+/* Standard Desktop (1200px - 1439px) */
+@media (max-width: 1439px) {
+  .phone-wrapper {
+    width: 320px;
+  }
+
+  .phone-wrapper:has(.phone-image-horizontal) {
+    width: 600px;
+  }
+
+  .section-ios15-grid {
+    height: 950px;
+  }
+}
+
+/* Small Desktop (1024px - 1199px) */
+@media (max-width: 1199px) {
+  .phone-wrapper {
+    width: 280px;
+  }
+
+  .phone-wrapper:has(.phone-image-horizontal) {
+    width: 520px;
+  }
+
+  .section-ios15-grid {
+    height: 850px;
+  }
+
+  .phones-row-1 .phone-wrapper:nth-child(1) {
+    top: 6%;
+    left: -7%;
+  }
+
+  .phones-row-1 .phone-wrapper:nth-child(2) {
+    top: 6%;
+    left: 16%;
+  }
+
+  .phones-row-1 .phone-wrapper:nth-child(3) {
+    top: 6%;
+    right: 22%;
+  }
+
+  .phones-row-1 .phone-wrapper:nth-child(4) {
+    top: 6%;
+    right: -14%;
+  }
+
+  .phones-row-2 .phone-wrapper:nth-child(1) {
+    bottom: 6%;
+    left: -14%;
+  }
+
+  .phones-row-2 .phone-wrapper:nth-child(2) {
+    bottom: 6%;
+    left: 22%;
+  }
+
+  .phones-row-2 .phone-wrapper:nth-child(3) {
+    bottom: 6%;
+    right: 16%;
+  }
+
+  .phones-row-2 .phone-wrapper:nth-child(4) {
+    bottom: 6%;
+    right: -7%;
+  }
+}
+
+/* Tablet (769px - 1023px) */
+@media (max-width: 1023px) {
   .section-ios15-grid {
     max-width: 950px;
     height: 750px;
@@ -668,7 +753,7 @@ nextjs-portal {
   }
 
   .phone-wrapper:has(.phone-image-horizontal) {
-    width: 320px;
+    width: 420px;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(1) {

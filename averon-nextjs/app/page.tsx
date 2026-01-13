@@ -313,16 +313,13 @@ const AveronWebsite = () => {
               >
                 Services
               </a>
-              <a
-                href="#work"
+              <Link
+                href="/our-work"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleWorkClick(e);
-                }}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Our Work
-              </a>
+              </Link>
               <a
                 href="#process-section"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"

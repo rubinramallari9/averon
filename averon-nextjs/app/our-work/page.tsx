@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -106,10 +107,13 @@ const OurWorkPage = () => {
         <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
           <div className="flex justify-between items-center h-14 sm:h-16">
             <Link href="/">
-              <img
+              <Image
                 src="/averon_logobg.png"
                 alt="Averon Digital"
+                width={160}
+                height={45}
                 className="w-28 sm:w-32 lg:w-40 cursor-pointer"
+                priority
               />
             </Link>
 
@@ -195,19 +199,17 @@ const OurWorkPage = () => {
                 <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer">
                   {/* Project Thumbnail */}
                   <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
-                    <img
+                    <Image
                       src={project.image}
                       alt={`${project.title} - ${project.description} by Averon Digital`}
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={75}
                       className={`${
                         project.id === 2
-                          ? 'w-1/2 h-auto object-contain group-hover:scale-110'
-                          : 'w-full h-full object-cover group-hover:scale-110'
+                          ? 'object-contain group-hover:scale-110'
+                          : 'object-cover group-hover:scale-110'
                       } transition-transform duration-500`}
-                      onError={(e) => {
-                        // Fallback gradient if image doesn't load
-                        (e.target as HTMLImageElement).style.display = 'none';
-                      }}
                     />
 
                     {/* Overlay on hover */}
@@ -271,11 +273,13 @@ const OurWorkPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-3xl border-t border-x border-purple-500/20 pt-8 pb-6">
             <div className="text-center">
-              <Link href="/">
-                <img
+              <Link href="/" className="inline-block">
+                <Image
                   src="/averon_logobg.png"
                   alt="Averon Digital"
-                  className="w-40 mx-auto mb-4 cursor-pointer"
+                  width={160}
+                  height={45}
+                  className="mx-auto mb-4 cursor-pointer"
                 />
               </Link>
               <p className="text-purple-200 text-sm mb-4">

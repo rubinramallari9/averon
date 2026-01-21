@@ -226,6 +226,45 @@ nextjs-portal {
 /* React orbit wrapper positioning */
 .react-orbit-wrapper {
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* GPU acceleration for animated elements */
+.phone-wrapper,
+.logo-ios15-wrapper,
+.orbit-a,
+.orbit-b,
+.orbit-c,
+.modal-orbit-a,
+.modal-orbit-b,
+.modal-orbit-c {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-a,
+  .orbit-b,
+  .orbit-c,
+  .modal-orbit-a,
+  .modal-orbit-b,
+  .modal-orbit-c,
+  .animate-marquee,
+  .animate-shimmer,
+  .animate-text-shine,
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-float-fast {
+    animation: none !important;
+  }
+
+  .phone-wrapper,
+  .logo-ios15-wrapper {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ============================================

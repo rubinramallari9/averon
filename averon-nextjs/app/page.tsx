@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
@@ -239,10 +240,13 @@ const AveronWebsite = () => {
 
   // Averon Logo SVG Component
   const AveronLogo = ({ className = "w-40" }: { className?: string }) => (
-    <img 
-      src="/averon_logobg.png" 
-      alt="Averon Digital" 
+    <Image
+      src="/averon_logobg.png"
+      alt="Averon Digital"
+      width={176}
+      height={50}
       className={className}
+      priority
     />
   );
 
@@ -579,18 +583,22 @@ const AveronWebsite = () => {
           >
             <div className="w-full h-12 sm:h-20 lg:h-24">
               <div className="flex items-center justify-center gap-6 sm:gap-12 lg:gap-16 h-full px-4">
-                <a href="https://rasimrama.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center">
-                  <img
+                <a href="https://rasimrama.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-24 sm:w-32 lg:w-40">
+                  <Image
                     src="/trusted_logos/rasimramalogo.png"
                     alt="Rasim Rama"
-                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                    fill
+                    sizes="(max-width: 640px) 96px, (max-width: 1024px) 128px, 160px"
+                    className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                   />
                 </a>
-                <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center">
-                  <img
+                <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-24 sm:w-32 lg:w-40">
+                  <Image
                     src="/trusted_logos/rubin-logo.svg"
                     alt="Rubin Ramallari"
-                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                    fill
+                    sizes="(max-width: 640px) 96px, (max-width: 1024px) 128px, 160px"
+                    className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                   />
                 </a>
               </div>
@@ -621,31 +629,47 @@ const AveronWebsite = () => {
             {/* Row 1 (Top arc): vertical, vertical, horizontal, horizontal */}
             <div className="phones-row-1">
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/luxury-watch-mockup.png"
                   alt="Luxury Watch"
+                  width={320}
+                  height={480}
                   className="phone-image"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/construction-mockup.png"
                   alt="Construction"
+                  width={320}
+                  height={480}
                   className="phone-image"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/car-mockup.png"
                   alt="Luxury Car"
+                  width={600}
+                  height={400}
                   className="phone-image-horizontal"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/jewelry-mockup.png"
                   alt="Jewelry Store"
+                  width={600}
+                  height={400}
                   className="phone-image-horizontal"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
             </div>
@@ -653,31 +677,47 @@ const AveronWebsite = () => {
             {/* Row 2 (Bottom arc): horizontal, horizontal, vertical, vertical */}
             <div className="phones-row-2">
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/restaurant-mockup.png"
                   alt="Fine Dining"
+                  width={600}
+                  height={400}
                   className="phone-image-horizontal"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/computerstore-mockup.png"
                   alt="Computer Store"
+                  width={600}
+                  height={400}
                   className="phone-image-horizontal"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/cigars-wine-mockup.png"
                   alt="Cigars & Wine"
+                  width={320}
+                  height={480}
                   className="phone-image"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
-                <img
+                <Image
                   src="/images/realestate-mockup.png"
                   alt="Real Estate"
+                  width={320}
+                  height={480}
                   className="phone-image"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
             </div>

@@ -8,6 +8,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
 import ServiceCardTilt from '@/components/ServiceCardTilt';
 import { apiClient } from '@/lib/api';
+import {
+  BLUR_CAR_MOCKUP,
+  BLUR_CIGARS_WINE_MOCKUP,
+  BLUR_COMPUTERSTORE_MOCKUP,
+  BLUR_CONSTRUCTION_MOCKUP,
+  BLUR_JEWELRY_MOCKUP,
+  BLUR_LUXURY_WATCH_MOCKUP,
+  BLUR_REALESTATE_MOCKUP,
+  BLUR_RESTAURANT_MOCKUP,
+} from '@/lib/blurPlaceholders';
 
 const AveronWebsite = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -636,6 +646,8 @@ const AveronWebsite = () => {
                   height={480}
                   className="phone-image"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_LUXURY_WATCH_MOCKUP}
                 />
               </div>
               <div className="phone-wrapper">
@@ -646,6 +658,8 @@ const AveronWebsite = () => {
                   height={480}
                   className="phone-image"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_CONSTRUCTION_MOCKUP}
                 />
               </div>
               <div className="phone-wrapper">
@@ -656,6 +670,8 @@ const AveronWebsite = () => {
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_CAR_MOCKUP}
                 />
               </div>
               <div className="phone-wrapper">
@@ -666,6 +682,8 @@ const AveronWebsite = () => {
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_JEWELRY_MOCKUP}
                 />
               </div>
             </div>
@@ -680,6 +698,8 @@ const AveronWebsite = () => {
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_RESTAURANT_MOCKUP}
                 />
               </div>
               <div className="phone-wrapper">
@@ -690,6 +710,8 @@ const AveronWebsite = () => {
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_COMPUTERSTORE_MOCKUP}
                 />
               </div>
               <div className="phone-wrapper">
@@ -700,6 +722,8 @@ const AveronWebsite = () => {
                   height={480}
                   className="phone-image"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_CIGARS_WINE_MOCKUP}
                 />
               </div>
               <div className="phone-wrapper">
@@ -710,6 +734,8 @@ const AveronWebsite = () => {
                   height={480}
                   className="phone-image"
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_REALESTATE_MOCKUP}
                 />
               </div>
             </div>

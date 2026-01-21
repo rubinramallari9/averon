@@ -5,9 +5,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import {
+  BLUR_CAR_MOCKUP,
+  BLUR_CIGARS_WINE_MOCKUP,
+  BLUR_COMPUTERSTORE_MOCKUP,
+  BLUR_CONSTRUCTION_MOCKUP,
+  BLUR_JEWELRY_MOCKUP,
+  BLUR_LUXURY_WATCH_MOCKUP,
+  BLUR_REALESTATE_MOCKUP,
+  BLUR_RESTAURANT_MOCKUP,
+} from '@/lib/blurPlaceholders';
 
 const OurWorkPage = () => {
-  // Portfolio projects data
+  // Portfolio projects data with blur placeholders
   const projects = [
     {
       id: 1,
@@ -15,7 +25,8 @@ const OurWorkPage = () => {
       description: "Personal portfolio website showcasing professional work and achievements",
       image: "/trusted_logos/rasimramalogo.png",
       tech: ["React", "Next.js", "Tailwind"],
-      link: "https://rasimrama.com"
+      link: "https://rasimrama.com",
+      blur: undefined
     },
     {
       id: 2,
@@ -23,7 +34,8 @@ const OurWorkPage = () => {
       description: "Professional portfolio website with modern design and smooth animations",
       image: "/trusted_logos/rubin-logo.svg",
       tech: ["Next.js", "TypeScript", "Framer Motion"],
-      link: "https://rubinramallari.com"
+      link: "https://rubinramallari.com",
+      blur: undefined
     },
     {
       id: 3,
@@ -31,7 +43,8 @@ const OurWorkPage = () => {
       description: "Premium timepiece marketplace with real-time inventory and secure checkout",
       image: "/images/luxury-watch-mockup.webp",
       tech: ["React", "Next.js", "Stripe"],
-      link: "#"
+      link: "#",
+      blur: BLUR_LUXURY_WATCH_MOCKUP
     },
     {
       id: 4,
@@ -39,7 +52,8 @@ const OurWorkPage = () => {
       description: "Modern portfolio showcasing projects with interactive galleries",
       image: "/images/construction-mockup.webp",
       tech: ["Tailwind", "AI", "CMS"],
-      link: "#"
+      link: "#",
+      blur: BLUR_CONSTRUCTION_MOCKUP
     },
     {
       id: 5,
@@ -47,7 +61,8 @@ const OurWorkPage = () => {
       description: "Immersive automotive experience with 3D vehicle showcases",
       image: "/images/car-mockup.webp",
       tech: ["Three.js", "React", "API"],
-      link: "#"
+      link: "#",
+      blur: BLUR_CAR_MOCKUP
     },
     {
       id: 6,
@@ -55,7 +70,8 @@ const OurWorkPage = () => {
       description: "Elegant online boutique with custom product configurator",
       image: "/images/jewelry-mockup.webp",
       tech: ["Next.js", "E-commerce", "SEO"],
-      link: "#"
+      link: "#",
+      blur: BLUR_JEWELRY_MOCKUP
     },
     {
       id: 7,
@@ -63,7 +79,8 @@ const OurWorkPage = () => {
       description: "Reservation system with dynamic menu and event management",
       image: "/images/restaurant-mockup.webp",
       tech: ["React", "Database", "Maps"],
-      link: "#"
+      link: "#",
+      blur: BLUR_RESTAURANT_MOCKUP
     },
     {
       id: 8,
@@ -71,7 +88,8 @@ const OurWorkPage = () => {
       description: "Tech retailer with advanced filtering and comparison tools",
       image: "/images/computerstore-mockup.webp",
       tech: ["Next.js", "AI", "Analytics"],
-      link: "#"
+      link: "#",
+      blur: BLUR_COMPUTERSTORE_MOCKUP
     },
     {
       id: 9,
@@ -79,7 +97,8 @@ const OurWorkPage = () => {
       description: "Curated marketplace for premium cigars and fine wines",
       image: "/images/cigars-wine-mockup.webp",
       tech: ["React", "E-commerce", "Tailwind"],
-      link: "#"
+      link: "#",
+      blur: BLUR_CIGARS_WINE_MOCKUP
     },
     {
       id: 10,
@@ -87,7 +106,8 @@ const OurWorkPage = () => {
       description: "Property listings with virtual tours and mortgage calculators",
       image: "/images/realestate-mockup.webp",
       tech: ["Next.js", "Maps", "CRM"],
-      link: "#"
+      link: "#",
+      blur: BLUR_REALESTATE_MOCKUP
     }
   ];
 
@@ -210,6 +230,7 @@ const OurWorkPage = () => {
                           ? 'object-contain group-hover:scale-110'
                           : 'object-cover group-hover:scale-110'
                       } transition-transform duration-500`}
+                      {...(project.blur && { placeholder: "blur", blurDataURL: project.blur })}
                     />
 
                     {/* Overlay on hover */}

@@ -29,7 +29,7 @@ const OurWorkPage = () => {
       id: 3,
       title: "Luxury Watch E-commerce",
       description: "Premium timepiece marketplace with real-time inventory and secure checkout",
-      image: "/images/luxury-watch-mockup.png",
+      image: "/images/luxury-watch-mockup.webp",
       tech: ["React", "Next.js", "Stripe"],
       link: "#"
     },
@@ -37,7 +37,7 @@ const OurWorkPage = () => {
       id: 4,
       title: "Construction Company Site",
       description: "Modern portfolio showcasing projects with interactive galleries",
-      image: "/images/construction-mockup.png",
+      image: "/images/construction-mockup.webp",
       tech: ["Tailwind", "AI", "CMS"],
       link: "#"
     },
@@ -45,7 +45,7 @@ const OurWorkPage = () => {
       id: 5,
       title: "Luxury Car Dealership",
       description: "Immersive automotive experience with 3D vehicle showcases",
-      image: "/images/car-mockup.png",
+      image: "/images/car-mockup.webp",
       tech: ["Three.js", "React", "API"],
       link: "#"
     },
@@ -53,7 +53,7 @@ const OurWorkPage = () => {
       id: 6,
       title: "Fine Jewelry Store",
       description: "Elegant online boutique with custom product configurator",
-      image: "/images/jewelry-mockup.png",
+      image: "/images/jewelry-mockup.webp",
       tech: ["Next.js", "E-commerce", "SEO"],
       link: "#"
     },
@@ -61,7 +61,7 @@ const OurWorkPage = () => {
       id: 7,
       title: "Fine Dining Restaurant",
       description: "Reservation system with dynamic menu and event management",
-      image: "/images/restaurant-mockup.png",
+      image: "/images/restaurant-mockup.webp",
       tech: ["React", "Database", "Maps"],
       link: "#"
     },
@@ -69,7 +69,7 @@ const OurWorkPage = () => {
       id: 8,
       title: "Computer Store",
       description: "Tech retailer with advanced filtering and comparison tools",
-      image: "/images/computerstore-mockup.png",
+      image: "/images/computerstore-mockup.webp",
       tech: ["Next.js", "AI", "Analytics"],
       link: "#"
     },
@@ -77,7 +77,7 @@ const OurWorkPage = () => {
       id: 9,
       title: "Cigars & Wine Collection",
       description: "Curated marketplace for premium cigars and fine wines",
-      image: "/images/cigars-wine-mockup.png",
+      image: "/images/cigars-wine-mockup.webp",
       tech: ["React", "E-commerce", "Tailwind"],
       link: "#"
     },
@@ -85,7 +85,7 @@ const OurWorkPage = () => {
       id: 10,
       title: "Real Estate Platform",
       description: "Property listings with virtual tours and mortgage calculators",
-      image: "/images/realestate-mockup.png",
+      image: "/images/realestate-mockup.webp",
       tech: ["Next.js", "Maps", "CRM"],
       link: "#"
     }

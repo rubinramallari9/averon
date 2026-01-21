@@ -630,46 +630,42 @@ const AveronWebsite = () => {
             <div className="phones-row-1">
               <div className="phone-wrapper">
                 <Image
-                  src="/images/luxury-watch-mockup.png"
+                  src="/images/luxury-watch-mockup.webp"
                   alt="Luxury Watch"
                   width={320}
                   height={480}
                   className="phone-image"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
                 <Image
-                  src="/images/construction-mockup.png"
+                  src="/images/construction-mockup.webp"
                   alt="Construction"
                   width={320}
                   height={480}
                   className="phone-image"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
                 <Image
-                  src="/images/car-mockup.png"
+                  src="/images/car-mockup.webp"
                   alt="Luxury Car"
                   width={600}
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
                 <Image
-                  src="/images/jewelry-mockup.png"
+                  src="/images/jewelry-mockup.webp"
                   alt="Jewelry Store"
                   width={600}
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
             </div>
@@ -678,46 +674,42 @@ const AveronWebsite = () => {
             <div className="phones-row-2">
               <div className="phone-wrapper">
                 <Image
-                  src="/images/restaurant-mockup.png"
+                  src="/images/restaurant-mockup.webp"
                   alt="Fine Dining"
                   width={600}
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
                 <Image
-                  src="/images/computerstore-mockup.png"
+                  src="/images/computerstore-mockup.webp"
                   alt="Computer Store"
                   width={600}
                   height={400}
                   className="phone-image-horizontal"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
                 <Image
-                  src="/images/cigars-wine-mockup.png"
+                  src="/images/cigars-wine-mockup.webp"
                   alt="Cigars & Wine"
                   width={320}
                   height={480}
                   className="phone-image"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
               <div className="phone-wrapper">
                 <Image
-                  src="/images/realestate-mockup.png"
+                  src="/images/realestate-mockup.webp"
                   alt="Real Estate"
                   width={320}
                   height={480}
                   className="phone-image"
                   loading="lazy"
-                  quality={75}
                 />
               </div>
             </div>

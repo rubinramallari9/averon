@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
@@ -50,120 +50,145 @@ const AveronWebsite = () => {
     };
   }, [activeServiceCard]);
 
-  // 🎯 Track scroll position for navbar behavior
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 50);
+  // 🎯 Refs for scroll optimization
+  const rafRef = useRef<number | null>(null);
+  const lastScrollY = useRef(0);
+  const isScrolledRef = useRef(false);
+  const activeSectionRef = useRef('');
 
-      // Track active section
-      const sections = ['services', 'work', 'process', 'features', 'contact'];
-      for (const sectionId of sections) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
+  // Optimized scroll handler using requestAnimationFrame
+  const handleScrollOptimized = useCallback(() => {
+    const currentScrollY = window.scrollY;
+
+    // Update navbar state (only if changed)
+    const shouldBeScrolled = currentScrollY > 50;
+    if (shouldBeScrolled !== isScrolledRef.current) {
+      isScrolledRef.current = shouldBeScrolled;
+      setIsScrolled(shouldBeScrolled);
+    }
+
+    // Track active section
+    const sections = ['services', 'work', 'process', 'features', 'contact'];
+    for (const sectionId of sections) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          if (activeSectionRef.current !== sectionId) {
+            activeSectionRef.current = sectionId;
             setActiveSection(sectionId);
-            break;
           }
+          break;
         }
+      }
+    }
+
+    // Desktop path animation
+    const path = document.getElementById('processPath') as unknown as SVGPathElement;
+    const processSection = document.getElementById('process-section');
+
+    if (path && processSection) {
+      const length = path.getTotalLength();
+      const sectionTop = processSection.offsetTop;
+      const sectionHeight = processSection.offsetHeight;
+
+      let progress = (currentScrollY - sectionTop + window.innerHeight * 0.5) / sectionHeight;
+      progress = Math.min(Math.max(progress, 0), 1);
+
+      const easedProgress = progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+      const draw = length * easedProgress;
+      path.style.strokeDashoffset = `${length - draw}`;
+    }
+
+    // Mobile path animation
+    const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
+    const mobileMarker = document.getElementById('mobileEndMarker');
+
+    if (mobilePath && mobileMarker && processSection) {
+      const mobileLength = mobilePath.getTotalLength();
+      const sectionTop = processSection.offsetTop;
+      const sectionHeight = processSection.offsetHeight;
+
+      let progress = (currentScrollY - sectionTop + window.innerHeight * 0.3) / sectionHeight;
+      progress = Math.min(Math.max(progress, 0), 1);
+
+      const easedProgress = progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+      const draw = mobileLength * easedProgress;
+      mobilePath.style.strokeDashoffset = `${mobileLength - draw}`;
+
+      // Animate dots
+      const dots = document.querySelectorAll('.timeline-dot');
+      dots.forEach((dot, index) => {
+        const dotProgress = (index + 1) / 3;
+        const dotElement = dot as HTMLElement;
+        if (easedProgress >= dotProgress - 0.1) {
+          dotElement.style.opacity = '1';
+          dotElement.style.transform = 'scale(1)';
+        } else {
+          dotElement.style.opacity = '0.3';
+          dotElement.style.transform = 'scale(0.8)';
+        }
+      });
+
+      // X marker appears when fully drawn
+      if (easedProgress >= 0.98) {
+        mobileMarker.style.opacity = '1';
+        mobileMarker.style.transform = 'scale(1.1)';
+      } else {
+        mobileMarker.style.opacity = '0';
+        mobileMarker.style.transform = 'scale(0.9)';
+      }
+    }
+
+    // Update scrollY state only when significantly changed (reduces re-renders)
+    if (Math.abs(currentScrollY - lastScrollY.current) > 10) {
+      lastScrollY.current = currentScrollY;
+      setScrollY(currentScrollY);
+    }
+
+    rafRef.current = null;
+  }, []);
+
+  // Single scroll listener with RAF throttling
+  useEffect(() => {
+    const onScroll = () => {
+      if (rafRef.current === null) {
+        rafRef.current = requestAnimationFrame(handleScrollOptimized);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
+    // Initialize path dasharray on mount
     const path = document.getElementById('processPath') as unknown as SVGPathElement;
     const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
-    const mobileMarker = document.getElementById('mobileEndMarker');
-    const section = document.getElementById('process-section');
 
-    if (!section) return;
-
-    // Desktop path animation
     if (path) {
       const length = path.getTotalLength();
       path.style.strokeDasharray = `${length}`;
       path.style.strokeDashoffset = `${length}`;
-
-      const handleScroll = () => {
-        setScrollY(window.scrollY);
-
-        const scrollY = window.scrollY;
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-
-        let progress = (scrollY - sectionTop + window.innerHeight * 0.5) / sectionHeight;
-        progress = Math.min(Math.max(progress, 0), 1);
-
-        const easedProgress = progress < 0.5
-          ? 2 * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-        const draw = length * easedProgress;
-        path.style.strokeDashoffset = `${length - draw}`;
-
-      };
-
-      handleScroll();
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
     }
 
-    // Mobile path animation
-    if (mobilePath && mobileMarker) {
+    if (mobilePath) {
       const mobileLength = mobilePath.getTotalLength();
       mobilePath.style.strokeDasharray = `${mobileLength}`;
       mobilePath.style.strokeDashoffset = `${mobileLength}`;
-
-      const handleMobileScroll = () => {
-        setScrollY(window.scrollY);
-
-        const scrollY = window.scrollY;
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-
-        let progress = (scrollY - sectionTop + window.innerHeight * 0.3) / sectionHeight;
-        progress = Math.min(Math.max(progress, 0), 1);
-
-        const easedProgress = progress < 0.5
-          ? 2 * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-        const draw = mobileLength * easedProgress;
-        mobilePath.style.strokeDashoffset = `${mobileLength - draw}`;
-
-        // Animate dots
-        const dots = document.querySelectorAll('.timeline-dot');
-        dots.forEach((dot, index) => {
-          const dotProgress = (index + 1) / 3;
-          if (easedProgress >= dotProgress - 0.1) {
-            (dot as HTMLElement).style.opacity = '1';
-            (dot as HTMLElement).style.transform = 'scale(1)';
-          } else {
-            (dot as HTMLElement).style.opacity = '0.3';
-            (dot as HTMLElement).style.transform = 'scale(0.8)';
-          }
-        });
-
-        // X marker appears when fully drawn
-        if (easedProgress >= 0.98) {
-          mobileMarker.style.opacity = '1';
-          mobileMarker.style.transform = 'scale(1.1)';
-        } else {
-          mobileMarker.style.opacity = '0';
-          mobileMarker.style.transform = 'scale(0.9)';
-        }
-      };
-
-      handleMobileScroll();
-      window.addEventListener('scroll', handleMobileScroll);
-      return () => window.removeEventListener('scroll', handleMobileScroll);
     }
-  }, []);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    handleScrollOptimized(); // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [handleScrollOptimized]);
 
   const handleWorkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -367,38 +392,25 @@ const AveronWebsite = () => {
 
       {/* Hero Section - Payking Style */}
       <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
-        {/* Ambient Glow Orbs - Subtle */}
+        {/* Ambient Glow Orbs - CSS-optimized for better GPU performance */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[150px] opacity-30"
-            style={{ backgroundColor: '#6366f1' }}
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.4, 0.3] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          <div
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-1"
+            style={{ backgroundColor: '#6366f1', willChange: 'transform, opacity' }}
           />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[150px] opacity-25"
-            style={{ backgroundColor: '#8b5cf6' }}
-            animate={{ scale: [1, 1.3, 1], opacity: [0.25, 0.35, 0.25] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          <div
+            className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-2"
+            style={{ backgroundColor: '#8b5cf6', willChange: 'transform, opacity' }}
           />
 
           {/* Abstract Tech Mesh Background */}
-          <motion.div
-            className="absolute inset-0 opacity-20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.2 }}
-            transition={{ duration: 2 }}
-          >
+          <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-transparent to-emerald-600/20" />
-          </motion.div>
+          </div>
         </div>
 
-        {/* Floating Decorative Elements */}
-        <motion.div
-          className="absolute top-32 left-[15%] hidden lg:block z-10"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
+        {/* Floating Decorative Elements - CSS-optimized */}
+        <div className="absolute top-32 left-[15%] hidden lg:block z-10 animate-float-slow">
           {/* Growth Metric Card */}
           <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold">
@@ -411,18 +423,14 @@ const AveronWebsite = () => {
               <span className="font-accent text-emerald-400 font-bold text-lg">+342%</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Floating Code Icon */}
-        <motion.div
-          className="absolute top-40 right-[12%] hidden lg:block z-10"
-          animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        >
+        {/* Floating Code Icon - CSS-optimized */}
+        <div className="absolute top-40 right-[12%] hidden lg:block z-10 animate-float-medium">
           <div className="bg-purple-500/20 backdrop-blur-md rounded-xl p-3 border border-purple-400/30">
             <div className="text-emerald-400 font-mono text-xs">{"</>"}</div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto relative z-10 text-center">

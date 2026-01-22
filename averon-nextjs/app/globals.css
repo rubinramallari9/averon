@@ -10,6 +10,16 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize scrolling performance */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Typography Enhancements - Dual Typography System */
 @layer base {
   /* Base defaults - Typography B (Elegant) */
@@ -199,15 +209,13 @@ nextjs-portal {
   to { transform: rotate(-360deg); }
 }
 
-/* ✨ Breathing effect - more subtle than pulse */
+/* ✨ Breathing effect - optimized (no filter for better perf) */
 @keyframes orbitBreath {
   0%, 100% {
     opacity: 0.5;
-    filter: brightness(1);
   }
   50% {
     opacity: 0.75;
-    filter: brightness(1.2);
   }
 }
 
@@ -223,16 +231,27 @@ nextjs-portal {
   }
 }
 
-/* React orbit wrapper positioning */
+/* React orbit wrapper positioning - optimized containment */
 .react-orbit-wrapper {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+/* GPU acceleration for animated elements */
+.phone-wrapper {
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-/* GPU acceleration for animated elements */
-.phone-wrapper,
-.logo-ios15-wrapper,
+/* Logo wrapper - no backface-visibility to preserve image quality */
+.logo-ios15-wrapper {
+  will-change: transform;
+}
+
+/* Orbit animations - isolated layer for smooth performance */
 .orbit-a,
 .orbit-b,
 .orbit-c,
@@ -242,6 +261,44 @@ nextjs-portal {
   will-change: transform, opacity;
   transform: translateZ(0);
   backface-visibility: hidden;
+  contain: layout style;
+}
+
+/* ============================================
+   AMBIENT GLOW PULSE ANIMATIONS - GPU Optimized
+   ============================================ */
+@keyframes ambientPulse1 {
+  0%, 100% {
+    transform: scale(1) translateZ(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2) translateZ(0);
+    opacity: 0.4;
+  }
+}
+
+@keyframes ambientPulse2 {
+  0%, 100% {
+    transform: scale(1) translateZ(0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.3) translateZ(0);
+    opacity: 0.35;
+  }
+}
+
+.animate-ambient-pulse-1 {
+  animation: ambientPulse1 8s ease-in-out infinite;
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+.animate-ambient-pulse-2 {
+  animation: ambientPulse2 10s ease-in-out infinite;
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 
 /* Reduce motion for users who prefer it */
@@ -257,7 +314,9 @@ nextjs-portal {
   .animate-text-shine,
   .animate-float-slow,
   .animate-float-medium,
-  .animate-float-fast {
+  .animate-float-fast,
+  .animate-ambient-pulse-1,
+  .animate-ambient-pulse-2 {
     animation: none !important;
   }
 
@@ -406,6 +465,8 @@ nextjs-portal {
 .logo-glow {
   filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
   transition: filter 0.6s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .logo-ios15-wrapper:hover .logo-glow {
@@ -886,35 +947,19 @@ nextjs-portal {
 
 @keyframes floatSlow {
   0%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.2;
-  }
-  25% {
-    transform: translate(10px, -15px);
-    opacity: 0.25;
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate(-15px, 10px);
-    opacity: 0.3;
-  }
-  75% {
-    transform: translate(20px, 5px);
-    opacity: 0.25;
+    transform: translate3d(0, -20px, 0);
   }
 }
 
 @keyframes floatMedium {
   0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.25;
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
-  33% {
-    transform: translate(-20px, 15px) scale(1.05);
-    opacity: 0.3;
-  }
-  66% {
-    transform: translate(15px, -20px) scale(0.95);
-    opacity: 0.28;
+  50% {
+    transform: translate3d(0, 15px, 0) rotate(-5deg);
   }
 }
 
@@ -942,15 +987,21 @@ nextjs-portal {
 }
 
 .animate-float-slow {
-  animation: floatSlow 20s ease-in-out infinite;
+  animation: floatSlow 4s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .animate-float-medium {
-  animation: floatMedium 15s ease-in-out infinite;
+  animation: floatMedium 5s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .animate-float-fast {
-  animation: floatFast 12s ease-in-out infinite;
+  animation: floatFast 3s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* ============================================

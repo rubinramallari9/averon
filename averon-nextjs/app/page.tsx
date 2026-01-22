@@ -273,15 +273,16 @@ const AveronWebsite = () => {
     "Fast turnaround times"
   ];
 
-  // Averon Logo SVG Component
+  // Averon Logo Component
   const AveronLogo = ({ className = "w-40" }: { className?: string }) => (
     <Image
       src="/averon_logobg.png"
       alt="Averon Digital"
-      width={176}
-      height={50}
+      width={560}
+      height={160}
       className={className}
       priority
+      quality={100}
     />
   );
 
@@ -632,7 +633,7 @@ const AveronWebsite = () => {
           <div className="logo-hover-area">
             {/* Logo with glow effect */}
             <div className="logo-ios15-wrapper flex flex-col items-center">
-              <AveronLogo className="logo-glow w-96 sm:w-[480px] lg:w-[560px]" />
+              <AveronLogo className="logo-glow w-72 sm:w-80 lg:w-96" />
               <Link
                 href="/our-work"
                 className="mt-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"

@@ -67,6 +67,7 @@ build/
 eggs/
 .eggs/
 lib/
+!averon-nextjs/lib/
 lib64/
 parts/
 sdist/

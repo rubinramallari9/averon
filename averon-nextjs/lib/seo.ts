@@ -92,8 +92,7 @@ export const defaultSEO: Metadata = {
     },
   },
   verification: {
-    // google: 'your-google-verification-code', // Add via Google Search Console
-    // yandex: 'your-yandex-verification-code', // Add if targeting Russian/CIS markets
+    google: 'QN9a17gsvN_DBDSB7hniWRUx68iG5bx5DivlIzXkptE',
   },
 };
 

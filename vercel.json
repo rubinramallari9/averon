@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd averon-nextjs && npm install && npm run build",
-  "outputDirectory": "averon-nextjs/.next",
-  "installCommand": "cd averon-nextjs && npm install",
-  "framework": "nextjs"
-}

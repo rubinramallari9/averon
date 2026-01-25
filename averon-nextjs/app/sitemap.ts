@@ -7,7 +7,7 @@ import { MetadataRoute } from 'next'
  */
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://averon.al'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://averon.agency'
   const currentDate = new Date()
 
   return [

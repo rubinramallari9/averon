@@ -2,7 +2,7 @@
 import { Metadata } from 'next';
 
 // Base URL configuration
-export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://averon.al';
+export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://averon.agency';
 
 // Default SEO configuration
 export const defaultSEO: Metadata = {

@@ -1,4 +1,4 @@
-# robots.txt for Averon Digital - https://averon.al
+# robots.txt for Averon Digital - https://averon.agency
 # Updated: 2026-01-13
 
 # Allow all good crawlers to index everything (except specified)
@@ -10,7 +10,7 @@ Disallow: /_next/
 Disallow: /static/
 
 # Sitemap location - dynamically generated
-Sitemap: https://averon.al/sitemap.xml
+Sitemap: https://averon.agency/sitemap.xml
 
 # No crawl delay for major search engines (fast indexing)
 Crawl-delay: 0

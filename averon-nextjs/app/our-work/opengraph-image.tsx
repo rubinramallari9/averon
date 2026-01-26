@@ -38,7 +38,7 @@ export default async function Image() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+            backgroundImage: 'radial-gradient(circle at 50% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
             display: 'flex',
           }}
         />
@@ -53,23 +53,25 @@ export default async function Image() {
             zIndex: 10,
           }}
         >
-          {/* Logo Image */}
+          {/* Logo Image - keeping square aspect ratio */}
           <img
             src={`data:image/png;base64,${Buffer.from(logoData).toString('base64')}`}
-            width={600}
-            height={180}
+            width={280}
+            height={280}
             style={{
-              marginBottom: 40,
+              marginBottom: 20,
+              objectFit: 'contain',
             }}
           />
 
-          {/* Page Title */}
+          {/* Page Title - moved down */}
           <div
             style={{
-              fontSize: 64,
+              fontSize: 56,
               fontWeight: 700,
               color: '#ffffff',
-              marginBottom: 20,
+              marginTop: 10,
+              marginBottom: 15,
               display: 'flex',
             }}
           >
@@ -79,9 +81,9 @@ export default async function Image() {
           {/* Subtitle */}
           <div
             style={{
-              fontSize: 28,
+              fontSize: 24,
               color: '#94a3b8',
-              marginBottom: 40,
+              marginBottom: 30,
               display: 'flex',
               textAlign: 'center',
             }}
@@ -93,7 +95,7 @@ export default async function Image() {
           <div
             style={{
               display: 'flex',
-              gap: 16,
+              gap: 12,
               flexWrap: 'wrap',
               justifyContent: 'center',
             }}
@@ -105,8 +107,8 @@ export default async function Image() {
                   background: 'rgba(139, 92, 246, 0.2)',
                   border: '1px solid rgba(139, 92, 246, 0.4)',
                   borderRadius: 20,
-                  padding: '8px 20px',
-                  fontSize: 18,
+                  padding: '6px 16px',
+                  fontSize: 16,
                   color: '#c4b5fd',
                   display: 'flex',
                 }}
@@ -121,8 +123,8 @@ export default async function Image() {
         <div
           style={{
             position: 'absolute',
-            bottom: 30,
-            fontSize: 22,
+            bottom: 25,
+            fontSize: 20,
             color: '#64748b',
             display: 'flex',
           }}
@@ -130,7 +132,7 @@ export default async function Image() {
           averon.agency/our-work
         </div>
 
-        {/* Decorative Elements */}
+        {/* Decorative Element - only on right side */}
         <div
           style={{
             position: 'absolute',
@@ -141,19 +143,6 @@ export default async function Image() {
             borderRadius: '50%',
             background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3))',
             filter: 'blur(40px)',
-            display: 'flex',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 80,
-            left: 60,
-            width: 150,
-            height: 150,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.2))',
-            filter: 'blur(50px)',
             display: 'flex',
           }}
         />

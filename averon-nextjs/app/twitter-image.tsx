@@ -38,7 +38,7 @@ export default async function Image() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+            backgroundImage: 'radial-gradient(circle at 50% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
             display: 'flex',
           }}
         />
@@ -53,13 +53,14 @@ export default async function Image() {
             zIndex: 10,
           }}
         >
-          {/* Logo Image */}
+          {/* Logo Image - keeping square aspect ratio */}
           <img
             src={`data:image/png;base64,${Buffer.from(logoData).toString('base64')}`}
-            width={800}
-            height={240}
+            width={320}
+            height={320}
             style={{
-              marginBottom: 50,
+              marginBottom: 30,
+              objectFit: 'contain',
             }}
           />
 
@@ -68,7 +69,7 @@ export default async function Image() {
             style={{
               fontSize: 36,
               color: '#e2e8f0',
-              marginBottom: 40,
+              marginBottom: 35,
               display: 'flex',
             }}
           >
@@ -79,7 +80,7 @@ export default async function Image() {
           <div
             style={{
               display: 'flex',
-              gap: 16,
+              gap: 14,
               flexWrap: 'wrap',
               justifyContent: 'center',
             }}
@@ -91,8 +92,8 @@ export default async function Image() {
                   background: 'rgba(139, 92, 246, 0.2)',
                   border: '1px solid rgba(139, 92, 246, 0.4)',
                   borderRadius: 20,
-                  padding: '10px 24px',
-                  fontSize: 22,
+                  padding: '8px 20px',
+                  fontSize: 20,
                   color: '#c4b5fd',
                   display: 'flex',
                 }}
@@ -101,28 +102,14 @@ export default async function Image() {
               </div>
             ))}
           </div>
-
-          {/* Location */}
-          <div
-            style={{
-              fontSize: 26,
-              color: '#94a3b8',
-              marginTop: 40,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
-            Tirana, Albania
-          </div>
         </div>
 
         {/* Website URL */}
         <div
           style={{
             position: 'absolute',
-            bottom: 30,
-            fontSize: 24,
+            bottom: 25,
+            fontSize: 22,
             color: '#64748b',
             display: 'flex',
           }}
@@ -130,7 +117,7 @@ export default async function Image() {
           averon.agency
         </div>
 
-        {/* Decorative Elements */}
+        {/* Decorative Element - only on right side */}
         <div
           style={{
             position: 'absolute',
@@ -141,19 +128,6 @@ export default async function Image() {
             borderRadius: '50%',
             background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3))',
             filter: 'blur(50px)',
-            display: 'flex',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 80,
-            left: 60,
-            width: 180,
-            height: 180,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.2))',
-            filter: 'blur(60px)',
             display: 'flex',
           }}
         />

@@ -10,6 +10,11 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image() {
+  // Fetch the logo
+  const logoData = await fetch(
+    new URL('../../public/averon_logobg.png', import.meta.url)
+  ).then((res) => res.arrayBuffer())
+
   return new ImageResponse(
     (
       <div
@@ -33,7 +38,7 @@ export default async function Image() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
+            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
             display: 'flex',
           }}
         />
@@ -48,20 +53,15 @@ export default async function Image() {
             zIndex: 10,
           }}
         >
-          {/* Logo Text */}
-          <div
+          {/* Logo Image */}
+          <img
+            src={`data:image/png;base64,${Buffer.from(logoData).toString('base64')}`}
+            width={300}
+            height={90}
             style={{
-              fontSize: 48,
-              fontWeight: 800,
-              background: 'linear-gradient(90deg, #ffffff 0%, #a78bfa 100%)',
-              backgroundClip: 'text',
-              color: 'transparent',
-              marginBottom: 10,
-              display: 'flex',
+              marginBottom: 20,
             }}
-          >
-            AVERON
-          </div>
+          />
 
           {/* Page Title */}
           <div

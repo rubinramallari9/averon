@@ -392,7 +392,7 @@ const AveronWebsite = () => {
       </nav>
 
       {/* Hero Section - Payking Style */}
-      <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
+      <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
         {/* Ambient Glow Orbs - CSS-optimized for better GPU performance */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div
@@ -602,7 +602,7 @@ const AveronWebsite = () => {
           >
             <div className="w-full h-12 sm:h-20 lg:h-24">
               <div className="flex items-center justify-center gap-6 sm:gap-12 lg:gap-16 h-full px-4">
-                <a href="https://rasimrama.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-24 sm:w-32 lg:w-40">
+                <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-24 sm:w-32 lg:w-40">
                   <Image
                     src="/trusted_logos/rasimramalogo.png"
                     alt="Rasim Rama"
@@ -994,22 +994,6 @@ const AveronWebsite = () => {
             </div>
 
             <div className="relative">
-              {/* Decorative Background Pattern */}
-              <div className="absolute inset-0 overflow-hidden rounded-3xl opacity-10">
-                <div className="absolute top-0 left-0 w-full h-full">
-                  <svg className="w-full h-full" viewBox="0 0 400 400">
-                    <defs>
-                      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-purple-400"/>
-                      </pattern>
-                    </defs>
-                    <rect width="400" height="400" fill="url(#grid)" />
-                    <circle cx="100" cy="100" r="50" fill="currentColor" className="text-emerald-400" opacity="0.1"/>
-                    <circle cx="300" cy="300" r="70" fill="currentColor" className="text-purple-400" opacity="0.1"/>
-                  </svg>
-                </div>
-              </div>
-
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
 
               {/* React Atomic Orbital Animation */}

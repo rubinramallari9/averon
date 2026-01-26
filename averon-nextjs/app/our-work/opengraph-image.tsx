@@ -56,10 +56,10 @@ export default async function Image() {
           {/* Logo Image */}
           <img
             src={`data:image/png;base64,${Buffer.from(logoData).toString('base64')}`}
-            width={300}
-            height={90}
+            width={450}
+            height={135}
             style={{
-              marginBottom: 20,
+              marginBottom: 30,
             }}
           />
 

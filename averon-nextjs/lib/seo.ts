@@ -143,13 +143,11 @@ export const organizationSchema = {
     },
   ],
   sameAs: [
-    // Add your actual social media URLs here when created
-    // 'https://www.facebook.com/averondigital',
-    // 'https://www.instagram.com/averondigital',
-    // 'https://www.linkedin.com/company/averondigital',
-    // 'https://twitter.com/averondigital',
-    // 'https://www.youtube.com/@averondigital',
-    // 'https://github.com/averondigital',
+    'https://www.instagram.com/averonagency/',
+    // Add more social media URLs as you create them:
+    // 'https://www.facebook.com/averonagency',
+    // 'https://www.linkedin.com/company/averonagency',
+    // 'https://twitter.com/averonagency',
   ],
   foundingDate: '2024',
   foundingLocation: 'Tirana, Albania',

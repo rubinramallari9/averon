@@ -56,22 +56,22 @@ export default async function Image() {
           {/* Logo Image - keeping square aspect ratio */}
           <img
             src={`data:image/png;base64,${Buffer.from(logoData).toString('base64')}`}
-            width={280}
-            height={280}
+            width={240}
+            height={240}
             style={{
-              marginBottom: 20,
+              marginBottom: -30,
               objectFit: 'contain',
             }}
           />
 
-          {/* Page Title - moved down */}
+          {/* Page Title - overlapping logo slightly */}
           <div
             style={{
               fontSize: 56,
               fontWeight: 700,
               color: '#ffffff',
-              marginTop: 10,
-              marginBottom: 15,
+              marginTop: 0,
+              marginBottom: 10,
               display: 'flex',
             }}
           >

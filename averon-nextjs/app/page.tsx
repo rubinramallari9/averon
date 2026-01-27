@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, memo, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, Instagram, Linkedin, Facebook } from 'lucide-react';
-import { motion } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
 import { apiClient } from '@/lib/api';
 import {
@@ -18,6 +17,70 @@ import {
   BLUR_REALESTATE_MOCKUP,
   BLUR_RESTAURANT_MOCKUP,
 } from '@/lib/blurPlaceholders';
+
+// Lazy load framer-motion to reduce initial bundle (~47KB savings)
+const MotionDiv = lazy(() =>
+  import('framer-motion').then((mod) => ({
+    default: mod.motion.div,
+  }))
+);
+
+// AnimatedDiv props - use any for framer-motion compatibility
+interface AnimatedDivProps {
+  children?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  initial?: any;
+  animate?: any;
+  whileInView?: any;
+  viewport?: any;
+  transition?: any;
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+}
+
+// Fallback for SSR/initial load - renders without animation
+const AnimatedDiv = ({
+  children,
+  className,
+  style,
+  initial,
+  animate,
+  whileInView,
+  viewport,
+  transition,
+}: AnimatedDivProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    // SSR/initial render - just render the div without animation
+    return (
+      <div className={className} style={style}>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <Suspense fallback={<div className={className} style={style}>{children}</div>}>
+      <MotionDiv
+        className={className}
+        style={style}
+        initial={initial}
+        animate={animate}
+        whileInView={whileInView}
+        viewport={viewport}
+        transition={transition}
+      >
+        {children}
+      </MotionDiv>
+    </Suspense>
+  );
+};
 
 // ============================================
 // STATIC DATA - Moved outside component to prevent recreation
@@ -140,50 +203,73 @@ const AveronWebsite = () => {
     };
   }, [activeServiceCard]);
 
-  // Refs for scroll optimization
+  // Refs for scroll optimization - cache layout values
   const rafRef = useRef<number | null>(null);
+  const layoutCacheRef = useRef<{
+    sectionTop: number;
+    sectionHeight: number;
+    pathLength: number;
+    mobilePathLength: number;
+  } | null>(null);
 
-  // Optimized scroll handler - removed unused state updates
+  // Cache layout values on mount and resize (prevents forced reflow)
+  const cacheLayoutValues = useCallback(() => {
+    const path = document.getElementById('processPath') as unknown as SVGPathElement;
+    const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
+    const processSection = document.getElementById('process-section');
+
+    if (path && processSection) {
+      layoutCacheRef.current = {
+        sectionTop: processSection.offsetTop,
+        sectionHeight: processSection.offsetHeight,
+        pathLength: path.getTotalLength(),
+        mobilePathLength: mobilePath?.getTotalLength() ?? 0,
+      };
+
+      // Set initial dasharray
+      path.style.strokeDasharray = `${layoutCacheRef.current.pathLength}`;
+      path.style.strokeDashoffset = `${layoutCacheRef.current.pathLength}`;
+
+      if (mobilePath) {
+        mobilePath.style.strokeDasharray = `${layoutCacheRef.current.mobilePathLength}`;
+        mobilePath.style.strokeDashoffset = `${layoutCacheRef.current.mobilePathLength}`;
+      }
+    }
+  }, []);
+
+  // Optimized scroll handler - uses cached values (no DOM reads)
   const handleScrollOptimized = useCallback(() => {
+    const cache = layoutCacheRef.current;
+    if (!cache) return;
+
     const currentScrollY = window.scrollY;
 
     // Desktop path animation
     const path = document.getElementById('processPath') as unknown as SVGPathElement;
-    const processSection = document.getElementById('process-section');
-
-    if (path && processSection) {
-      const length = path.getTotalLength();
-      const sectionTop = processSection.offsetTop;
-      const sectionHeight = processSection.offsetHeight;
-
-      let progress = (currentScrollY - sectionTop + window.innerHeight * 0.5) / sectionHeight;
+    if (path) {
+      let progress = (currentScrollY - cache.sectionTop + window.innerHeight * 0.5) / cache.sectionHeight;
       progress = Math.min(Math.max(progress, 0), 1);
 
       const easedProgress = progress < 0.5
         ? 2 * progress * progress
         : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      const draw = length * easedProgress;
-      path.style.strokeDashoffset = `${length - draw}`;
+      const draw = cache.pathLength * easedProgress;
+      path.style.strokeDashoffset = `${cache.pathLength - draw}`;
     }
 
     // Mobile path animation
     const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
-
-    if (mobilePath && processSection) {
-      const mobileLength = mobilePath.getTotalLength();
-      const sectionTop = processSection.offsetTop;
-      const sectionHeight = processSection.offsetHeight;
-
-      let progress = (currentScrollY - sectionTop + window.innerHeight * 0.3) / sectionHeight;
+    if (mobilePath && cache.mobilePathLength > 0) {
+      let progress = (currentScrollY - cache.sectionTop + window.innerHeight * 0.3) / cache.sectionHeight;
       progress = Math.min(Math.max(progress, 0), 1);
 
       const easedProgress = progress < 0.5
         ? 2 * progress * progress
         : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      const draw = mobileLength * easedProgress;
-      mobilePath.style.strokeDashoffset = `${mobileLength - draw}`;
+      const draw = cache.mobilePathLength * easedProgress;
+      mobilePath.style.strokeDashoffset = `${cache.mobilePathLength - draw}`;
     }
 
     rafRef.current = null;
@@ -197,32 +283,34 @@ const AveronWebsite = () => {
       }
     };
 
-    // Initialize path dasharray on mount
-    const path = document.getElementById('processPath') as unknown as SVGPathElement;
-    const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
+    // Cache layout values after mount
+    // Use setTimeout to ensure DOM is fully rendered
+    const initTimer = setTimeout(() => {
+      cacheLayoutValues();
+      handleScrollOptimized();
+    }, 100);
 
-    if (path) {
-      const length = path.getTotalLength();
-      path.style.strokeDasharray = `${length}`;
-      path.style.strokeDashoffset = `${length}`;
-    }
+    // Re-cache on resize using ResizeObserver
+    const resizeObserver = new ResizeObserver(() => {
+      cacheLayoutValues();
+    });
 
-    if (mobilePath) {
-      const mobileLength = mobilePath.getTotalLength();
-      mobilePath.style.strokeDasharray = `${mobileLength}`;
-      mobilePath.style.strokeDashoffset = `${mobileLength}`;
+    const processSection = document.getElementById('process-section');
+    if (processSection) {
+      resizeObserver.observe(processSection);
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    handleScrollOptimized(); // Initial check
 
     return () => {
+      clearTimeout(initTimer);
       window.removeEventListener('scroll', onScroll);
+      resizeObserver.disconnect();
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScrollOptimized]);
+  }, [handleScrollOptimized, cacheLayoutValues]);
 
   // Memoized click handlers
   const handleWorkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -382,15 +470,15 @@ const AveronWebsite = () => {
 
       {/* Hero Section */}
       <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
-        {/* Ambient Glow Orbs */}
+        {/* Ambient Glow Orbs - GPU optimized with transform */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div
             className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-1"
-            style={{ backgroundColor: '#6366f1', willChange: 'transform, opacity' }}
+            style={{ backgroundColor: '#6366f1' }}
           />
           <div
             className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-2"
-            style={{ backgroundColor: '#8b5cf6', willChange: 'transform, opacity' }}
+            style={{ backgroundColor: '#8b5cf6' }}
           />
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-transparent to-emerald-600/20" />
@@ -420,7 +508,7 @@ const AveronWebsite = () => {
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <motion.div
+          <AnimatedDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -449,10 +537,10 @@ const AveronWebsite = () => {
                 <span>Our Work</span>
               </button>
             </div>
-          </motion.div>
+          </AnimatedDiv>
 
           {/* Dashboard Preview */}
-          <motion.div
+          <AnimatedDiv
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -510,7 +598,7 @@ const AveronWebsite = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </AnimatedDiv>
         </div>
 
         <ScrollArrow />
@@ -525,32 +613,32 @@ const AveronWebsite = () => {
       {/* Services - Progressive Scroll */}
       <section id="services" className="typography-b relative">
         <div className="text-center pt-16 sm:pt-24 pb-8 sm:pb-12 px-4">
-          <motion.h2
+          <AnimatedDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
           >
-            Our Services
-          </motion.h2>
-          <motion.p
+            <h2>Our Services</h2>
+          </AnimatedDiv>
+          <AnimatedDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-sm sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto leading-relaxed"
           >
-            Comprehensive digital solutions tailored to accelerate your business growth
-          </motion.p>
+            <p>Comprehensive digital solutions tailored to accelerate your business growth</p>
+          </AnimatedDiv>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {services.map((service, index) => (
-            <motion.div
+            <AnimatedDiv
               key={index}
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-100px" } as Record<string, unknown>}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="relative py-12 sm:py-20 lg:py-24"
             >
@@ -559,9 +647,9 @@ const AveronWebsite = () => {
               </div>
 
               <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16`}>
-                <motion.div
+                <AnimatedDiv
                   className="flex-shrink-0"
-                  whileInView={{ scale: [0.8, 1], rotate: [0, 360] }}
+                  whileInView={{ scale: [0.8, 1], rotate: [0, 360] } as Record<string, unknown>}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 >
@@ -571,10 +659,10 @@ const AveronWebsite = () => {
                       {service.icon}
                     </div>
                   </div>
-                </motion.div>
+                </AnimatedDiv>
 
                 <div className="flex-1 text-center lg:text-left">
-                  <motion.div
+                  <AnimatedDiv
                     initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -589,12 +677,12 @@ const AveronWebsite = () => {
                     <p className="text-purple-200/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
                       {service.description}
                     </p>
-                  </motion.div>
+                  </AnimatedDiv>
                 </div>
               </div>
 
               {index < services.length - 1 && (
-                <motion.div
+                <AnimatedDiv
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -602,11 +690,11 @@ const AveronWebsite = () => {
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 sm:w-48 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
                 />
               )}
-            </motion.div>
+            </AnimatedDiv>
           ))}
         </div>
 
-        <motion.div
+        <AnimatedDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -635,7 +723,7 @@ const AveronWebsite = () => {
               </a>
             </div>
           </div>
-        </motion.div>
+        </AnimatedDiv>
       </section>
 
       {/* Agency Accelerator iOS15 Style Section */}
@@ -920,7 +1008,11 @@ const AveronWebsite = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
+              {/* GPU-optimized pulse - uses transform instead of just opacity */}
+              <div
+                className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl animate-ambient-pulse-1"
+                style={{ opacity: 0.3 }}
+              />
 
               {/* React Orbital Animation */}
               <div
@@ -1035,7 +1127,7 @@ const AveronWebsite = () => {
             </button>
 
             {submitStatus.type && (
-              <motion.div
+              <AnimatedDiv
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className={`p-3 sm:p-4 rounded-lg text-center font-semibold text-sm sm:text-base ${
@@ -1045,7 +1137,7 @@ const AveronWebsite = () => {
                 }`}
               >
                 {submitStatus.message}
-              </motion.div>
+              </AnimatedDiv>
             )}
           </form>
 

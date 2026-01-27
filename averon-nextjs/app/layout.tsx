@@ -6,9 +6,9 @@ import {
   organizationSchema,
   localBusinessSchema,
   websiteSchema,
-  getSchemaScript
 } from "@/lib/seo";
 import InitialLoadingScreen from "@/components/InitialLoadingScreen";
+import DeferredStyles from "@/components/DeferredStyles";
 
 // PRIMARY (60%) - Inter for body text, descriptions, most content
 const inter = Inter({
@@ -88,10 +88,9 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} ${lora.variable} antialiased`}
       >
         <InitialLoadingScreen />
+        <DeferredStyles />
         {children}
       </body>
     </html>
   );
 }
-
-

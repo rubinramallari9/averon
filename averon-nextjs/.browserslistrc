@@ -1,0 +1,17 @@
+# Modern browsers only - no polyfills for ES2020+ features
+# This eliminates ~14KB of unnecessary polyfills
+
+# Target browsers with native ES2020+ support
+chrome >= 80
+firefox >= 74
+safari >= 14
+edge >= 80
+
+# Exclude IE entirely
+not ie 11
+not ie_mob 11
+
+# Exclude old mobile browsers
+not op_mini all
+not android < 80
+not ios_saf < 14

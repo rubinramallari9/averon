@@ -613,23 +613,23 @@ const AveronWebsite = () => {
           transition={{ duration: 0.8 }}
           className="py-12 sm:py-16"
         >
-          <div className="w-full h-16 sm:h-24 lg:h-28">
-            <div className="flex items-center justify-center gap-6 sm:gap-12 lg:gap-16 h-full px-4">
-              <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-32 sm:w-40 lg:w-48">
+          <div className="w-full h-24 sm:h-32 lg:h-40">
+            <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-20 h-full px-4">
+              <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
                 <Image
                   src="/trusted_logos/rasimramalogo.png"
                   alt="Rasim Rama"
                   fill
-                  sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
+                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
                   className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>
-              <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-32 sm:w-40 lg:w-48">
+              <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
                 <Image
                   src="/trusted_logos/rubin-logo.svg"
                   alt="Rubin Ramallari"
                   fill
-                  sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
+                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
                   className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>

@@ -1070,7 +1070,7 @@ const AveronWebsite = () => {
                   </p>
                   <div className="flex gap-3">
                     <a
-                      href="https://instagram.com"
+                      href="https://www.instagram.com/averonagency/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"

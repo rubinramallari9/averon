@@ -1116,3 +1116,24 @@ document.addEventListener('DOMContentLoaded', function() {
 .animate-shimmer {
   animation: shimmer 3s infinite;
 }
+
+/* ============================================
+   LOADING BAR ANIMATION
+   Progress bar for loading screens
+   ============================================ */
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 2s ease-in-out infinite;
+}

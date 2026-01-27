@@ -840,63 +840,6 @@ const AveronWebsite = () => {
               />
             </svg>
 
-            {/* Mobile Timeline Dots */}
-            <div className="md:hidden absolute left-[30px] top-[80px] timeline-dot" style={{
-              width: '20px',
-              height: '20px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #ec4899, #a855f7)',
-              boxShadow: '0 0 12px rgba(168, 85, 247, 0.8)',
-              opacity: 0.3,
-              transform: 'scale(0.8)',
-              transition: 'all 0.4s ease',
-              zIndex: 5
-            }}></div>
-
-            <div className="md:hidden absolute left-[30px] top-[370px] timeline-dot" style={{
-              width: '20px',
-              height: '20px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-              boxShadow: '0 0 12px rgba(236, 72, 153, 0.8)',
-              opacity: 0.3,
-              transform: 'scale(0.8)',
-              transition: 'all 0.4s ease',
-              zIndex: 5
-            }}></div>
-
-            <div className="md:hidden absolute left-[30px] top-[660px] timeline-dot" style={{
-              width: '20px',
-              height: '20px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #ec4899, #a855f7)',
-              boxShadow: '0 0 12px rgba(168, 85, 247, 0.8)',
-              opacity: 0.3,
-              transform: 'scale(0.8)',
-              transition: 'all 0.4s ease',
-              zIndex: 5
-            }}></div>
-
-            {/* Mobile X Marker */}
-            <div
-              id="mobileEndMarker"
-              className="md:hidden absolute pointer-events-none"
-              style={{
-                left: '40px',
-                top: '740px',
-                fontSize: '32px',
-                fontWeight: 900,
-                color: '#ff6db0',
-                opacity: 0,
-                transition: 'opacity 0.4s ease-out, transform 0.3s ease',
-                transform: 'scale(0.9)',
-                textShadow: '0 0 16px rgba(255, 109, 176, 0.9), 0 0 24px rgba(168, 85, 247, 0.5)',
-                zIndex: 20
-              }}
-            >
-              ✕
-            </div>
-
             <div className="relative space-y-8 sm:space-y-12 md:pl-0 pl-12 sm:pl-16" style={{zIndex: 5}}>
               {/* Step 1 - Top Left */}
               <div className="flex justify-start">

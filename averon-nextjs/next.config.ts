@@ -28,6 +28,13 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: false,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.jsdelivr.net',
+        pathname: '/gh/devicons/**',
+      },
+    ],
   },
 
   // Output configuration
@@ -86,7 +93,7 @@ const nextConfig: NextConfig = {
       default-src 'self';
       script-src 'self' 'unsafe-inline' 'unsafe-eval';
       style-src 'self' 'unsafe-inline';
-      img-src 'self' data: blob: https:;
+      img-src 'self' data: blob: https: https://cdn.jsdelivr.net;
       font-src 'self' data:;
       connect-src 'self' ${connectSrcOrigins};
       form-action 'self' ${apiOrigin};

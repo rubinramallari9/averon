@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, Instagram, Linkedin, Facebook } from 'lucide-react';
+import { motion } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
 import { apiClient } from '@/lib/api';
 import {
@@ -18,12 +19,102 @@ import {
   BLUR_RESTAURANT_MOCKUP,
 } from '@/lib/blurPlaceholders';
 
+// ============================================
+// STATIC DATA - Moved outside component to prevent recreation
+// ============================================
+const services = [
+  {
+    icon: <Zap className="w-8 h-8" />,
+    title: "Web Development",
+    description: "Custom websites and web applications built with cutting-edge technologies that convert visitors into customers."
+  },
+  {
+    icon: <ChartNoAxesCombined className="w-8 h-8" />,
+    title: "SEO",
+    description: "We offer a comprehensive range of services designed to boost your website's ranking and attract organic, non-paid Google search traffic."
+  },
+  {
+    icon: <Terminal className="w-8 h-8" />,
+    title: "Website Redesign",
+    description: "Whether you need a design refresh or a complete website overhaul, we analyze your site's pain points and opportunities to revitalize your digital presence."
+  },
+  {
+    icon: <Users className="w-8 h-8" />,
+    title: "Brand Design",
+    description: "Compelling brand identities and visual experiences that resonate with your audience and stand out in the market."
+  }
+] as const;
+
+const features = [
+  "Lifetime support & updates",
+  "Dedicated project manager",
+  "Mobile-first responsive design",
+  "SEO optimization included",
+  "Analytics & tracking setup",
+  "Fast turnaround times"
+] as const;
+
+// Tech stack data using devicon CDN (reliable, fast, cached by Next.js)
+const techStack = [
+  { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
+  { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+  { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+  { name: 'C++', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg' },
+  { name: 'C#', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg' },
+  { name: 'Java', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
+] as const;
+
+// ============================================
+// MEMOIZED COMPONENTS
+// ============================================
+
+// Memoized Logo Component - prevents recreation on parent re-renders
+const AveronLogo = memo(({ className = "w-40" }: { className?: string }) => (
+  <Image
+    src="/averon_logobg.png"
+    alt="Averon Digital"
+    width={560}
+    height={160}
+    className={className}
+    priority
+    quality={75} // Reduced from 100 - visually identical, smaller file
+  />
+));
+AveronLogo.displayName = 'AveronLogo';
+
+// Memoized Tech Icon Component
+const TechIcon = memo(({ name, src }: { name: string; src: string }) => (
+  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
+    <Image
+      src={src}
+      alt={name}
+      width={64}
+      height={64}
+      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
+      loading="lazy"
+    />
+    <span className="text-xs sm:text-sm font-semibold text-purple-200">{name}</span>
+  </div>
+));
+TechIcon.displayName = 'TechIcon';
+
+// ============================================
+// LAZY LOADED COMPONENTS - Only load when needed
+// ============================================
+
+// Service Modal - Only ~20% of users click service cards
+const ServiceModal = dynamic(() => import('@/components/ServiceModal'), {
+  loading: () => null,
+  ssr: false,
+});
+
+// ============================================
+// MAIN COMPONENT
+// ============================================
 const AveronWebsite = () => {
-  const [scrollY, setScrollY] = useState(0);
+  // Essential state only - removed unused scrollY, activeSection, isScrolled
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
-  const [activeSection, setActiveSection] = useState('');
-  const [isScrolled, setIsScrolled] = useState(false);
 
   // Contact form state
   const [contactForm, setContactForm] = useState({
@@ -49,38 +140,12 @@ const AveronWebsite = () => {
     };
   }, [activeServiceCard]);
 
-  // 🎯 Refs for scroll optimization
+  // Refs for scroll optimization
   const rafRef = useRef<number | null>(null);
-  const lastScrollY = useRef(0);
-  const isScrolledRef = useRef(false);
-  const activeSectionRef = useRef('');
 
-  // Optimized scroll handler using requestAnimationFrame
+  // Optimized scroll handler - removed unused state updates
   const handleScrollOptimized = useCallback(() => {
     const currentScrollY = window.scrollY;
-
-    // Update navbar state (only if changed)
-    const shouldBeScrolled = currentScrollY > 50;
-    if (shouldBeScrolled !== isScrolledRef.current) {
-      isScrolledRef.current = shouldBeScrolled;
-      setIsScrolled(shouldBeScrolled);
-    }
-
-    // Track active section
-    const sections = ['services', 'work', 'process', 'features', 'contact'];
-    for (const sectionId of sections) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 100 && rect.bottom >= 100) {
-          if (activeSectionRef.current !== sectionId) {
-            activeSectionRef.current = sectionId;
-            setActiveSection(sectionId);
-          }
-          break;
-        }
-      }
-    }
 
     // Desktop path animation
     const path = document.getElementById('processPath') as unknown as SVGPathElement;
@@ -104,9 +169,8 @@ const AveronWebsite = () => {
 
     // Mobile path animation
     const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
-    const mobileMarker = document.getElementById('mobileEndMarker');
 
-    if (mobilePath && mobileMarker && processSection) {
+    if (mobilePath && processSection) {
       const mobileLength = mobilePath.getTotalLength();
       const sectionTop = processSection.offsetTop;
       const sectionHeight = processSection.offsetHeight;
@@ -120,35 +184,6 @@ const AveronWebsite = () => {
 
       const draw = mobileLength * easedProgress;
       mobilePath.style.strokeDashoffset = `${mobileLength - draw}`;
-
-      // Animate dots
-      const dots = document.querySelectorAll('.timeline-dot');
-      dots.forEach((dot, index) => {
-        const dotProgress = (index + 1) / 3;
-        const dotElement = dot as HTMLElement;
-        if (easedProgress >= dotProgress - 0.1) {
-          dotElement.style.opacity = '1';
-          dotElement.style.transform = 'scale(1)';
-        } else {
-          dotElement.style.opacity = '0.3';
-          dotElement.style.transform = 'scale(0.8)';
-        }
-      });
-
-      // X marker appears when fully drawn
-      if (easedProgress >= 0.98) {
-        mobileMarker.style.opacity = '1';
-        mobileMarker.style.transform = 'scale(1.1)';
-      } else {
-        mobileMarker.style.opacity = '0';
-        mobileMarker.style.transform = 'scale(0.9)';
-      }
-    }
-
-    // Update scrollY state only when significantly changed (reduces re-renders)
-    if (Math.abs(currentScrollY - lastScrollY.current) > 10) {
-      lastScrollY.current = currentScrollY;
-      setScrollY(currentScrollY);
     }
 
     rafRef.current = null;
@@ -189,23 +224,21 @@ const AveronWebsite = () => {
     };
   }, [handleScrollOptimized]);
 
-  const handleWorkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // Memoized click handlers
+  const handleWorkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const workSection = document.getElementById('work');
     if (workSection) {
       workSection.scrollIntoView({ behavior: 'smooth' });
 
-      // After scroll completes, trigger the animation
       setTimeout(() => {
         const logoHoverArea = document.querySelector('.logo-hover-area') as HTMLElement;
         const workGrid = document.getElementById('work-grid');
 
         if (logoHoverArea && workGrid) {
-          // Manually add the hover classes to trigger animation
           workGrid.classList.add('show-images');
           logoHoverArea.classList.add('active');
 
-          // Remove after animation completes
           setTimeout(() => {
             workGrid.classList.remove('show-images');
             logoHoverArea.classList.remove('active');
@@ -213,21 +246,19 @@ const AveronWebsite = () => {
         }
       }, 800);
     }
-  };
+  }, []);
 
-  // Handle contact form submission
-  const handleContactSubmit = async (e: React.FormEvent) => {
+  const handleContactSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await apiClient.submitContact(contactForm);
+      await apiClient.submitContact(contactForm);
       setSubmitStatus({
         type: 'success',
         message: 'Thank you! We\'ll get back to you soon.',
       });
-      // Clear form
       setContactForm({ email: '', name: '', message: '' });
     } catch (error) {
       setSubmitStatus({
@@ -237,53 +268,14 @@ const AveronWebsite = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [contactForm]);
 
+  const scrollToSection = useCallback((sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    section?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
 
-  const services = [
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Web Development",
-      description: "Custom websites and web applications built with cutting-edge technologies that convert visitors into customers."
-    },
-    {
-      icon: <ChartNoAxesCombined className="w-8 h-8" />,
-      title: "SEO",
-      description: "We offer a comprehensive range of services designed to boost your website's ranking and attract organic, non-paid Google search traffic."
-    },
-    {
-      icon: <Terminal className="w-8 h-8" />,
-      title: "Website Redesign",
-      description: "Whether you need a design refresh or a complete website overhaul, we analyze your site's pain points and opportunities to revitalize your digital presence. "
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Brand Design",
-      description: "Compelling brand identities and visual experiences that resonate with your audience and stand out in the market."
-    }
-  ];
-
-  const features = [
-    "Lifetime support & updates",
-    "Dedicated project manager",
-    "Mobile-first responsive design",
-    "SEO optimization included",
-    "Analytics & tracking setup",
-    "Fast turnaround times"
-  ];
-
-  // Averon Logo Component
-  const AveronLogo = ({ className = "w-40" }: { className?: string }) => (
-    <Image
-      src="/averon_logobg.png"
-      alt="Averon Digital"
-      width={560}
-      height={160}
-      className={className}
-      priority
-      quality={100}
-    />
-  );
+  const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
 
   return (
     <div className="min-h-screen text-white overflow-x-hidden relative w-full" style={{
@@ -313,8 +305,7 @@ const AveronWebsite = () => {
                 href="#process-section"
                 onClick={(e) => {
                   e.preventDefault();
-                  const processSection = document.getElementById('process-section');
-                  processSection?.scrollIntoView({ behavior: 'smooth' });
+                  scrollToSection('process-section');
                 }}
                 className="text-sm font-medium text-white/80 hover:text-white transition-colors"
               >
@@ -348,14 +339,14 @@ const AveronWebsite = () => {
               <a
                 href="#services"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 Services
               </a>
               <Link
                 href="/our-work"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 Our Work
               </Link>
@@ -364,9 +355,8 @@ const AveronWebsite = () => {
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                 onClick={(e) => {
                   e.preventDefault();
-                  setMobileMenuOpen(false);
-                  const processSection = document.getElementById('process-section');
-                  processSection?.scrollIntoView({ behavior: 'smooth' });
+                  closeMobileMenu();
+                  scrollToSection('process-section');
                 }}
               >
                 Process
@@ -374,14 +364,14 @@ const AveronWebsite = () => {
               <a
                 href="#features"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 Features
               </a>
               <a
                 href="#contact"
                 className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 Contact
               </a>
@@ -390,9 +380,9 @@ const AveronWebsite = () => {
         </div>
       </nav>
 
-      {/* Hero Section - Payking Style */}
+      {/* Hero Section */}
       <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
-        {/* Ambient Glow Orbs - CSS-optimized for better GPU performance */}
+        {/* Ambient Glow Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div
             className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-1"
@@ -402,16 +392,13 @@ const AveronWebsite = () => {
             className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-2"
             style={{ backgroundColor: '#8b5cf6', willChange: 'transform, opacity' }}
           />
-
-          {/* Abstract Tech Mesh Background */}
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-transparent to-emerald-600/20" />
           </div>
         </div>
 
-        {/* Floating Decorative Elements - CSS-optimized */}
+        {/* Floating Decorative Elements */}
         <div className="absolute top-32 left-[15%] hidden lg:block z-10 animate-float-slow">
-          {/* Growth Metric Card */}
           <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold">
               <Terminal className="w-6 h-6" />
@@ -425,7 +412,6 @@ const AveronWebsite = () => {
           </div>
         </div>
 
-        {/* Floating Code Icon - CSS-optimized */}
         <div className="absolute top-40 right-[12%] hidden lg:block z-10 animate-float-medium">
           <div className="bg-purple-500/20 backdrop-blur-md rounded-xl p-3 border border-purple-400/30">
             <div className="text-emerald-400 font-mono text-xs">{"</>"}</div>
@@ -439,7 +425,6 @@ const AveronWebsite = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Main Heading - Payking Style */}
             <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 sm:mb-8 leading-[1.1] sm:leading-tight tracking-tight px-2 sm:px-0">
               <span className="text-white block sm:inline">Control Your</span>
               <br className="hidden sm:block" />
@@ -447,22 +432,15 @@ const AveronWebsite = () => {
               <span className="brand-averon text-emerald-400 block sm:inline">Averon</span>
             </h1>
 
-            {/* CTA Buttons - Payking Style */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-16 w-full max-w-sm sm:max-w-none sm:w-auto px-2 sm:px-0">
               <button
-                onClick={() => {
-                  const contactSection = document.getElementById('contact');
-                  contactSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => scrollToSection('contact')}
                 className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-emerald-400 hover:bg-emerald-500 active:bg-emerald-600 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/50 text-base sm:text-lg"
               >
                 <span>Contact</span>
               </button>
               <button
-                onClick={() => {
-                  const workSection = document.getElementById('work');
-                  workSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => scrollToSection('work')}
                 className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center justify-center space-x-2 text-base sm:text-lg"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -473,14 +451,13 @@ const AveronWebsite = () => {
             </div>
           </motion.div>
 
-          {/* Dashboard Preview - Glassmorphism with Floating Shadow */}
+          {/* Dashboard Preview */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
             className="relative max-w-6xl mx-auto shadow-2xl shadow-purple-900/50 px-2 sm:px-0"
           >
-            {/* Browser Window Frame */}
             <div className="bg-gradient-to-b from-purple-400/30 to-purple-500/30 backdrop-blur-xl rounded-t-xl sm:rounded-t-2xl border border-white/20 p-2 sm:p-3">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5 sm:gap-2">
@@ -494,10 +471,8 @@ const AveronWebsite = () => {
               </div>
             </div>
 
-            {/* Dashboard Content */}
             <div className="bg-[#2d1b4e]/50 backdrop-blur-xl border-x border-b border-white/20 rounded-b-xl sm:rounded-b-2xl overflow-hidden shadow-2xl">
               <div className="flex">
-                {/* Sidebar */}
                 <div className="w-48 bg-[#1e1433]/80 p-4 border-r border-white/10 hidden md:block">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
@@ -515,7 +490,6 @@ const AveronWebsite = () => {
                   </div>
                 </div>
 
-                {/* Main Content */}
                 <div className="flex-1 p-4 sm:p-6 bg-gradient-to-br from-white/5 to-white/10">
                   <div className="flex justify-between items-center mb-4 sm:mb-6">
                     <h2 className="text-white text-base sm:text-xl font-bold">Welcome Dashboard</h2>
@@ -524,14 +498,11 @@ const AveronWebsite = () => {
                       <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/10 rounded-lg"></div>
                     </div>
                   </div>
-
                   <div className="mb-3 sm:mb-4">
                     <div className="text-white/60 text-xs sm:text-sm mb-1">Active Projects:</div>
                     <div className="font-accent text-white text-2xl sm:text-3xl font-bold">24</div>
                   </div>
-
                   <div className="text-white/40 text-xs mb-3 sm:mb-4">Recent Activity</div>
-
                   <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <div className="bg-emerald-400/90 rounded-xl sm:rounded-2xl p-3 sm:p-4 h-20 sm:h-24"></div>
                     <div className="bg-purple-400/90 rounded-xl sm:rounded-2xl p-3 sm:p-4 h-20 sm:h-24"></div>
@@ -542,10 +513,8 @@ const AveronWebsite = () => {
           </motion.div>
         </div>
 
-        {/* Scroll Arrow */}
         <ScrollArrow />
 
-        {/* Smooth transition overlay - positioned at bottom of hero */}
         <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none" style={{
           background: 'linear-gradient(to bottom, transparent 0%, #0f0b1e 50%, transparent 100%)',
           mixBlendMode: 'multiply',
@@ -555,7 +524,6 @@ const AveronWebsite = () => {
 
       {/* Services - Progressive Scroll */}
       <section id="services" className="typography-b relative">
-        {/* Section Header */}
         <div className="text-center pt-16 sm:pt-24 pb-8 sm:pb-12 px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -576,7 +544,6 @@ const AveronWebsite = () => {
           </motion.p>
         </div>
 
-        {/* Progressive Scroll Services */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {services.map((service, index) => (
             <motion.div
@@ -587,13 +554,11 @@ const AveronWebsite = () => {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="relative py-12 sm:py-20 lg:py-24"
             >
-              {/* Service Number - Large Background */}
               <div className="absolute left-0 top-1/2 -translate-y-1/2 text-[120px] sm:text-[180px] lg:text-[220px] font-bold text-purple-500/5 select-none pointer-events-none leading-none -z-10">
                 0{index + 1}
               </div>
 
               <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16`}>
-                {/* Icon Side */}
                 <motion.div
                   className="flex-shrink-0"
                   whileInView={{ scale: [0.8, 1], rotate: [0, 360] }}
@@ -601,7 +566,6 @@ const AveronWebsite = () => {
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 >
                   <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-800 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/30 relative overflow-hidden">
-                    {/* Shimmer effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
                     <div className="text-white scale-150 sm:scale-[2] lg:scale-[2.5]">
                       {service.icon}
@@ -609,7 +573,6 @@ const AveronWebsite = () => {
                   </div>
                 </motion.div>
 
-                {/* Content Side */}
                 <div className="flex-1 text-center lg:text-left">
                   <motion.div
                     initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
@@ -630,7 +593,6 @@ const AveronWebsite = () => {
                 </div>
               </div>
 
-              {/* Divider Line (except last item) */}
               {index < services.length - 1 && (
                 <motion.div
                   initial={{ scaleX: 0 }}
@@ -644,7 +606,6 @@ const AveronWebsite = () => {
           ))}
         </div>
 
-        {/* Logo Container - Integrated */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -680,9 +641,7 @@ const AveronWebsite = () => {
       {/* Agency Accelerator iOS15 Style Section */}
       <section id="work" className="typography-b section-ios15 relative overflow-hidden">
         <div className="padding-bottom-2 padding-xhuge">
-          {/* Circular hover area */}
           <div className="logo-hover-area">
-            {/* Logo with glow effect */}
             <div className="logo-ios15-wrapper flex flex-col items-center">
               <AveronLogo className="logo-glow w-72 sm:w-80 lg:w-96" />
               <Link
@@ -696,7 +655,6 @@ const AveronWebsite = () => {
           </div>
 
           <div className="section-ios15-grid" id="work-grid">
-            {/* Row 1 (Top arc): vertical, vertical, horizontal, horizontal */}
             <div className="phones-row-1">
               <div className="phone-wrapper">
                 <Image
@@ -748,7 +706,6 @@ const AveronWebsite = () => {
               </div>
             </div>
 
-            {/* Row 2 (Bottom arc): horizontal, horizontal, vertical, vertical */}
             <div className="phones-row-2">
               <div className="phone-wrapper">
                 <Image
@@ -803,7 +760,7 @@ const AveronWebsite = () => {
         </div>
       </section>
 
-      {/* Process Section - Snake Path */}
+      {/* Process Section */}
       <section id="process-section" className="typography-a flex items-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-5xl mx-auto w-full">
           <div className="text-center mb-10 sm:mb-12">
@@ -813,9 +770,8 @@ const AveronWebsite = () => {
             </p>
           </div>
 
-          {/* Snake Path Layout */}
           <div className="relative">
-            {/* Desktop Animated SVG Snake Path */}
+            {/* Desktop SVG Path */}
             <svg
               className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
               style={{zIndex: 1}}
@@ -823,11 +779,6 @@ const AveronWebsite = () => {
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>
-                <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
-                  <stop offset="50%" style={{stopColor: '#ec4899', stopOpacity: 0.9}} />
-                  <stop offset="100%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
-                </linearGradient>
                 <linearGradient id="pinkPurpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" style={{stopColor: '#ff1e99', stopOpacity: 1}} />
                   <stop offset="50%" style={{stopColor: '#b200ff', stopOpacity: 1}} />
@@ -843,27 +794,18 @@ const AveronWebsite = () => {
               </defs>
               <path
                 id="processPath"
-                d="M 180 140
-                   C 280 130, 360 155, 480 145
-                   C 600 135, 680 165, 720 220
-                   S 710 305, 630 340
-                   C 520 380, 360 385, 220 365
-                   C 150 355, 100 375, 90 445
-                   C 85 495, 110 525, 220 570
-                   C 360 630, 480 670, 400 750"
+                d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
                 stroke="url(#pinkPurpleGradient)"
                 strokeWidth="12"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 filter="url(#glow)"
-                style={{
-                  transition: 'stroke-dashoffset 0.15s ease-out'
-                }}
+                style={{ transition: 'stroke-dashoffset 0.15s ease-out' }}
               />
             </svg>
 
-            {/* Mobile Vertical Timeline */}
+            {/* Mobile Path */}
             <svg
               className="md:hidden absolute left-4 top-0 h-full pointer-events-none"
               style={{zIndex: 1, width: '40px'}}
@@ -892,22 +834,18 @@ const AveronWebsite = () => {
             </svg>
 
             <div className="relative space-y-8 sm:space-y-12 md:pl-0 pl-12 sm:pl-16" style={{zIndex: 5}}>
-              {/* Step 1 - Top Left */}
+              {/* Step 1 */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
                   <div className="font-accent text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
                     01
                   </div>
                   <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
-                    {/* Discovery Illustration */}
                     <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
                       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="2" className="text-emerald-400"/>
                         <path d="M50 25 L50 50 L65 65" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-purple-400"/>
                         <circle cx="50" cy="50" r="4" fill="currentColor" className="text-emerald-400"/>
-                        <circle cx="30" cy="30" r="3" fill="currentColor" className="text-purple-400" opacity="0.6"/>
-                        <circle cx="70" cy="35" r="2" fill="currentColor" className="text-emerald-400" opacity="0.4"/>
-                        <circle cx="65" cy="70" r="2.5" fill="currentColor" className="text-purple-400" opacity="0.5"/>
                       </svg>
                     </div>
                     <div className="relative z-10">
@@ -918,7 +856,7 @@ const AveronWebsite = () => {
                 </div>
               </div>
 
-              {/* Step 2 - Middle Right */}
+              {/* Step 2 */}
               <div className="flex justify-end">
                 <div className="relative group w-full max-w-md">
                   <div className="font-accent text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -right-2 sm:-right-4 group-hover:text-purple-500/20 transition-colors">
@@ -933,24 +871,18 @@ const AveronWebsite = () => {
                 </div>
               </div>
 
-              {/* Step 3 - Bottom Left */}
+              {/* Step 3 */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
                   <div className="font-accent text-5xl sm:text-8xl font-bold text-purple-500/10 absolute -top-4 sm:-top-8 -left-2 sm:-left-4 group-hover:text-purple-500/20 transition-colors">
                     03
                   </div>
                   <div className="relative z-10 p-5 sm:p-8 bg-gradient-to-br from-black/40 to-purple-900/20 rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all overflow-hidden">
-                    {/* Launch & Grow Illustration */}
                     <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
                       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M50 20 L55 40 L50 45 L45 40 Z" fill="currentColor" className="text-emerald-400" opacity="0.7"/>
                         <path d="M45 45 L30 75 L35 75 L50 50 L65 75 L70 75 L55 45 Z" fill="currentColor" className="text-purple-400" opacity="0.6"/>
                         <circle cx="50" cy="45" r="6" fill="currentColor" className="text-emerald-400"/>
-                        <path d="M42 55 Q35 50 30 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-emerald-400" opacity="0.5"/>
-                        <path d="M58 55 Q65 50 70 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-emerald-400" opacity="0.5"/>
-                        <path d="M20 80 L80 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-purple-400"/>
-                        <circle cx="25" cy="75" r="2" fill="currentColor" className="text-emerald-400" opacity="0.6"/>
-                        <circle cx="75" cy="75" r="2" fill="currentColor" className="text-emerald-400" opacity="0.6"/>
                       </svg>
                     </div>
                     <div className="relative z-10">
@@ -990,7 +922,7 @@ const AveronWebsite = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
 
-              {/* React Atomic Orbital Animation */}
+              {/* React Orbital Animation */}
               <div
                 className="react-orbit-wrapper absolute pointer-events-none"
                 style={{
@@ -1002,11 +934,7 @@ const AveronWebsite = () => {
                   zIndex: 0
                 }}
               >
-                <svg
-                  className="w-full h-full"
-                  viewBox="0 0 500 500"
-                  style={{ overflow: 'visible' }}
-                >
+                <svg className="w-full h-full" viewBox="0 0 500 500" style={{ overflow: 'visible' }}>
                   <defs>
                     <filter id="orbitGlow">
                       <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -1029,115 +957,24 @@ const AveronWebsite = () => {
                       <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.75}} />
                     </linearGradient>
                   </defs>
-
-                  {/* Orbit A - Clockwise 12s */}
                   <g className="orbit-a">
-                    <ellipse
-                      cx="250"
-                      cy="250"
-                      rx="240"
-                      ry="100"
-                      fill="none"
-                      stroke="url(#orbitGradient1)"
-                      strokeWidth="3"
-                      filter="url(#orbitGlow)"
-                    />
+                    <ellipse cx="250" cy="250" rx="240" ry="100" fill="none" stroke="url(#orbitGradient1)" strokeWidth="3" filter="url(#orbitGlow)" />
                   </g>
-
-                  {/* Orbit B - Counter-clockwise 18s */}
                   <g className="orbit-b">
-                    <ellipse
-                      cx="250"
-                      cy="250"
-                      rx="240"
-                      ry="100"
-                      fill="none"
-                      stroke="url(#orbitGradient2)"
-                      strokeWidth="3.5"
-                      filter="url(#orbitGlow)"
-                    />
+                    <ellipse cx="250" cy="250" rx="240" ry="100" fill="none" stroke="url(#orbitGradient2)" strokeWidth="3.5" filter="url(#orbitGlow)" />
                   </g>
-
-                  {/* Orbit C - Clockwise 24s */}
                   <g className="orbit-c">
-                    <ellipse
-                      cx="250"
-                      cy="250"
-                      rx="240"
-                      ry="100"
-                      fill="none"
-                      stroke="url(#orbitGradient3)"
-                      strokeWidth="3"
-                      filter="url(#orbitGlow)"
-                    />
+                    <ellipse cx="250" cy="250" rx="240" ry="100" fill="none" stroke="url(#orbitGradient3)" strokeWidth="3" filter="url(#orbitGlow)" />
                   </g>
                 </svg>
               </div>
 
               <div className="relative bg-gradient-to-br from-purple-900/40 to-black/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-purple-500/30 p-6 sm:p-12 mx-2 sm:mx-0" style={{ zIndex: 5 }}>
                 <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center">Technologies We Master</h3>
-
-                {/* Tech Stack Grid */}
                 <div className="grid grid-cols-3 gap-3 sm:gap-6">
-                  {/* Python */}
-                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
-                    <img
-                      src="https://code.visualstudio.com/assets/home/language-python.png"
-                      alt="Python"
-                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
-                    />
-                    <span className="text-xs sm:text-sm font-semibold text-purple-200">Python</span>
-                  </div>
-
-                  {/* TypeScript */}
-                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
-                    <img
-                      src="https://code.visualstudio.com/assets/home/language-ts.png"
-                      alt="TypeScript"
-                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
-                    />
-                    <span className="text-xs sm:text-sm font-semibold text-purple-200">TypeScript</span>
-                  </div>
-
-                  {/* JavaScript */}
-                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
-                    <img
-                      src="https://code.visualstudio.com/assets/home/language-js.png"
-                      alt="JavaScript"
-                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
-                    />
-                    <span className="text-xs sm:text-sm font-semibold text-purple-200">JavaScript</span>
-                  </div>
-
-                  {/* C++ */}
-                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
-                    <img
-                      src="https://code.visualstudio.com/assets/home/language-cpp.png"
-                      alt="C++"
-                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
-                    />
-                    <span className="text-xs sm:text-sm font-semibold text-purple-200">C++</span>
-                  </div>
-
-                  {/* C# */}
-                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
-                    <img
-                      src="https://code.visualstudio.com/assets/home/language-cs.png"
-                      alt="C#"
-                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
-                    />
-                    <span className="text-xs sm:text-sm font-semibold text-purple-200">C#</span>
-                  </div>
-
-                  {/* Java */}
-                  <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
-                    <img
-                      src="https://code.visualstudio.com/assets/home/language-java.png"
-                      alt="Java"
-                      className="w-10 h-10 sm:w-16 sm:h-16 mb-2 sm:mb-3 object-contain"
-                    />
-                    <span className="text-xs sm:text-sm font-semibold text-purple-200">Java</span>
-                  </div>
+                  {techStack.map((tech) => (
+                    <TechIcon key={tech.name} name={tech.name} src={tech.src} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -1145,9 +982,8 @@ const AveronWebsite = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Contact Section */}
       <section id="contact" className="typography-a min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Decorative Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-1/4 -left-20 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-emerald-600/20 rounded-full blur-3xl" />
@@ -1166,7 +1002,7 @@ const AveronWebsite = () => {
               type="email"
               placeholder="Enter your email"
               value={contactForm.email}
-              onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+              onChange={(e) => setContactForm(prev => ({ ...prev, email: e.target.value }))}
               required
               disabled={isSubmitting}
               className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300 text-sm sm:text-base disabled:opacity-50"
@@ -1175,7 +1011,7 @@ const AveronWebsite = () => {
               type="text"
               placeholder="Your name"
               value={contactForm.name}
-              onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+              onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
               required
               disabled={isSubmitting}
               className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300 text-sm sm:text-base disabled:opacity-50"
@@ -1184,7 +1020,7 @@ const AveronWebsite = () => {
               placeholder="Tell us about your project and preferences..."
               rows={6}
               value={contactForm.message}
-              onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+              onChange={(e) => setContactForm(prev => ({ ...prev, message: e.target.value }))}
               required
               disabled={isSubmitting}
               className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-black/40 border border-purple-500/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300 text-sm sm:text-base resize-none disabled:opacity-50"
@@ -1198,7 +1034,6 @@ const AveronWebsite = () => {
               {!isSubmitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
             </button>
 
-            {/* Success/Error Message */}
             {submitStatus.type && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -1220,25 +1055,19 @@ const AveronWebsite = () => {
         </div>
       </section>
 
-      {/* Footer - Professional Multi-Column Layout */}
+      {/* Footer */}
       <footer className="pt-12 sm:pt-16 px-4 sm:px-6 lg:px-8 relative z-10 mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="relative bg-gradient-to-b from-purple-900/30 via-purple-950/40 to-black/90 backdrop-blur-xl rounded-t-2xl sm:rounded-t-3xl border-t border-x border-purple-500/20 pt-10 sm:pt-12 pb-6 overflow-hidden">
-            {/* Subtle top border glow */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
 
             <div className="relative z-10 px-6 sm:px-8 lg:px-12">
-              {/* Main Footer Content - Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
-
-                {/* Company Info Column */}
                 <div className="lg:col-span-2">
                   <AveronLogo className="w-36 sm:w-40 mb-4" />
                   <p className="text-purple-200/80 text-sm leading-relaxed mb-6 max-w-md">
                     Empowering businesses with cutting-edge digital solutions. From web development to brand identity, we transform your vision into reality.
                   </p>
-
-                  {/* Social Links */}
                   <div className="flex gap-3">
                     <a
                       href="https://instagram.com"
@@ -1270,56 +1099,30 @@ const AveronWebsite = () => {
                   </div>
                 </div>
 
-                {/* Quick Links Column */}
                 <div>
                   <h3 className="text-white font-semibold text-base mb-4">Quick Links</h3>
                   <ul className="space-y-3">
-                    <li>
-                      <a href="#services" className="text-purple-200/70 hover:text-white text-sm transition-colors">
-                        Services
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#work" className="text-purple-200/70 hover:text-white text-sm transition-colors">
-                        Our Work
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#process-section" className="text-purple-200/70 hover:text-white text-sm transition-colors">
-                        Process
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#features" className="text-purple-200/70 hover:text-white text-sm transition-colors">
-                        Features
-                      </a>
-                    </li>
+                    <li><a href="#services" className="text-purple-200/70 hover:text-white text-sm transition-colors">Services</a></li>
+                    <li><a href="#work" className="text-purple-200/70 hover:text-white text-sm transition-colors">Our Work</a></li>
+                    <li><a href="#process-section" className="text-purple-200/70 hover:text-white text-sm transition-colors">Process</a></li>
+                    <li><a href="#features" className="text-purple-200/70 hover:text-white text-sm transition-colors">Features</a></li>
                   </ul>
                 </div>
 
-                {/* Contact Column */}
                 <div>
                   <h3 className="text-white font-semibold text-base mb-4">Get in Touch</h3>
                   <ul className="space-y-3 text-sm">
                     <li>
-                      <a
-                        href="#contact"
-                        className="text-purple-200/70 hover:text-white transition-colors flex items-center gap-2"
-                      >
+                      <a href="#contact" className="text-purple-200/70 hover:text-white transition-colors flex items-center gap-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         Contact Us
                       </a>
                     </li>
-                    <li className="text-purple-200/70">
-                      <span className="block">Available for projects</span>
-                    </li>
+                    <li className="text-purple-200/70"><span className="block">Available for projects</span></li>
                     <li>
-                      <a
-                        href="#contact"
-                        className="inline-block mt-2 px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg text-sm font-medium transition-colors border border-emerald-500/30"
-                      >
+                      <a href="#contact" className="inline-block mt-2 px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg text-sm font-medium transition-colors border border-emerald-500/30">
                         Start Project
                       </a>
                     </li>
@@ -1327,19 +1130,14 @@ const AveronWebsite = () => {
                 </div>
               </div>
 
-              {/* Bottom Bar */}
               <div className="pt-6 border-t border-purple-500/20">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                   <p className="text-xs sm:text-sm text-purple-400/70">
                     © {new Date().getFullYear()} Averon Digital. All rights reserved.
                   </p>
                   <div className="flex gap-6 text-xs sm:text-sm">
-                    <a href="#" className="text-purple-400/70 hover:text-white transition-colors">
-                      Privacy Policy
-                    </a>
-                    <a href="#" className="text-purple-400/70 hover:text-white transition-colors">
-                      Terms of Service
-                    </a>
+                    <a href="#" className="text-purple-400/70 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" className="text-purple-400/70 hover:text-white transition-colors">Terms of Service</a>
                   </div>
                 </div>
               </div>
@@ -1348,148 +1146,13 @@ const AveronWebsite = () => {
         </div>
       </footer>
 
-      {/* Service Card Modal with Atomic Animation */}
-      <AnimatePresence>
-        {activeServiceCard !== null && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
-              onClick={() => setActiveServiceCard(null)}
-            />
-
-            {/* Modal Card with Atomic Animation */}
-            <div className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none px-4">
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.8, opacity: 0, y: 50 }}
-                transition={{
-                  type: "spring",
-                  damping: 25,
-                  stiffness: 300,
-                  duration: 0.5
-                }}
-                className="relative w-full sm:w-[80%] md:w-[70%] max-w-lg pointer-events-auto"
-              >
-                {/* Atomic Orbital Animation - Behind Card */}
-                <div
-                  className="absolute pointer-events-none"
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: 'calc(100% + 140px)',
-                    height: 'calc(100% + 140px)',
-                    zIndex: 0
-                  }}
-                >
-                  <motion.svg
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="w-full h-full"
-                    viewBox="0 0 600 600"
-                    style={{ overflow: 'visible' }}
-                  >
-                    <defs>
-                      <filter id="modalOrbitGlow">
-                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                        <feMerge>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                      </filter>
-                      <linearGradient id="modalOrbitGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style={{stopColor: '#ff77cc', stopOpacity: 0.9}} />
-                        <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.9}} />
-                      </linearGradient>
-                      <linearGradient id="modalOrbitGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style={{stopColor: '#c778ff', stopOpacity: 0.85}} />
-                        <stop offset="100%" style={{stopColor: '#ff77cc', stopOpacity: 0.85}} />
-                      </linearGradient>
-                      <linearGradient id="modalOrbitGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" style={{stopColor: '#ff77cc', stopOpacity: 0.9}} />
-                        <stop offset="100%" style={{stopColor: '#c778ff', stopOpacity: 0.9}} />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Orbit A - Clockwise 12s */}
-                    <g className="modal-orbit-a">
-                      <ellipse
-                        cx="300"
-                        cy="300"
-                        rx="280"
-                        ry="120"
-                        fill="none"
-                        stroke="url(#modalOrbitGradient1)"
-                        strokeWidth="4"
-                        filter="url(#modalOrbitGlow)"
-                      />
-                    </g>
-
-                    {/* Orbit B - Counter-clockwise 18s */}
-                    <g className="modal-orbit-b">
-                      <ellipse
-                        cx="300"
-                        cy="300"
-                        rx="280"
-                        ry="120"
-                        fill="none"
-                        stroke="url(#modalOrbitGradient2)"
-                        strokeWidth="4.5"
-                        filter="url(#modalOrbitGlow)"
-                      />
-                    </g>
-
-                    {/* Orbit C - Clockwise 24s */}
-                    <g className="modal-orbit-c">
-                      <ellipse
-                        cx="300"
-                        cy="300"
-                        rx="280"
-                        ry="120"
-                        fill="none"
-                        stroke="url(#modalOrbitGradient3)"
-                        strokeWidth="4"
-                        filter="url(#modalOrbitGlow)"
-                      />
-                    </g>
-                  </motion.svg>
-                </div>
-
-                {/* Card Content */}
-                <div className="relative bg-gradient-to-br from-purple-900/95 to-black/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl border-2 border-purple-500/50 p-6 sm:p-8 shadow-2xl shadow-purple-500/50" style={{ zIndex: 10 }}>
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setActiveServiceCard(null)}
-                    className="absolute top-2 right-2 sm:top-3 sm:right-3 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-purple-500/20 hover:bg-purple-500/40 active:bg-purple-500/50 border border-purple-500/30 hover:border-purple-500/60 transition-all group"
-                  >
-                    <X className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
-                  </button>
-
-                  {/* Service Content */}
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-purple-500/50">
-                      {services[activeServiceCard].icon}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">{services[activeServiceCard].title}</h3>
-                    <p className="text-base sm:text-lg text-purple-200 leading-relaxed">
-                      {services[activeServiceCard].description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Lazy-loaded Service Modal */}
+      {activeServiceCard !== null && (
+        <ServiceModal
+          service={services[activeServiceCard]}
+          onClose={() => setActiveServiceCard(null)}
+        />
+      )}
     </div>
   );
 };

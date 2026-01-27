@@ -14,6 +14,15 @@ module.exports = {
         'brand': ['var(--font-lora)', 'Georgia', 'serif'],                  // Brand signature - balanced sophistication
         'sans': ['var(--font-inter)', 'system-ui', 'sans-serif'],           // default
       },
+      animation: {
+        'shimmer': 'shimmer 2s infinite',
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
     },
   },
   plugins: [],

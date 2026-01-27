@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, WifiPen, Instagram, Linkedin, Facebook} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollArrow from '@/components/ScrollArrow';
-import ServiceCardTilt from '@/components/ServiceCardTilt';
 import { apiClient } from '@/lib/api';
 import {
   BLUR_CAR_MOCKUP,
@@ -554,76 +553,128 @@ const AveronWebsite = () => {
         }}></div>
       </section>
 
-      {/* Services Grid - Transparent Background for Seamless Blend */}
-      <section id="services" className="typography-b min-h-screen flex items-center pt-12 sm:pt-20 pb-0 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 px-2">Our Services</h2>
-            <p className="text-sm sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto px-4 sm:px-6 leading-relaxed">
-              Comprehensive digital solutions tailored to accelerate your business growth
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-fr px-2 sm:px-0">
-            {services.map((service, index) => (
-              <ServiceCardTilt key={index}>
-                <motion.div
-                  className="group h-full p-5 sm:p-8 bg-gradient-to-br from-purple-900/50 to-black/50 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 cursor-pointer flex flex-col active:scale-95 relative overflow-hidden"
-                  onClick={() => setActiveServiceCard(index)}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {/* Background Pattern Overlay */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/30 via-purple-500/20 to-transparent" />
-                    <div className="absolute inset-0" style={{
-                      backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)',
-                    }} />
-                  </div>
-
-                  <div className="relative z-10">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg sm:rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4 flex-shrink-0">{service.title}</h3>
-                    <p className="text-purple-200 leading-relaxed text-sm sm:text-base flex-grow">{service.description}</p>
-                  </div>
-                </motion.div>
-              </ServiceCardTilt>
-            ))}
-          </div>
-
-          {/* Logo Container - Integrated */}
-          <motion.div
+      {/* Services - Progressive Scroll */}
+      <section id="services" className="typography-b relative">
+        {/* Section Header */}
+        <div className="text-center pt-16 sm:pt-24 pb-8 sm:pb-12 px-4">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mt-12 sm:mt-16"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
           >
-            <div className="w-full h-16 sm:h-24 lg:h-28">
-              <div className="flex items-center justify-center gap-6 sm:gap-12 lg:gap-16 h-full px-4">
-                <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-32 sm:w-40 lg:w-48">
-                  <Image
-                    src="/trusted_logos/rasimramalogo.png"
-                    alt="Rasim Rama"
-                    fill
-                    sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
-                    className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-                  />
-                </a>
-                <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-32 sm:w-40 lg:w-48">
-                  <Image
-                    src="/trusted_logos/rubin-logo.svg"
-                    alt="Rubin Ramallari"
-                    fill
-                    sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
-                    className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-                  />
-                </a>
-              </div>
-            </div>
-          </motion.div>
+            Our Services
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-sm sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto leading-relaxed"
+          >
+            Comprehensive digital solutions tailored to accelerate your business growth
+          </motion.p>
         </div>
+
+        {/* Progressive Scroll Services */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative py-12 sm:py-20 lg:py-24"
+            >
+              {/* Service Number - Large Background */}
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 text-[120px] sm:text-[180px] lg:text-[220px] font-bold text-purple-500/5 select-none pointer-events-none leading-none -z-10">
+                0{index + 1}
+              </div>
+
+              <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16`}>
+                {/* Icon Side */}
+                <motion.div
+                  className="flex-shrink-0"
+                  whileInView={{ scale: [0.8, 1], rotate: [0, 360] }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-800 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/30 relative overflow-hidden">
+                    {/* Shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
+                    <div className="text-white scale-150 sm:scale-[2] lg:scale-[2.5]">
+                      {service.icon}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Content Side */}
+                <div className={`flex-1 text-center ${index % 2 === 0 ? 'lg:text-left' : 'lg:text-right'}`}>
+                  <motion.div
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <span className="text-purple-400 text-sm sm:text-base font-semibold tracking-wider uppercase mb-2 block">
+                      Service 0{index + 1}
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-white">
+                      {service.title}
+                    </h3>
+                    <p className="text-purple-200/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
+                      {service.description}
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Divider Line (except last item) */}
+              {index < services.length - 1 && (
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 sm:w-48 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+                />
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Logo Container - Integrated */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="py-12 sm:py-16"
+        >
+          <div className="w-full h-16 sm:h-24 lg:h-28">
+            <div className="flex items-center justify-center gap-6 sm:gap-12 lg:gap-16 h-full px-4">
+              <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-32 sm:w-40 lg:w-48">
+                <Image
+                  src="/trusted_logos/rasimramalogo.png"
+                  alt="Rasim Rama"
+                  fill
+                  sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
+                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                />
+              </a>
+              <a href="https://rubinramallari.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-32 sm:w-40 lg:w-48">
+                <Image
+                  src="/trusted_logos/rubin-logo.svg"
+                  alt="Rubin Ramallari"
+                  fill
+                  sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
+                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                />
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* Agency Accelerator iOS15 Style Section */}

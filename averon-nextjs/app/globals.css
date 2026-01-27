@@ -506,61 +506,61 @@ nextjs-portal {
   width: 600px;
 }
 
-/* Row 1 - Top row - spaced apart */
+/* Row 1 - Top row - ALL ALIGNED ON SAME LINE */
 /* Position 1: Top left - vertical (half off-screen) */
 .phones-row-1 .phone-wrapper:nth-child(1) {
   top: 5%;
-  left: -10%;
+  left: -8%;
   transform: translateX(-150%) scale(0.5);
 }
 
 /* Position 2: Top center-left - vertical */
 .phones-row-1 .phone-wrapper:nth-child(2) {
   top: 5%;
-  left: 5%;
+  left: 14%;
   transform: translateX(-150%) scale(0.5);
 }
 
 /* Position 3: Top center-right - horizontal */
 .phones-row-1 .phone-wrapper:nth-child(3) {
   top: 5%;
-  right: 20%;
+  right: 24%;
   transform: translateX(150%) scale(0.5);
 }
 
 /* Position 4: Top right - horizontal (half off-screen) */
 .phones-row-1 .phone-wrapper:nth-child(4) {
   top: 5%;
-  right: -12%;
+  right: -16%;
   transform: translateX(150%) scale(0.5);
 }
 
-/* Row 2 - Bottom row - spaced apart */
+/* Row 2 - Bottom row - ALL ALIGNED ON SAME LINE */
 /* Position 1: Bottom left - horizontal (half off-screen) */
 .phones-row-2 .phone-wrapper:nth-child(1) {
   bottom: 5%;
-  left: -12%;
+  left: -16%;
   transform: translateX(-150%) scale(0.5);
 }
 
 /* Position 2: Bottom center-left - horizontal */
 .phones-row-2 .phone-wrapper:nth-child(2) {
   bottom: 5%;
-  left: 20%;
+  left: 24%;
   transform: translateX(-150%) scale(0.5);
 }
 
 /* Position 3: Bottom center-right - vertical */
 .phones-row-2 .phone-wrapper:nth-child(3) {
   bottom: 5%;
-  right: 5%;
+  right: 14%;
   transform: translateX(150%) scale(0.5);
 }
 
 /* Position 4: Bottom right - vertical (half off-screen) */
 .phones-row-2 .phone-wrapper:nth-child(4) {
   bottom: 5%;
-  right: -10%;
+  right: -8%;
   transform: translateX(150%) scale(0.5);
 }
 
@@ -800,42 +800,42 @@ nextjs-portal {
 
   .phones-row-1 .phone-wrapper:nth-child(1) {
     top: 6%;
-    left: -9%;
+    left: -7%;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(2) {
     top: 6%;
-    left: 6%;
+    left: 16%;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(3) {
     top: 6%;
-    right: 18%;
+    right: 22%;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(4) {
     top: 6%;
-    right: -10%;
+    right: -14%;
   }
 
   .phones-row-2 .phone-wrapper:nth-child(1) {
     bottom: 6%;
-    left: -10%;
+    left: -14%;
   }
 
   .phones-row-2 .phone-wrapper:nth-child(2) {
     bottom: 6%;
-    left: 18%;
+    left: 22%;
   }
 
   .phones-row-2 .phone-wrapper:nth-child(3) {
     bottom: 6%;
-    right: 6%;
+    right: 16%;
   }
 
   .phones-row-2 .phone-wrapper:nth-child(4) {
     bottom: 6%;
-    right: -9%;
+    right: -7%;
   }
 }
 
@@ -856,17 +856,17 @@ nextjs-portal {
 
   .phones-row-1 .phone-wrapper:nth-child(1) {
     top: 7%;
-    left: -8%;
+    left: -6%;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(2) {
     top: 7%;
-    left: 8%;
+    left: 20%;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(3) {
     top: 7%;
-    right: 16%;
+    right: 20%;
   }
 
   .phones-row-1 .phone-wrapper:nth-child(4) {
@@ -881,17 +881,17 @@ nextjs-portal {
 
   .phones-row-2 .phone-wrapper:nth-child(2) {
     bottom: 7%;
-    left: 16%;
+    left: 20%;
   }
 
   .phones-row-2 .phone-wrapper:nth-child(3) {
     bottom: 7%;
-    right: 8%;
+    right: 20%;
   }
 
   .phones-row-2 .phone-wrapper:nth-child(4) {
     bottom: 7%;
-    right: -8%;
+    right: -6%;
   }
 }
 

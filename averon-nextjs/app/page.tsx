@@ -610,7 +610,7 @@ const AveronWebsite = () => {
                 </motion.div>
 
                 {/* Content Side */}
-                <div className={`flex-1 text-center ${index % 2 === 0 ? 'lg:text-left' : 'lg:text-right'}`}>
+                <div className="flex-1 text-center lg:text-left">
                   <motion.div
                     initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                     whileInView={{ opacity: 1, x: 0 }}

@@ -8,6 +8,7 @@ import {
   websiteSchema,
   getSchemaScript
 } from "@/lib/seo";
+import InitialLoadingScreen from "@/components/InitialLoadingScreen";
 
 // PRIMARY (60%) - Inter for body text, descriptions, most content
 const inter = Inter({
@@ -86,6 +87,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} ${lora.variable} antialiased`}
       >
+        <InitialLoadingScreen />
         {children}
       </body>
     </html>

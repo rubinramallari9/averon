@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback, memo, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { ArrowRight, Zap, Users, ChartNoAxesCombined, CheckCircle, Menu, X, Terminal, Instagram, Linkedin, Facebook } from 'lucide-react';
 import ScrollArrow from '@/components/ScrollArrow';
 import { apiClient } from '@/lib/api';
 import {
@@ -18,95 +17,133 @@ import {
   BLUR_RESTAURANT_MOCKUP,
 } from '@/lib/blurPlaceholders';
 
-// Lazy load framer-motion to reduce initial bundle (~47KB savings)
-const MotionDiv = lazy(() =>
-  import('framer-motion').then((mod) => ({
-    default: mod.motion.div,
-  }))
-);
+// ============================================
+// INLINE SVG ICONS - Eliminates lucide-react chunk (~37KB savings)
+// Only include icons actually used on initial render
+// ============================================
+const ArrowRightIcon = memo(() => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+  </svg>
+));
+ArrowRightIcon.displayName = 'ArrowRightIcon';
 
-// AnimatedDiv props - use any for framer-motion compatibility
-interface AnimatedDivProps {
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  initial?: any;
-  animate?: any;
-  whileInView?: any;
-  viewport?: any;
-  transition?: any;
-  /* eslint-enable @typescript-eslint/no-explicit-any */
-}
+const MenuIcon = memo(() => (
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+));
+MenuIcon.displayName = 'MenuIcon';
 
-// Fallback for SSR/initial load - renders without animation
-const AnimatedDiv = ({
-  children,
-  className,
-  style,
-  initial,
-  animate,
-  whileInView,
-  viewport,
-  transition,
-}: AnimatedDivProps) => {
-  const [isMounted, setIsMounted] = useState(false);
+const XIcon = memo(() => (
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+));
+XIcon.displayName = 'XIcon';
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+const CheckCircleIcon = memo(() => (
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+));
+CheckCircleIcon.displayName = 'CheckCircleIcon';
 
-  if (!isMounted) {
-    // SSR/initial render - just render the div without animation
-    return (
-      <div className={className} style={style}>
-        {children}
-      </div>
-    );
-  }
+const TerminalIcon = memo(({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+  </svg>
+));
+TerminalIcon.displayName = 'TerminalIcon';
 
-  return (
-    <Suspense fallback={<div className={className} style={style}>{children}</div>}>
-      <MotionDiv
-        className={className}
-        style={style}
-        initial={initial}
-        animate={animate}
-        whileInView={whileInView}
-        viewport={viewport}
-        transition={transition}
-      >
-        {children}
-      </MotionDiv>
-    </Suspense>
-  );
-};
+// Social icons - only loaded when footer is in view (below fold)
+const InstagramIcon = memo(() => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+  </svg>
+));
+InstagramIcon.displayName = 'InstagramIcon';
+
+const LinkedinIcon = memo(() => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+));
+LinkedinIcon.displayName = 'LinkedinIcon';
+
+const FacebookIcon = memo(() => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+  </svg>
+));
+FacebookIcon.displayName = 'FacebookIcon';
+
+// Service icons - inline SVGs to avoid lucide chunk
+const ZapIcon = memo(() => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+  </svg>
+));
+ZapIcon.displayName = 'ZapIcon';
+
+const ChartIcon = memo(() => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+  </svg>
+));
+ChartIcon.displayName = 'ChartIcon';
+
+const UsersIcon = memo(() => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+  </svg>
+));
+UsersIcon.displayName = 'UsersIcon';
+
+const TerminalServiceIcon = memo(() => (
+  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+  </svg>
+));
+TerminalServiceIcon.displayName = 'TerminalServiceIcon';
 
 // ============================================
-// STATIC DATA - Moved outside component to prevent recreation
+// STATIC DATA - No JSX at module level
 // ============================================
-const services = [
+const servicesData = [
   {
-    icon: <Zap className="w-8 h-8" />,
+    iconType: 'zap',
     title: "Web Development",
     description: "Custom websites and web applications built with cutting-edge technologies that convert visitors into customers."
   },
   {
-    icon: <ChartNoAxesCombined className="w-8 h-8" />,
+    iconType: 'chart',
     title: "SEO",
     description: "We offer a comprehensive range of services designed to boost your website's ranking and attract organic, non-paid Google search traffic."
   },
   {
-    icon: <Terminal className="w-8 h-8" />,
+    iconType: 'terminal',
     title: "Website Redesign",
     description: "Whether you need a design refresh or a complete website overhaul, we analyze your site's pain points and opportunities to revitalize your digital presence."
   },
   {
-    icon: <Users className="w-8 h-8" />,
+    iconType: 'users',
     title: "Brand Design",
     description: "Compelling brand identities and visual experiences that resonate with your audience and stand out in the market."
   }
 ] as const;
+
+// Helper to render service icon
+const ServiceIcon = memo(({ type }: { type: string }) => {
+  switch (type) {
+    case 'zap': return <ZapIcon />;
+    case 'chart': return <ChartIcon />;
+    case 'terminal': return <TerminalServiceIcon />;
+    case 'users': return <UsersIcon />;
+    default: return null;
+  }
+});
+ServiceIcon.displayName = 'ServiceIcon';
 
 const features = [
   "Lifetime support & updates",
@@ -117,7 +154,7 @@ const features = [
   "Fast turnaround times"
 ] as const;
 
-// Tech stack data using devicon CDN (reliable, fast, cached by Next.js)
+// Tech stack data
 const techStack = [
   { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
   { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
@@ -131,7 +168,6 @@ const techStack = [
 // MEMOIZED COMPONENTS
 // ============================================
 
-// Memoized Logo Component - prevents recreation on parent re-renders
 const AveronLogo = memo(({ className = "w-40" }: { className?: string }) => (
   <Image
     src="/averon_logobg.png"
@@ -140,12 +176,11 @@ const AveronLogo = memo(({ className = "w-40" }: { className?: string }) => (
     height={160}
     className={className}
     priority
-    quality={75} // Reduced from 100 - visually identical, smaller file
+    quality={75}
   />
 ));
 AveronLogo.displayName = 'AveronLogo';
 
-// Memoized Tech Icon Component
 const TechIcon = memo(({ name, src }: { name: string; src: string }) => (
   <div className="group flex flex-col items-center justify-center p-3 sm:p-6 bg-black/40 rounded-lg sm:rounded-2xl border border-purple-500/20 hover:border-purple-400/50 hover:bg-black/60 transition-all duration-300 hover:scale-105 active:scale-95">
     <Image
@@ -162,22 +197,140 @@ const TechIcon = memo(({ name, src }: { name: string; src: string }) => (
 TechIcon.displayName = 'TechIcon';
 
 // ============================================
-// LAZY LOADED COMPONENTS - Only load when needed
+// LAZY LOADED COMPONENTS
 // ============================================
-
-// Service Modal - Only ~20% of users click service cards
 const ServiceModal = dynamic(() => import('@/components/ServiceModal'), {
   loading: () => null,
   ssr: false,
 });
 
 // ============================================
+// PROCESS PATH COMPONENT - GPU Composited Animation
+// Uses clipPath with transform instead of stroke-dashoffset
+// ============================================
+const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: boolean }) => {
+  // GPU-composited: uses transform: scaleY() instead of stroke-dashoffset
+  const clipProgress = Math.min(Math.max(progress, 0), 1);
+
+  if (isMobile) {
+    return (
+      <svg
+        className="md:hidden absolute left-4 top-0 h-full pointer-events-none"
+        style={{ zIndex: 1, width: '40px' }}
+        viewBox="0 0 40 800"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#ec4899', stopOpacity: 0.9 }} />
+            <stop offset="50%" style={{ stopColor: '#a855f7', stopOpacity: 0.9 }} />
+            <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.9 }} />
+          </linearGradient>
+          <clipPath id="mobileRevealClip">
+            <rect
+              x="0"
+              y="0"
+              width="40"
+              height="800"
+              style={{
+                transform: `scaleY(${clipProgress})`,
+                transformOrigin: 'top',
+              }}
+            />
+          </clipPath>
+        </defs>
+        {/* Background path (dim) */}
+        <path
+          d="M 20 80 L 20 720"
+          stroke="rgba(168, 85, 247, 0.15)"
+          strokeWidth="7"
+          fill="none"
+          strokeLinecap="round"
+        />
+        {/* Revealed path (bright) - clipped with GPU-composited transform */}
+        <path
+          d="M 20 80 L 20 720"
+          stroke="url(#mobileGradient)"
+          strokeWidth="7"
+          fill="none"
+          strokeLinecap="round"
+          clipPath="url(#mobileRevealClip)"
+          style={{
+            filter: 'drop-shadow(0 0 6px rgba(168, 85, 247, 0.6))'
+          }}
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
+      style={{ zIndex: 1 }}
+      viewBox="0 0 800 700"
+      preserveAspectRatio="xMidYMid meet"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="pinkPurpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#ff1e99', stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: '#b200ff', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#ff1e99', stopOpacity: 1 }} />
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        {/* GPU-composited clip using transform */}
+        <clipPath id="desktopRevealClip">
+          <rect
+            x="0"
+            y="0"
+            width="800"
+            height="800"
+            style={{
+              transform: `scaleX(${clipProgress})`,
+              transformOrigin: 'left',
+            }}
+          />
+        </clipPath>
+      </defs>
+      {/* Background path (dim) */}
+      <path
+        d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
+        stroke="rgba(255, 30, 153, 0.15)"
+        strokeWidth="12"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Revealed path (bright) - clipped */}
+      <path
+        d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
+        stroke="url(#pinkPurpleGradient)"
+        strokeWidth="12"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        filter="url(#glow)"
+        clipPath="url(#desktopRevealClip)"
+      />
+    </svg>
+  );
+});
+ProcessPath.displayName = 'ProcessPath';
+
+// ============================================
 // MAIN COMPONENT
 // ============================================
 const AveronWebsite = () => {
-  // Essential state only - removed unused scrollY, activeSection, isScrolled
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
+  const [pathProgress, setPathProgress] = useState(0);
 
   // Contact form state
   const [contactForm, setContactForm] = useState({
@@ -203,94 +356,76 @@ const AveronWebsite = () => {
     };
   }, [activeServiceCard]);
 
-  // Refs for scroll optimization - cache layout values
+  // Refs for scroll optimization
   const rafRef = useRef<number | null>(null);
   const layoutCacheRef = useRef<{
     sectionTop: number;
     sectionHeight: number;
-    pathLength: number;
-    mobilePathLength: number;
   } | null>(null);
+  const isInitializedRef = useRef(false);
 
-  // Cache layout values on mount and resize (prevents forced reflow)
+  // Cache layout values - deferred with requestIdleCallback
   const cacheLayoutValues = useCallback(() => {
-    const path = document.getElementById('processPath') as unknown as SVGPathElement;
-    const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
     const processSection = document.getElementById('process-section');
-
-    if (path && processSection) {
+    if (processSection) {
       layoutCacheRef.current = {
         sectionTop: processSection.offsetTop,
         sectionHeight: processSection.offsetHeight,
-        pathLength: path.getTotalLength(),
-        mobilePathLength: mobilePath?.getTotalLength() ?? 0,
       };
-
-      // Set initial dasharray
-      path.style.strokeDasharray = `${layoutCacheRef.current.pathLength}`;
-      path.style.strokeDashoffset = `${layoutCacheRef.current.pathLength}`;
-
-      if (mobilePath) {
-        mobilePath.style.strokeDasharray = `${layoutCacheRef.current.mobilePathLength}`;
-        mobilePath.style.strokeDashoffset = `${layoutCacheRef.current.mobilePathLength}`;
-      }
     }
   }, []);
 
-  // Optimized scroll handler - uses cached values (no DOM reads)
+  // Optimized scroll handler - uses React state for GPU-composited animation
   const handleScrollOptimized = useCallback(() => {
     const cache = layoutCacheRef.current;
     if (!cache) return;
 
     const currentScrollY = window.scrollY;
+    let progress = (currentScrollY - cache.sectionTop + window.innerHeight * 0.5) / cache.sectionHeight;
+    progress = Math.min(Math.max(progress, 0), 1);
 
-    // Desktop path animation
-    const path = document.getElementById('processPath') as unknown as SVGPathElement;
-    if (path) {
-      let progress = (currentScrollY - cache.sectionTop + window.innerHeight * 0.5) / cache.sectionHeight;
-      progress = Math.min(Math.max(progress, 0), 1);
+    // Eased progress
+    const easedProgress = progress < 0.5
+      ? 2 * progress * progress
+      : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      const easedProgress = progress < 0.5
-        ? 2 * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-      const draw = cache.pathLength * easedProgress;
-      path.style.strokeDashoffset = `${cache.pathLength - draw}`;
-    }
-
-    // Mobile path animation
-    const mobilePath = document.getElementById('mobileProcessPath') as unknown as SVGPathElement;
-    if (mobilePath && cache.mobilePathLength > 0) {
-      let progress = (currentScrollY - cache.sectionTop + window.innerHeight * 0.3) / cache.sectionHeight;
-      progress = Math.min(Math.max(progress, 0), 1);
-
-      const easedProgress = progress < 0.5
-        ? 2 * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-      const draw = cache.mobilePathLength * easedProgress;
-      mobilePath.style.strokeDashoffset = `${cache.mobilePathLength - draw}`;
-    }
-
+    setPathProgress(easedProgress);
     rafRef.current = null;
   }, []);
 
-  // Single scroll listener with RAF throttling
+  // Single scroll listener with RAF throttling - deferred initialization
   useEffect(() => {
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setPathProgress(1); // Show full path immediately
+      return;
+    }
+
     const onScroll = () => {
       if (rafRef.current === null) {
         rafRef.current = requestAnimationFrame(handleScrollOptimized);
       }
     };
 
-    // Cache layout values after mount
-    // Use setTimeout to ensure DOM is fully rendered
-    const initTimer = setTimeout(() => {
+    // Defer layout cache to after paint using requestIdleCallback
+    const initializeScrollAnimation = () => {
+      if (isInitializedRef.current) return;
+      isInitializedRef.current = true;
+
       cacheLayoutValues();
       handleScrollOptimized();
-    }, 100);
+      window.addEventListener('scroll', onScroll, { passive: true });
+    };
 
-    // Re-cache on resize using ResizeObserver
+    // Use requestIdleCallback to defer work after paint
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initializeScrollAnimation, { timeout: 500 });
+    } else {
+      setTimeout(initializeScrollAnimation, 100);
+    }
+
+    // Re-cache on resize
     const resizeObserver = new ResizeObserver(() => {
       cacheLayoutValues();
     });
@@ -300,10 +435,7 @@ const AveronWebsite = () => {
       resizeObserver.observe(processSection);
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-
     return () => {
-      clearTimeout(initTimer);
       window.removeEventListener('scroll', onScroll);
       resizeObserver.disconnect();
       if (rafRef.current !== null) {
@@ -312,7 +444,7 @@ const AveronWebsite = () => {
     };
   }, [handleScrollOptimized, cacheLayoutValues]);
 
-  // Memoized click handlers
+  // Memoized handlers
   const handleWorkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const workSection = document.getElementById('work');
@@ -413,11 +545,7 @@ const AveronWebsite = () => {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6 text-white" />
-              ) : (
-                <Menu className="w-6 h-6 text-white" />
-              )}
+              {mobileMenuOpen ? <XIcon /> : <MenuIcon />}
             </button>
           </div>
 
@@ -470,7 +598,7 @@ const AveronWebsite = () => {
 
       {/* Hero Section */}
       <section className="typography-a min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 pb-8 sm:pb-20 px-4 sm:px-6 lg:px-8 relative">
-        {/* Ambient Glow Orbs - GPU optimized with transform */}
+        {/* Ambient Glow Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div
             className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[100px] sm:blur-[150px] animate-ambient-pulse-1"
@@ -489,7 +617,7 @@ const AveronWebsite = () => {
         <div className="absolute top-32 left-[15%] hidden lg:block z-10 animate-float-slow">
           <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold">
-              <Terminal className="w-6 h-6" />
+              <TerminalIcon className="w-6 h-6" />
             </div>
             <div className="flex items-center gap-2">
               <svg width="30" height="20" viewBox="0 0 30 20" fill="none">
@@ -506,46 +634,35 @@ const AveronWebsite = () => {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <AnimatedDiv
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 sm:mb-8 leading-[1.1] sm:leading-tight tracking-tight px-2 sm:px-0">
-              <span className="text-white block sm:inline">Control Your</span>
-              <br className="hidden sm:block" />
-              <span className="text-white block sm:inline">Development With </span>
-              <span className="brand-averon text-emerald-400 block sm:inline">Averon</span>
-            </h1>
+        {/* Main Content - No framer-motion, uses CSS animations */}
+        <div className="max-w-7xl mx-auto relative z-10 text-center animate-fade-in-up">
+          <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 sm:mb-8 leading-[1.1] sm:leading-tight tracking-tight px-2 sm:px-0">
+            <span className="text-white block sm:inline">Control Your</span>
+            <br className="hidden sm:block" />
+            <span className="text-white block sm:inline">Development With </span>
+            <span className="brand-averon text-emerald-400 block sm:inline">Averon</span>
+          </h1>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-16 w-full max-w-sm sm:max-w-none sm:w-auto px-2 sm:px-0">
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-emerald-400 hover:bg-emerald-500 active:bg-emerald-600 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/50 text-base sm:text-lg"
-              >
-                <span>Contact</span>
-              </button>
-              <button
-                onClick={() => scrollToSection('work')}
-                className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center justify-center space-x-2 text-base sm:text-lg"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
-                </svg>
-                <span>Our Work</span>
-              </button>
-            </div>
-          </AnimatedDiv>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-16 w-full max-w-sm sm:max-w-none sm:w-auto px-2 sm:px-0">
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-emerald-400 hover:bg-emerald-500 active:bg-emerald-600 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/50 text-base sm:text-lg"
+            >
+              <span>Contact</span>
+            </button>
+            <button
+              onClick={() => scrollToSection('work')}
+              className="group w-full sm:w-auto px-8 sm:px-8 py-4 sm:py-4 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm text-white rounded-full font-semibold transition-all border-2 border-white/30 flex items-center justify-center space-x-2 text-base sm:text-lg"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
+              </svg>
+              <span>Our Work</span>
+            </button>
+          </div>
 
           {/* Dashboard Preview */}
-          <AnimatedDiv
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="relative max-w-6xl mx-auto shadow-2xl shadow-purple-900/50 px-2 sm:px-0"
-          >
+          <div className="relative max-w-6xl mx-auto shadow-2xl shadow-purple-900/50 px-2 sm:px-0 animate-fade-in-up-delayed">
             <div className="bg-gradient-to-b from-purple-400/30 to-purple-500/30 backdrop-blur-xl rounded-t-xl sm:rounded-t-2xl border border-white/20 p-2 sm:p-3">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5 sm:gap-2">
@@ -598,7 +715,7 @@ const AveronWebsite = () => {
                 </div>
               </div>
             </div>
-          </AnimatedDiv>
+          </div>
         </div>
 
         <ScrollArrow />
@@ -610,36 +727,21 @@ const AveronWebsite = () => {
         }}></div>
       </section>
 
-      {/* Services - Progressive Scroll */}
+      {/* Services Section */}
       <section id="services" className="typography-b relative">
         <div className="text-center pt-16 sm:pt-24 pb-8 sm:pb-12 px-4">
-          <AnimatedDiv
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
-          >
+          <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
             <h2>Our Services</h2>
-          </AnimatedDiv>
-          <AnimatedDiv
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-sm sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto leading-relaxed"
-          >
+          </div>
+          <div className="text-sm sm:text-lg lg:text-xl text-purple-200 max-w-2xl mx-auto leading-relaxed">
             <p>Comprehensive digital solutions tailored to accelerate your business growth</p>
-          </AnimatedDiv>
+          </div>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {services.map((service, index) => (
-            <AnimatedDiv
+          {servicesData.map((service, index) => (
+            <div
               key={index}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" } as Record<string, unknown>}
-              transition={{ duration: 0.6, ease: "easeOut" }}
               className="relative py-12 sm:py-20 lg:py-24"
             >
               <div className="absolute left-0 top-1/2 -translate-y-1/2 text-[120px] sm:text-[180px] lg:text-[220px] font-bold text-purple-500/5 select-none pointer-events-none leading-none -z-10">
@@ -647,60 +749,36 @@ const AveronWebsite = () => {
               </div>
 
               <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16`}>
-                <AnimatedDiv
-                  className="flex-shrink-0"
-                  whileInView={{ scale: [0.8, 1], rotate: [0, 360] } as Record<string, unknown>}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                >
+                <div className="flex-shrink-0">
                   <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-800 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/30 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
                     <div className="text-white scale-150 sm:scale-[2] lg:scale-[2.5]">
-                      {service.icon}
+                      <ServiceIcon type={service.iconType} />
                     </div>
                   </div>
-                </AnimatedDiv>
+                </div>
 
                 <div className="flex-1 text-center lg:text-left">
-                  <AnimatedDiv
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  >
-                    <span className="text-purple-400 text-sm sm:text-base font-semibold tracking-wider uppercase mb-2 block">
-                      Service 0{index + 1}
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-white">
-                      {service.title}
-                    </h3>
-                    <p className="text-purple-200/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                      {service.description}
-                    </p>
-                  </AnimatedDiv>
+                  <span className="text-purple-400 text-sm sm:text-base font-semibold tracking-wider uppercase mb-2 block">
+                    Service 0{index + 1}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-white">
+                    {service.title}
+                  </h3>
+                  <p className="text-purple-200/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    {service.description}
+                  </p>
                 </div>
               </div>
 
-              {index < services.length - 1 && (
-                <AnimatedDiv
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 sm:w-48 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
-                />
+              {index < servicesData.length - 1 && (
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 sm:w-48 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
               )}
-            </AnimatedDiv>
+            </div>
           ))}
         </div>
 
-        <AnimatedDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="py-12 sm:py-16"
-        >
+        <div className="py-12 sm:py-16">
           <div className="w-full h-24 sm:h-32 lg:h-40">
             <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-20 h-full px-4">
               <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
@@ -723,7 +801,7 @@ const AveronWebsite = () => {
               </a>
             </div>
           </div>
-        </AnimatedDiv>
+        </div>
       </section>
 
       {/* Agency Accelerator iOS15 Style Section */}
@@ -737,7 +815,7 @@ const AveronWebsite = () => {
                 className="mt-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"
               >
                 <span>View Our Work</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRightIcon />
               </Link>
             </div>
           </div>
@@ -848,7 +926,7 @@ const AveronWebsite = () => {
         </div>
       </section>
 
-      {/* Process Section */}
+      {/* Process Section - GPU Composited Path Animation */}
       <section id="process-section" className="typography-a flex items-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-5xl mx-auto w-full">
           <div className="text-center mb-10 sm:mb-12">
@@ -859,69 +937,11 @@ const AveronWebsite = () => {
           </div>
 
           <div className="relative">
-            {/* Desktop SVG Path */}
-            <svg
-              className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
-              style={{zIndex: 1}}
-              viewBox="0 0 800 700"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <defs>
-                <linearGradient id="pinkPurpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor: '#ff1e99', stopOpacity: 1}} />
-                  <stop offset="50%" style={{stopColor: '#b200ff', stopOpacity: 1}} />
-                  <stop offset="100%" style={{stopColor: '#ff1e99', stopOpacity: 1}} />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              <path
-                id="processPath"
-                d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
-                stroke="url(#pinkPurpleGradient)"
-                strokeWidth="12"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                filter="url(#glow)"
-                style={{ transition: 'stroke-dashoffset 0.15s ease-out' }}
-              />
-            </svg>
+            {/* GPU-Composited Path Animation */}
+            <ProcessPath progress={pathProgress} isMobile={false} />
+            <ProcessPath progress={pathProgress} isMobile={true} />
 
-            {/* Mobile Path */}
-            <svg
-              className="md:hidden absolute left-4 top-0 h-full pointer-events-none"
-              style={{zIndex: 1, width: '40px'}}
-              viewBox="0 0 40 800"
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{stopColor: '#ec4899', stopOpacity: 0.9}} />
-                  <stop offset="50%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
-                  <stop offset="100%" style={{stopColor: '#ec4899', stopOpacity: 0.9}} />
-                </linearGradient>
-              </defs>
-              <path
-                id="mobileProcessPath"
-                d="M 20 80 L 20 720"
-                stroke="url(#mobileGradient)"
-                strokeWidth="7"
-                fill="none"
-                strokeLinecap="round"
-                style={{
-                  transition: 'stroke-dashoffset 0.15s ease-out',
-                  filter: 'drop-shadow(0 0 6px rgba(168, 85, 247, 0.6))'
-                }}
-              />
-            </svg>
-
-            <div className="relative space-y-8 sm:space-y-12 md:pl-0 pl-12 sm:pl-16" style={{zIndex: 5}}>
+            <div className="relative space-y-8 sm:space-y-12 md:pl-0 pl-12 sm:pl-16" style={{ zIndex: 5 }}>
               {/* Step 1 */}
               <div className="flex justify-start">
                 <div className="relative group w-full max-w-md">
@@ -1000,7 +1020,7 @@ const AveronWebsite = () => {
               <div className="space-y-3 sm:space-y-4">
                 {features.map((feature, index) => (
                   <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 flex-shrink-0" />
+                    <CheckCircleIcon />
                     <span className="text-sm sm:text-lg">{feature}</span>
                   </div>
                 ))}
@@ -1008,7 +1028,6 @@ const AveronWebsite = () => {
             </div>
 
             <div className="relative">
-              {/* GPU-optimized pulse - uses transform instead of just opacity */}
               <div
                 className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 rounded-3xl blur-3xl animate-ambient-pulse-1"
                 style={{ opacity: 0.3 }}
@@ -1086,7 +1105,7 @@ const AveronWebsite = () => {
             Ready to Elevate Your Digital Presence?
           </h2>
           <p className="text-sm sm:text-xl text-purple-200 mb-8 sm:mb-12 leading-relaxed px-2">
-            Schedule a free discovery call with our team. We'll discuss your goals and create a tailored strategy to help you succeed online.
+            Schedule a free discovery call with our team. We&apos;ll discuss your goals and create a tailored strategy to help you succeed online.
           </p>
 
           <form onSubmit={handleContactSubmit} className="flex flex-col gap-3 sm:gap-4 max-w-2xl mx-auto px-2">
@@ -1123,13 +1142,11 @@ const AveronWebsite = () => {
               className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2 shadow-lg shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
             >
               <span>{isSubmitting ? 'Sending...' : 'Get Started'}</span>
-              {!isSubmitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+              {!isSubmitting && <span className="group-hover:translate-x-1 transition-transform"><ArrowRightIcon /></span>}
             </button>
 
             {submitStatus.type && (
-              <AnimatedDiv
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
+              <div
                 className={`p-3 sm:p-4 rounded-lg text-center font-semibold text-sm sm:text-base ${
                   submitStatus.type === 'success'
                     ? 'bg-green-500/20 border border-green-500/50 text-green-300'
@@ -1137,7 +1154,7 @@ const AveronWebsite = () => {
                 }`}
               >
                 {submitStatus.message}
-              </AnimatedDiv>
+              </div>
             )}
           </form>
 
@@ -1168,7 +1185,7 @@ const AveronWebsite = () => {
                       className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"
                       aria-label="Instagram"
                     >
-                      <Instagram className="w-5 h-5" />
+                      <InstagramIcon />
                     </a>
                     <a
                       href="https://linkedin.com"
@@ -1177,7 +1194,7 @@ const AveronWebsite = () => {
                       className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"
                       aria-label="LinkedIn"
                     >
-                      <Linkedin className="w-5 h-5" />
+                      <LinkedinIcon />
                     </a>
                     <a
                       href="https://facebook.com"
@@ -1186,7 +1203,7 @@ const AveronWebsite = () => {
                       className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-purple-600/50 rounded-lg transition-all hover:scale-105 border border-purple-500/20"
                       aria-label="Facebook"
                     >
-                      <Facebook className="w-5 h-5" />
+                      <FacebookIcon />
                     </a>
                   </div>
                 </div>
@@ -1241,7 +1258,7 @@ const AveronWebsite = () => {
       {/* Lazy-loaded Service Modal */}
       {activeServiceCard !== null && (
         <ServiceModal
-          service={services[activeServiceCard]}
+          service={servicesData[activeServiceCard]}
           onClose={() => setActiveServiceCard(null)}
         />
       )}

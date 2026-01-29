@@ -146,7 +146,7 @@ const ServiceIcon = memo(({ type }: { type: string }) => {
 ServiceIcon.displayName = 'ServiceIcon';
 
 const features = [
-  "Lifetime support & updates",
+  "Ongoing support & maintenance",
   "Dedicated project manager",
   "Mobile-first responsive design",
   "SEO optimization included",

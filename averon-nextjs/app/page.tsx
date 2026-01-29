@@ -235,7 +235,7 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
         {/* Background path (dim) */}
         <path
           d="M 20 80 L 20 720"
-          stroke="rgba(168, 85, 247, 0.15)"
+          stroke="rgba(168, 85, 247, 0.08)"
           strokeWidth="7"
           fill="none"
           strokeLinecap="round"
@@ -286,7 +286,7 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
       {/* Background path (dim) */}
       <path
         d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
-        stroke="rgba(255, 30, 153, 0.15)"
+        stroke="rgba(255, 30, 153, 0.08)"
         strokeWidth="12"
         fill="none"
         strokeLinecap="round"

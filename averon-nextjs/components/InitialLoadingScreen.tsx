@@ -108,14 +108,6 @@ export default function InitialLoadingScreen() {
         {/* Screen reader text */}
         <span className="sr-only">Loading website, please wait...</span>
       </div>
-
-      {/* Progress bar at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-purple-900/30 overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-purple-600 via-purple-400 to-emerald-400 motion-safe:animate-loading-bar"
-          style={{ width: '30%' }}
-        />
-      </div>
     </div>
   );
 }

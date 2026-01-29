@@ -2,6 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   CRITICAL ABOVE-THE-FOLD ANIMATIONS
+   These MUST be in globals.css (not deferred)
+   for Speed Index / LCP optimization
+   ============================================ */
+
+/* Hero fade-in animation - critical for FCP/LCP
+   IMPORTANT: Content starts visible (opacity: 1) to not hurt LCP
+   Animation is subtle enhancement, not content reveal */
+@keyframes fadeInUp {
+  from {
+    opacity: 0.7;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+  /* Ensure content is visible even before animation runs */
+  opacity: 1;
+}
+
+/* Delayed version for below-fold content */
+@keyframes fadeInUpDelayed {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up-delayed {
+  animation: fadeInUpDelayed 0.6s ease-out 0.2s forwards;
+  opacity: 0; /* OK to start hidden - this is below fold */
+}
+
+/* Instant content visibility for LCP */
+.lcp-priority {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+}
+
+/* Force GPU layer for animated hero elements */
+.hero-gpu-layer {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
 /* Remove all default margins and padding */
 html, body {
   margin: 0;

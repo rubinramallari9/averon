@@ -1,7 +1,6 @@
 "use client";
 
-import React, { memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { memo, useEffect, useState } from 'react';
 
 // Service icon type - matches servicesData in page.tsx
 type ServiceIconType = 'zap' | 'chart' | 'terminal' | 'users';
@@ -68,32 +67,43 @@ interface ServiceModalProps {
   onClose: () => void;
 }
 
+// CSS-only modal - eliminates framer-motion dependency (~25KiB savings)
 const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Trigger enter animation on mount
+  useEffect(() => {
+    // Small delay to ensure CSS transition triggers
+    const timer = requestAnimationFrame(() => {
+      setIsVisible(true);
+    });
+    return () => cancelAnimationFrame(timer);
+  }, []);
+
+  // Handle close with exit animation
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(onClose, 300); // Match transition duration
+  };
+
   return (
-    <AnimatePresence>
+    <>
       {/* Backdrop */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
-        onClick={onClose}
+      <div
+        className={`fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] transition-opacity duration-300 ${
+          isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={handleClose}
       />
 
-      {/* Modal Card with Atomic Animation */}
+      {/* Modal Card with CSS Animation */}
       <div className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none px-4">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0, y: 50 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.8, opacity: 0, y: 50 }}
-          transition={{
-            type: "spring",
-            damping: 25,
-            stiffness: 300,
-            duration: 0.5
-          }}
-          className="relative w-full sm:w-[80%] md:w-[70%] max-w-lg pointer-events-auto"
+        <div
+          className={`relative w-full sm:w-[80%] md:w-[70%] max-w-lg pointer-events-auto transition-all duration-300 ease-out ${
+            isVisible
+              ? 'opacity-100 scale-100 translate-y-0'
+              : 'opacity-0 scale-95 translate-y-8'
+          }`}
         >
           {/* Atomic Orbital Animation - Behind Card */}
           <div
@@ -107,12 +117,10 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) => {
               zIndex: 0
             }}
           >
-            <motion.svg
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="w-full h-full"
+            <svg
+              className={`w-full h-full transition-all duration-500 delay-200 ${
+                isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+              }`}
               viewBox="0 0 600 600"
               style={{ overflow: 'visible' }}
             >
@@ -180,14 +188,14 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) => {
                   filter="url(#modalOrbitGlow)"
                 />
               </g>
-            </motion.svg>
+            </svg>
           </div>
 
           {/* Card Content */}
           <div className="relative bg-gradient-to-br from-purple-900/95 to-black/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl border-2 border-purple-500/50 p-6 sm:p-8 shadow-2xl shadow-purple-500/50" style={{ zIndex: 10 }}>
             {/* Close Button */}
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="absolute top-2 right-2 sm:top-3 sm:right-3 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-purple-500/20 hover:bg-purple-500/40 active:bg-purple-500/50 border border-purple-500/30 hover:border-purple-500/60 transition-all group"
             >
               <CloseIcon />
@@ -204,9 +212,9 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) => {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
+    </>
   );
 };
 

@@ -16,7 +16,8 @@ const nextConfig: NextConfig = {
   // Experimental features
   experimental: {
     // optimizeCss: true,  // Disabled - requires 'critters' package
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    // framer-motion removed - now using CSS animations
+    optimizePackageImports: ['lucide-react'],
   },
 
   // Image optimization - Aggressive caching and modern formats

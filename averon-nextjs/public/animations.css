@@ -164,32 +164,44 @@
 
 /* ============================================
    HERO TEXT SHINE ANIMATION
-   Subtle light sweep effect
+   GPU-composited using pseudo-element with transform
+   (background-position animation is non-composited)
    ============================================ */
 
-@keyframes textShine {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+.animate-text-shine {
+  position: relative;
+  color: #d8b4fe;
+  /* Fallback solid color, shine overlay on top */
 }
 
-.animate-text-shine {
+.animate-text-shine::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(
     90deg,
-    #d8b4fe 0%,
-    #f0abfc 20%,
-    #ffffff 40%,
-    #f0abfc 60%,
-    #d8b4fe 100%
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
   );
-  background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textShine 6s linear infinite;
+  animation: textShineTransform 6s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes textShineTransform {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* ============================================
@@ -258,25 +270,33 @@
 
 /* ============================================
    TREASURE MAP PATH ANIMATION
+   GPU-composited using clip-path instead of stroke-dashoffset
    ============================================ */
 
-@keyframes dashAnimation {
+/* Note: stroke-dashoffset is non-composited and causes repaints.
+   For better performance, use clip-path with transform or
+   hide these animations on low-power devices. */
+
+@keyframes pathReveal {
   0% {
-    stroke-dashoffset: 1000;
+    clip-path: inset(0 100% 0 0);
   }
   100% {
-    stroke-dashoffset: 0;
+    clip-path: inset(0 0 0 0);
   }
 }
 
 .treasure-path {
   stroke-dasharray: 10 5;
-  animation: dashAnimation 20s linear infinite;
+  /* Use GPU-composited clip-path animation */
+  animation: pathReveal 20s linear infinite;
+  will-change: clip-path;
 }
 
 .snake-path {
   stroke-dasharray: 15 10;
-  animation: dashAnimation 25s linear infinite;
+  animation: pathReveal 25s linear infinite;
+  will-change: clip-path;
 }
 
 /* ============================================
@@ -351,12 +371,15 @@
   .animate-marquee,
   .animate-shimmer,
   .animate-text-shine,
+  .animate-text-shine::after,
   .animate-float-slow,
   .animate-float-medium,
   .animate-float-fast,
   .animate-ambient-pulse-1,
   .animate-ambient-pulse-2,
-  .animate-loading-bar {
+  .animate-loading-bar,
+  .treasure-path,
+  .snake-path {
     animation: none !important;
   }
 }

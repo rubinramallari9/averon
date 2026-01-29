@@ -1237,6 +1237,17 @@ const AveronWebsite = () => {
                     </li>
                   </ul>
                 </div>
+
+                <div>
+                  <h3 className="text-white font-semibold text-base mb-4">Partners</h3>
+                  <ul className="space-y-3 text-sm">
+                    <li>
+                      <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="text-purple-200/70 hover:text-white transition-colors">
+                        Ramarasim
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               <div className="pt-6 border-t border-purple-500/20">

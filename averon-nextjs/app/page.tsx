@@ -154,30 +154,29 @@ const features = [
   "Fast turnaround times"
 ] as const;
 
-// Tech stack data - self-hosted icons (eliminates CDN dependency)
+// Tech stack data
 const techStack = [
-  { name: 'Python', src: '/icons/python-original.svg' },
-  { name: 'TypeScript', src: '/icons/typescript-original.svg' },
-  { name: 'JavaScript', src: '/icons/javascript-original.svg' },
-  { name: 'C++', src: '/icons/cplusplus-original.svg' },
-  { name: 'C#', src: '/icons/csharp-original.svg' },
-  { name: 'Java', src: '/icons/java-original.svg' },
+  { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
+  { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+  { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+  { name: 'C++', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg' },
+  { name: 'C#', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg' },
+  { name: 'Java', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
 ] as const;
 
 // ============================================
 // MEMOIZED COMPONENTS
 // ============================================
 
-const AveronLogo = memo(({ className = "w-40", isPriority = true }: { className?: string; isPriority?: boolean }) => (
+const AveronLogo = memo(({ className = "w-40" }: { className?: string }) => (
   <Image
-    src="/averon_logobg.webp"
+    src="/averon_logobg.png"
     alt="Averon Digital"
     width={560}
     height={160}
     className={className}
-    priority={isPriority}
-    fetchPriority={isPriority ? "high" : "auto"}
-    quality={85}
+    priority
+    quality={75}
   />
 ));
 AveronLogo.displayName = 'AveronLogo';
@@ -207,12 +206,17 @@ const ServiceModal = dynamic(() => import('@/components/ServiceModal'), {
 
 // ============================================
 // PROCESS PATH COMPONENT - Scroll-driven SVG path animation
-// Uses GPU-composited mask with transform for better performance
-// (stroke-dashoffset is non-composited and causes repaints)
+// Uses stroke-dashoffset for proper SVG path reveal
 // ============================================
 const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: boolean }) => {
+  // Mobile path length (vertical line from y=80 to y=720 = 640)
+  const mobilePathLength = 640;
+  // Desktop path length (approximate for the curved path)
+  const desktopPathLength = 1800;
+
   if (isMobile) {
-    // Mobile: vertical line reveal using mask with scaleY transform (GPU composited)
+    const dashOffset = mobilePathLength * (1 - progress);
+
     return (
       <svg
         className="md:hidden absolute left-4 top-0 h-full pointer-events-none"
@@ -227,21 +231,6 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
             <stop offset="50%" style={{ stopColor: '#a855f7', stopOpacity: 0.9 }} />
             <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.9 }} />
           </linearGradient>
-          {/* Mask using transform for GPU compositing */}
-          <mask id="mobileRevealMask">
-            <rect
-              x="0"
-              y="0"
-              width="40"
-              height="800"
-              fill="white"
-              style={{
-                transformOrigin: 'top',
-                transform: `scaleY(${progress})`,
-                transition: 'transform 0.1s ease-out',
-              }}
-            />
-          </mask>
         </defs>
         {/* Background path (dim) */}
         <path
@@ -251,23 +240,27 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
           fill="none"
           strokeLinecap="round"
         />
-        {/* Revealed path (bright) - GPU composited with mask transform */}
+        {/* Revealed path (bright) - animated with stroke-dashoffset */}
         <path
+          id="mobileProcessPath"
           d="M 20 80 L 20 720"
           stroke="url(#mobileGradient)"
           strokeWidth="7"
           fill="none"
           strokeLinecap="round"
-          mask="url(#mobileRevealMask)"
+          strokeDasharray={mobilePathLength}
+          strokeDashoffset={dashOffset}
           style={{
             filter: 'drop-shadow(0 0 6px rgba(168, 85, 247, 0.6))',
+            transition: 'stroke-dashoffset 0.1s ease-out',
           }}
         />
       </svg>
     );
   }
 
-  // Desktop: curved path reveal using mask with scaleX transform (GPU composited)
+  const dashOffset = desktopPathLength * (1 - progress);
+
   return (
     <svg
       className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
@@ -289,21 +282,6 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        {/* Mask using transform for GPU compositing */}
-        <mask id="desktopRevealMask">
-          <rect
-            x="0"
-            y="0"
-            width="800"
-            height="700"
-            fill="white"
-            style={{
-              transformOrigin: 'left',
-              transform: `scaleX(${progress})`,
-              transition: 'transform 0.1s ease-out',
-            }}
-          />
-        </mask>
       </defs>
       {/* Background path (dim) */}
       <path
@@ -314,8 +292,9 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* Revealed path (bright) - GPU composited with mask transform */}
+      {/* Revealed path (bright) - animated with stroke-dashoffset */}
       <path
+        id="desktopProcessPath"
         d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
         stroke="url(#pinkPurpleGradient)"
         strokeWidth="12"
@@ -323,7 +302,11 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
         strokeLinecap="round"
         strokeLinejoin="round"
         filter="url(#glow)"
-        mask="url(#desktopRevealMask)"
+        strokeDasharray={desktopPathLength}
+        strokeDashoffset={dashOffset}
+        style={{
+          transition: 'stroke-dashoffset 0.1s ease-out',
+        }}
       />
     </svg>
   );
@@ -815,7 +798,7 @@ const AveronWebsite = () => {
         <div className="padding-bottom-2 padding-xhuge">
           <div className="logo-hover-area">
             <div className="logo-ios15-wrapper flex flex-col items-center">
-              <AveronLogo className="logo-glow w-72 sm:w-80 lg:w-96" isPriority={false} />
+              <AveronLogo className="logo-glow w-72 sm:w-80 lg:w-96" />
               <Link
                 href="/our-work"
                 className="mt-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"
@@ -1179,7 +1162,7 @@ const AveronWebsite = () => {
             <div className="relative z-10 px-6 sm:px-8 lg:px-12">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
                 <div className="lg:col-span-2">
-                  <AveronLogo className="w-36 sm:w-40 mb-4" isPriority={false} />
+                  <AveronLogo className="w-36 sm:w-40 mb-4" />
                   <p className="text-purple-200/80 text-sm leading-relaxed mb-6 max-w-md">
                     Empowering businesses with cutting-edge digital solutions. From web development to brand identity, we transform your vision into reality.
                   </p>

@@ -16,8 +16,8 @@ const nextConfig: NextConfig = {
   // Experimental features
   experimental: {
     // optimizeCss: true,  // Disabled - requires 'critters' package
-    // Tree-shake these packages for smaller bundles
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    // framer-motion removed - now using CSS animations
+    optimizePackageImports: ['lucide-react'],
   },
 
   // Image optimization - Aggressive caching and modern formats
@@ -154,36 +154,6 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // Cache CSS files
-      {
-        source: '/:path*.css',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // Cache font files
-      {
-        source: '/:path*.woff2',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // Cache self-hosted icons
-      {
-        source: '/icons/:path*',
         headers: [
           {
             key: 'Cache-Control',

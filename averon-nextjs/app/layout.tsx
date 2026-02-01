@@ -7,29 +7,28 @@ import {
   localBusinessSchema,
   websiteSchema,
 } from "@/lib/seo";
+import InitialLoadingScreen from "@/components/InitialLoadingScreen";
 import DeferredStyles from "@/components/DeferredStyles";
 
 // PRIMARY (60%) - Inter for body text, descriptions, most content
 // Using 'swap' for immediate text rendering with fallback
-// Reduced weights: removed 700 (not used for Inter)
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
 });
 
 // SECONDARY (30%) - Space Grotesk for major headings, navigation, buttons
-// Reduced weights: removed 500 (not used for Space Grotesk)
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
-  weight: ['600', '700'],
+  weight: ['500', '600', '700'],
 });
 
 // TERTIARY (10%) - Sora for hero accents, special callouts, stats
@@ -68,15 +67,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preload critical LCP image - WebP format for smaller size */}
+        {/* Preload critical resources for faster Speed Index */}
         <link
           rel="preload"
-          href="/averon_logobg.webp"
+          href="/averon_logobg.png"
           as="image"
-          type="image/webp"
-          fetchPriority="high"
+          type="image/png"
         />
-        {/* DNS prefetch removed - tech stack icons now self-hosted */}
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
 
         {/* Schema.org JSON-LD */}
         <script
@@ -101,6 +101,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} ${lora.variable} antialiased`}
       >
+        <InitialLoadingScreen />
         <DeferredStyles />
         {children}
       </body>

@@ -207,17 +207,12 @@ const ServiceModal = dynamic(() => import('@/components/ServiceModal'), {
 
 // ============================================
 // PROCESS PATH COMPONENT - Scroll-driven SVG path animation
-// Uses stroke-dashoffset for proper SVG path reveal
+// Uses GPU-composited mask with transform for better performance
+// (stroke-dashoffset is non-composited and causes repaints)
 // ============================================
 const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: boolean }) => {
-  // Mobile path length (vertical line from y=80 to y=720 = 640)
-  const mobilePathLength = 640;
-  // Desktop path length (approximate for the curved path)
-  const desktopPathLength = 1800;
-
   if (isMobile) {
-    const dashOffset = mobilePathLength * (1 - progress);
-
+    // Mobile: vertical line reveal using mask with scaleY transform (GPU composited)
     return (
       <svg
         className="md:hidden absolute left-4 top-0 h-full pointer-events-none"
@@ -232,6 +227,21 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
             <stop offset="50%" style={{ stopColor: '#a855f7', stopOpacity: 0.9 }} />
             <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.9 }} />
           </linearGradient>
+          {/* Mask using transform for GPU compositing */}
+          <mask id="mobileRevealMask">
+            <rect
+              x="0"
+              y="0"
+              width="40"
+              height="800"
+              fill="white"
+              style={{
+                transformOrigin: 'top',
+                transform: `scaleY(${progress})`,
+                transition: 'transform 0.1s ease-out',
+              }}
+            />
+          </mask>
         </defs>
         {/* Background path (dim) */}
         <path
@@ -241,27 +251,23 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
           fill="none"
           strokeLinecap="round"
         />
-        {/* Revealed path (bright) - animated with stroke-dashoffset */}
+        {/* Revealed path (bright) - GPU composited with mask transform */}
         <path
-          id="mobileProcessPath"
           d="M 20 80 L 20 720"
           stroke="url(#mobileGradient)"
           strokeWidth="7"
           fill="none"
           strokeLinecap="round"
-          strokeDasharray={mobilePathLength}
-          strokeDashoffset={dashOffset}
+          mask="url(#mobileRevealMask)"
           style={{
             filter: 'drop-shadow(0 0 6px rgba(168, 85, 247, 0.6))',
-            transition: 'stroke-dashoffset 0.1s ease-out',
           }}
         />
       </svg>
     );
   }
 
-  const dashOffset = desktopPathLength * (1 - progress);
-
+  // Desktop: curved path reveal using mask with scaleX transform (GPU composited)
   return (
     <svg
       className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
@@ -283,6 +289,21 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        {/* Mask using transform for GPU compositing */}
+        <mask id="desktopRevealMask">
+          <rect
+            x="0"
+            y="0"
+            width="800"
+            height="700"
+            fill="white"
+            style={{
+              transformOrigin: 'left',
+              transform: `scaleX(${progress})`,
+              transition: 'transform 0.1s ease-out',
+            }}
+          />
+        </mask>
       </defs>
       {/* Background path (dim) */}
       <path
@@ -293,9 +314,8 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* Revealed path (bright) - animated with stroke-dashoffset */}
+      {/* Revealed path (bright) - GPU composited with mask transform */}
       <path
-        id="desktopProcessPath"
         d="M 180 140 C 280 130, 360 155, 480 145 C 600 135, 680 165, 720 220 S 710 305, 630 340 C 520 380, 360 385, 220 365 C 150 355, 100 375, 90 445 C 85 495, 110 525, 220 570 C 360 630, 480 670, 400 750"
         stroke="url(#pinkPurpleGradient)"
         strokeWidth="12"
@@ -303,11 +323,7 @@ const ProcessPath = memo(({ progress, isMobile }: { progress: number; isMobile: 
         strokeLinecap="round"
         strokeLinejoin="round"
         filter="url(#glow)"
-        strokeDasharray={desktopPathLength}
-        strokeDashoffset={dashOffset}
-        style={{
-          transition: 'stroke-dashoffset 0.1s ease-out',
-        }}
+        mask="url(#desktopRevealMask)"
       />
     </svg>
   );

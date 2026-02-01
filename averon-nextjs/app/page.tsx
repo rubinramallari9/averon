@@ -168,15 +168,16 @@ const techStack = [
 // MEMOIZED COMPONENTS
 // ============================================
 
-const AveronLogo = memo(({ className = "w-40" }: { className?: string }) => (
+const AveronLogo = memo(({ className = "w-40", isPriority = true }: { className?: string; isPriority?: boolean }) => (
   <Image
-    src="/averon_logobg.png"
+    src="/averon_logobg.webp"
     alt="Averon Digital"
     width={560}
     height={160}
     className={className}
-    priority
-    quality={75}
+    priority={isPriority}
+    fetchPriority={isPriority ? "high" : "auto"}
+    quality={85}
   />
 ));
 AveronLogo.displayName = 'AveronLogo';
@@ -798,7 +799,7 @@ const AveronWebsite = () => {
         <div className="padding-bottom-2 padding-xhuge">
           <div className="logo-hover-area">
             <div className="logo-ios15-wrapper flex flex-col items-center">
-              <AveronLogo className="logo-glow w-72 sm:w-80 lg:w-96" />
+              <AveronLogo className="logo-glow w-72 sm:w-80 lg:w-96" isPriority={false} />
               <Link
                 href="/our-work"
                 className="mt-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 flex items-center space-x-2 shadow-lg shadow-purple-500/50"
@@ -1162,7 +1163,7 @@ const AveronWebsite = () => {
             <div className="relative z-10 px-6 sm:px-8 lg:px-12">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
                 <div className="lg:col-span-2">
-                  <AveronLogo className="w-36 sm:w-40 mb-4" />
+                  <AveronLogo className="w-36 sm:w-40 mb-4" isPriority={false} />
                   <p className="text-purple-200/80 text-sm leading-relaxed mb-6 max-w-md">
                     Empowering businesses with cutting-edge digital solutions. From web development to brand identity, we transform your vision into reality.
                   </p>

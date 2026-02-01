@@ -7,7 +7,6 @@ import {
   localBusinessSchema,
   websiteSchema,
 } from "@/lib/seo";
-import InitialLoadingScreen from "@/components/InitialLoadingScreen";
 import DeferredStyles from "@/components/DeferredStyles";
 
 // PRIMARY (60%) - Inter for body text, descriptions, most content
@@ -67,12 +66,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preload critical resources for faster Speed Index */}
+        {/* Preload critical LCP image - WebP format for smaller size */}
         <link
           rel="preload"
-          href="/averon_logobg.png"
+          href="/averon_logobg.webp"
           as="image"
-          type="image/png"
+          type="image/webp"
+          fetchPriority="high"
         />
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
@@ -101,7 +101,6 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} ${lora.variable} antialiased`}
       >
-        <InitialLoadingScreen />
         <DeferredStyles />
         {children}
       </body>

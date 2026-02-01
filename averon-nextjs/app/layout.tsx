@@ -11,23 +11,25 @@ import DeferredStyles from "@/components/DeferredStyles";
 
 // PRIMARY (60%) - Inter for body text, descriptions, most content
 // Using 'swap' for immediate text rendering with fallback
+// Reduced weights: removed 700 (not used for Inter)
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
 });
 
 // SECONDARY (30%) - Space Grotesk for major headings, navigation, buttons
+// Reduced weights: removed 500 (not used for Space Grotesk)
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
-  weight: ['500', '600', '700'],
+  weight: ['600', '700'],
 });
 
 // TERTIARY (10%) - Sora for hero accents, special callouts, stats

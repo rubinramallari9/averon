@@ -34,7 +34,7 @@ const OurWorkPage = () => {
       description: "Professional portfolio website with modern design and smooth animations",
       image: "/trusted_logos/rubin-logo.svg",
       tech: ["Next.js", "TypeScript", "Framer Motion"],
-      link: "https://rubinramallari.com",
+      link: "https://rubinramallari.vercel.app",
       blur: undefined
     },
     {

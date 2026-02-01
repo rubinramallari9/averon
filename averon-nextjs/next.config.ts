@@ -181,6 +181,16 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Cache self-hosted icons
+      {
+        source: '/icons/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
     ];
   },
 

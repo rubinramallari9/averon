@@ -76,9 +76,7 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
-        {/* DNS prefetch for external resources */}
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        {/* DNS prefetch removed - tech stack icons now self-hosted */}
 
         {/* Schema.org JSON-LD */}
         <script

@@ -154,14 +154,14 @@ const features = [
   "Fast turnaround times"
 ] as const;
 
-// Tech stack data
+// Tech stack data - self-hosted icons (eliminates CDN dependency)
 const techStack = [
-  { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
-  { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
-  { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
-  { name: 'C++', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg' },
-  { name: 'C#', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg' },
-  { name: 'Java', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
+  { name: 'Python', src: '/icons/python-original.svg' },
+  { name: 'TypeScript', src: '/icons/typescript-original.svg' },
+  { name: 'JavaScript', src: '/icons/javascript-original.svg' },
+  { name: 'C++', src: '/icons/cplusplus-original.svg' },
+  { name: 'C#', src: '/icons/csharp-original.svg' },
+  { name: 'Java', src: '/icons/java-original.svg' },
 ] as const;
 
 // ============================================

@@ -5,19 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
-import {
-  BLUR_CAR_MOCKUP,
-  BLUR_CIGARS_WINE_MOCKUP,
-  BLUR_COMPUTERSTORE_MOCKUP,
-  BLUR_CONSTRUCTION_MOCKUP,
-  BLUR_JEWELRY_MOCKUP,
-  BLUR_LUXURY_WATCH_MOCKUP,
-  BLUR_REALESTATE_MOCKUP,
-  BLUR_RESTAURANT_MOCKUP,
-} from '@/lib/blurPlaceholders';
 
 const OurWorkPage = () => {
-  // Portfolio projects data with blur placeholders
+  // Portfolio projects data
   const projects = [
     {
       id: 1,
@@ -25,7 +15,7 @@ const OurWorkPage = () => {
       description: "Personal portfolio website showcasing professional work and achievements",
       image: "/trusted_logos/rasimramalogo.png",
       tech: ["React", "Next.js", "Tailwind"],
-      link: "https://rasimrama.com",
+      link: "https://ramarasim.com",
       blur: undefined
     },
     {
@@ -36,78 +26,6 @@ const OurWorkPage = () => {
       tech: ["Next.js", "TypeScript", "Framer Motion"],
       link: "https://rubinramallari.vercel.app",
       blur: undefined
-    },
-    {
-      id: 3,
-      title: "Luxury Watch E-commerce",
-      description: "Premium timepiece marketplace with real-time inventory and secure checkout",
-      image: "/images/luxury-watch-mockup.webp",
-      tech: ["React", "Next.js", "Stripe"],
-      link: "#",
-      blur: BLUR_LUXURY_WATCH_MOCKUP
-    },
-    {
-      id: 4,
-      title: "Construction Company Site",
-      description: "Modern portfolio showcasing projects with interactive galleries",
-      image: "/images/construction-mockup.webp",
-      tech: ["Tailwind", "AI", "CMS"],
-      link: "#",
-      blur: BLUR_CONSTRUCTION_MOCKUP
-    },
-    {
-      id: 5,
-      title: "Luxury Car Dealership",
-      description: "Immersive automotive experience with 3D vehicle showcases",
-      image: "/images/car-mockup.webp",
-      tech: ["Three.js", "React", "API"],
-      link: "#",
-      blur: BLUR_CAR_MOCKUP
-    },
-    {
-      id: 6,
-      title: "Fine Jewelry Store",
-      description: "Elegant online boutique with custom product configurator",
-      image: "/images/jewelry-mockup.webp",
-      tech: ["Next.js", "E-commerce", "SEO"],
-      link: "#",
-      blur: BLUR_JEWELRY_MOCKUP
-    },
-    {
-      id: 7,
-      title: "Fine Dining Restaurant",
-      description: "Reservation system with dynamic menu and event management",
-      image: "/images/restaurant-mockup.webp",
-      tech: ["React", "Database", "Maps"],
-      link: "#",
-      blur: BLUR_RESTAURANT_MOCKUP
-    },
-    {
-      id: 8,
-      title: "Computer Store",
-      description: "Tech retailer with advanced filtering and comparison tools",
-      image: "/images/computerstore-mockup.webp",
-      tech: ["Next.js", "AI", "Analytics"],
-      link: "#",
-      blur: BLUR_COMPUTERSTORE_MOCKUP
-    },
-    {
-      id: 9,
-      title: "Cigars & Wine Collection",
-      description: "Curated marketplace for premium cigars and fine wines",
-      image: "/images/cigars-wine-mockup.webp",
-      tech: ["React", "E-commerce", "Tailwind"],
-      link: "#",
-      blur: BLUR_CIGARS_WINE_MOCKUP
-    },
-    {
-      id: 10,
-      title: "Real Estate Platform",
-      description: "Property listings with virtual tours and mortgage calculators",
-      image: "/images/realestate-mockup.webp",
-      tech: ["Next.js", "Maps", "CRM"],
-      link: "#",
-      blur: BLUR_REALESTATE_MOCKUP
     }
   ];
 

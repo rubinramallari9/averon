@@ -11,6 +11,15 @@ const OurWorkPage = () => {
   const projects = [
     {
       id: 1,
+      title: "TimeTrader",
+      description: "Luxury watch marketplace for Albania & the Balkans — connecting verified buyers and sellers of premium timepieces across Southeast Europe",
+      image: "/trusted_logos/logo.svg",
+      tech: ["Next.js", "TypeScript", "Tailwind"],
+      link: "https://timetrader-kappa.vercel.app/",
+      blur: undefined
+    },
+    {
+      id: 3,
       title: "Rasim Rama",
       description: "Personal portfolio website showcasing professional work and achievements",
       image: "/trusted_logos/rasimramalogo.png",
@@ -19,7 +28,7 @@ const OurWorkPage = () => {
       blur: undefined
     },
     {
-      id: 2,
+      id: 4,
       title: "Rubin Ramallari",
       description: "Professional portfolio website with modern design and smooth animations",
       image: "/trusted_logos/rubin-logo.svg",
@@ -137,19 +146,25 @@ const OurWorkPage = () => {
                 <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer">
                   {/* Project Thumbnail */}
                   <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} - ${project.description} by Averon Digital`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      quality={75}
-                      className={`${
-                        project.id === 2
-                          ? 'object-contain group-hover:scale-110'
-                          : 'object-cover group-hover:scale-110'
-                      } transition-transform duration-500`}
-                      {...(project.blur && { placeholder: "blur", blurDataURL: project.blur })}
-                    />
+                    {project.id === 1 ? (
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} - ${project.description} by Averon Digital`}
+                        width={260}
+                        height={46}
+                        className="object-contain group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} - ${project.description} by Averon Digital`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={75}
+                        className="object-contain group-hover:scale-110 transition-transform duration-500"
+                        {...(project.blur ? { placeholder: "blur" as const, blurDataURL: project.blur } : {})}
+                      />
+                    )}
 
                     {/* Overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

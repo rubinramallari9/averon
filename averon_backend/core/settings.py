@@ -315,6 +315,9 @@ if DEBUG:
 # Email recipient for contact form submissions
 CONTACT_EMAIL_RECIPIENT = os.environ.get('CONTACT_EMAIL_RECIPIENT', EMAIL_HOST_USER)
 
+# Resend API
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+
 # ==============================================================================
 # RECAPTCHA CONFIGURATION
 # ==============================================================================

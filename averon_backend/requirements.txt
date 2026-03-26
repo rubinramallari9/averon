@@ -26,6 +26,9 @@ pytest-django==4.9.0
 # reCAPTCHA
 requests==2.32.3
 
+# Email API
+resend==2.10.0
+
 # API Documentation
 drf-spectacular==0.28.0
 

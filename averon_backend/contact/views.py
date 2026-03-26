@@ -225,15 +225,15 @@ This is an automated notification from Averon.al
         """
 
         try:
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.CONTACT_EMAIL_RECIPIENT],
-                fail_silently=False,  # We catch exceptions in the caller
-            )
+            import resend
+            resend.api_key = settings.RESEND_API_KEY
+            resend.Emails.send({
+                "from": f"Averon <{settings.DEFAULT_FROM_EMAIL}>",
+                "to": [settings.CONTACT_EMAIL_RECIPIENT],
+                "subject": subject,
+                "text": message,
+            })
         except Exception as e:
-            # Re-raise with more context
             logger.error(f"send_mail failed: {str(e)}")
             raise
 

@@ -34,12 +34,10 @@ RUN python manage.py collectstatic --noinput || true
 
 # Create non-root user
 RUN useradd -m -u 1000 django && \
-    chown -R django:django /app
+    chown -R django:django /app && \
+    chmod +x /app/start.sh
 
 USER django
 
-# Expose port
-EXPOSE 8000
-
-# Run gunicorn (shell form required for $PORT env var expansion)
-CMD gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 4 --timeout 60 --access-logfile - --error-logfile -
+# Run start script
+CMD ["/app/start.sh"]

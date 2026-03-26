@@ -3,8 +3,6 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --timeout 60 --access-logfile - --error-logfile -"
-healthcheckPath = "/api/contacts/"
-healthcheckTimeout = 60
+startCommand = "python manage.py migrate --no-input && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --timeout 120 --access-logfile - --error-logfile -"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3

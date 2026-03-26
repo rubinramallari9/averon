@@ -1,4 +1,5 @@
 import logging
+import threading
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -138,18 +139,14 @@ class ContactViewSet(viewsets.ModelViewSet):
                 f"from {contact.email} (IP: {ip_address})"
             )
 
-            # Send email notification (non-blocking)
-            email_sent = False
-            try:
-                self._send_notification_email(contact)
-                email_sent = True
-                logger.info(f"Notification email sent for contact {contact.id}")
-            except Exception as e:
-                # Log the error but don't fail the request
-                logger.error(
-                    f"Error sending notification email for contact {contact.id}: {str(e)}",
-                    exc_info=True
-                )
+            # Send email notification in background thread (non-blocking)
+            email_sent = True
+            thread = threading.Thread(
+                target=self._send_notification_email,
+                args=(contact,),
+                daemon=True
+            )
+            thread.start()
 
             return Response(
                 {

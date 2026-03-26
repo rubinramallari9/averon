@@ -13,6 +13,7 @@ psycopg2-binary==2.9.10
 
 # Production Server
 gunicorn==23.0.0
+whitenoise==6.8.2
 
 # Security & Monitoring
 django-ratelimit==4.1.0

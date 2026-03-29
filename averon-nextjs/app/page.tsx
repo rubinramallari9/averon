@@ -1238,10 +1238,10 @@ const AveronWebsite = () => {
 
                 <div>
                   <h3 className="text-white font-semibold text-base mb-4">Partners</h3>
-                  <ul className="space-y-3 text-sm">
+                  <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
                     <li>
                       <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="text-purple-200/70 hover:text-white transition-colors">
-                        Ramarasim
+                        Rasim Rama
                       </a>
                     </li>
                     <li>

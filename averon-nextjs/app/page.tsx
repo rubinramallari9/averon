@@ -1241,7 +1241,7 @@ const AveronWebsite = () => {
                   <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
                     <li>
                       <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="text-purple-200/70 hover:text-white transition-colors">
-                        Rasim Rama
+                        Rama Rasim
                       </a>
                     </li>
                     <li>

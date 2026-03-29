@@ -1244,6 +1244,11 @@ const AveronWebsite = () => {
                         Ramarasim
                       </a>
                     </li>
+                    <li>
+                      <a href="https://timetrader-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-purple-200/70 hover:text-white transition-colors">
+                        Time Trader
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>

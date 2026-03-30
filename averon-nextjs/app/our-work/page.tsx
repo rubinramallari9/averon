@@ -241,7 +241,7 @@ const OurWorkPage = () => {
               </p>
               <div className="pt-4 border-t border-purple-500/20">
                 <p className="text-sm text-purple-400/80">
-                  © 2024 Averon Digital. All rights reserved.
+                  © {new Date().getFullYear()} Averon Digital. All rights reserved.
                 </p>
               </div>
             </div>

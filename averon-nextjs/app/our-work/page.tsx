@@ -8,6 +8,25 @@ import { motion } from 'framer-motion';
 
 const OurWorkPage = () => {
   // Portfolio projects data
+  const demos = [
+    {
+      id: 1,
+      title: "MobilTech",
+      description: "A concept showcase built to demonstrate mobile tech solutions for a prospective client",
+      image: "/trusted_logos/logoDemo1.jpg",
+      tech: ["Next.js", "TypeScript", "Tailwind"],
+      link: "https://mobiltech.vercel.app/"
+    },
+    {
+      id: 2,
+      title: "Brate Moto Servis",
+      description: "A concept showcase built to demonstrate a modern web presence for a motorcycle service shop",
+      image: "/trusted_logos/logobratemotoservis.jpg",
+      tech: ["Next.js", "TypeScript", "Tailwind"],
+      link: "https://bratemotoservis.vercel.app/"
+    }
+  ];
+
   const projects = [
     {
       id: 1,
@@ -187,6 +206,79 @@ const OurWorkPage = () => {
                     {/* Tech Stack Chips - Bottom Corner */}
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-3 py-1 bg-emerald-400/10 border border-emerald-400/30 rounded-full text-emerald-400 text-xs font-semibold backdrop-blur-sm"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Concept Showcases Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mb-12 text-center"
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+              <span className="text-white">Concept </span>
+              <span className="text-emerald-400">Showcases</span>
+            </h2>
+            <p className="text-purple-200 text-lg max-w-2xl mx-auto">
+              Prototype builds crafted to demonstrate our capabilities to future clients
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {demos.map((demo, index) => (
+              <motion.a
+                key={demo.id}
+                href={demo.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group relative block"
+              >
+                <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer">
+                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
+                    <Image
+                      src={demo.image}
+                      alt={`${demo.title} - ${demo.description} by Averon Digital`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={75}
+                      className="object-contain group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+                        <span>View Showcase</span>
+                        <ExternalLink className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6 relative">
+                    <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-emerald-400 transition-colors">
+                      {demo.title}
+                    </h3>
+                    <p className="text-purple-200 mb-6 leading-relaxed">
+                      {demo.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {demo.tech.map((tech, techIndex) => (
                         <span
                           key={techIndex}
                           className="px-3 py-1 bg-emerald-400/10 border border-emerald-400/30 rounded-full text-emerald-400 text-xs font-semibold backdrop-blur-sm"

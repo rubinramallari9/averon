@@ -6,6 +6,7 @@ import {
   organizationSchema,
   localBusinessSchema,
   websiteSchema,
+  faqSchema,
 } from "@/lib/seo";
 import InitialLoadingScreen from "@/components/InitialLoadingScreen";
 import DeferredStyles from "@/components/DeferredStyles";
@@ -65,7 +66,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="sq-AL" dir="ltr">
       <head>
         {/* Preload critical resources for faster Speed Index */}
         <link
@@ -77,6 +78,10 @@ export default function RootLayout({
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        {/* hreflang for Albanian/English bilingual targeting */}
+        <link rel="alternate" hrefLang="sq" href="https://averon.agency" />
+        <link rel="alternate" hrefLang="en" href="https://averon.agency" />
+        <link rel="alternate" hrefLang="x-default" href="https://averon.agency" />
 
         {/* Schema.org JSON-LD */}
         <script
@@ -95,6 +100,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema),
           }}
         />
       </head>

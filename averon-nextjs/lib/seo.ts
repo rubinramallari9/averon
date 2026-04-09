@@ -8,10 +8,10 @@ export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://averon.agenc
 export const defaultSEO: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Averon | Web Development Agency in Albania | Next.js & React Experts',
+    default: 'Averon | Krijim Faqesh Interneti & Sisteme Digjitale për Biznese në Shqipëri',
     template: '%s | Averon Digital',
   },
-  description: 'Leading web development agency in Tirana, Albania. We build modern, high-performance websites using Next.js, React & Django. Custom web solutions for Albanian businesses. Fast, SEO-optimized, mobile-responsive websites that drive results.',
+  description: 'Averon ndërton faqe interneti profesionale dhe sisteme digjitale për bizneset shqiptare. Zgjidhje web moderne, e-commerce, dhe platforma menaxhimi. Agjensia #1 digjitale në Tiranë. Web development agency in Albania specializing in business websites and digital systems.',
   keywords: [
     // English keywords
     'web development albania',
@@ -29,7 +29,7 @@ export const defaultSEO: Metadata = {
     'mobile app development albania',
     'responsive web design',
     'modern website design',
-    // Albanian keywords
+    // Albanian keywords - general
     'agjensi web',
     'agjensi digjitale',
     'krijimi faqesh interneti',
@@ -42,6 +42,30 @@ export const defaultSEO: Metadata = {
     'website responsive',
     'zhvillim software',
     'aplikacione web',
+    // Albanian keywords - business-focused (high intent)
+    'krijim faqe interneti per biznes',
+    'faqe interneti per kompani shqiperi',
+    'sisteme digjitale per biznes',
+    'sisteme digjitale shqiperi',
+    'digitalizim biznesi shqiperi',
+    'menaxhim online biznesi',
+    'zgjidhje digjitale per biznese',
+    'platforma digjitale biznes',
+    'transformim digjital shqiperi',
+    'ndertim faqesh interneti biznes',
+    'faqe interneti profesionale tirane',
+    'zhvillim sistem menaxhimi',
+    'software per biznese shqiperi',
+    'aplikacion web per kompani',
+    // English - business-focused
+    'digital systems albania',
+    'business website albania',
+    'website for albanian business',
+    'digital transformation albania',
+    'business software albania',
+    'web system development albania',
+    'management system albania',
+    'online business solutions albania',
   ],
   authors: [{ name: 'Averon Digital', url: baseUrl }],
   creator: 'Averon Digital',
@@ -364,6 +388,39 @@ export const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Yes! We provide lifetime support and updates for all our projects. We are committed to your long-term success.',
+      },
+    },
+    // Albanian-language FAQ entries targeting business-owner searches
+    {
+      '@type': 'Question',
+      name: 'Sa kushton krijimi i një faqe interneti për biznesin tim në Shqipëri?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Çmimi i një faqe interneti profesionale varion në bazë të kompleksitetit. Averon ofron paketa të personalizuara për biznese të çdo madhësie në Shqipëri. Na kontaktoni për një ofertë falas.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Çfarë është një sistem digjital për biznes dhe pse kam nevojë për të?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Një sistem digjital për biznes është një platformë softuerike që automatizimi proceseve të kompanisë suaj — si menaxhimi i porosive, klientëve, inventarit ose faturimit. Averon ndërton sisteme të personalizuara që kursejnë kohë dhe rrisin efiçencën e biznesit tuaj.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'A mund të ndërtoni faqe interneti në shqip dhe anglisht?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Po! Averon ndërton faqe interneti shumëgjuhëshe — shqip dhe anglisht — të optimizuara për motorët e kërkimit si Google. Kjo rrit dukshmërinë tuaj si tek klientët shqiptarë ashtu edhe tek ata ndërkombëtarë.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Si mund ta gjejnë klientët biznesin tim online në Shqipëri?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Averon ndërton faqe interneti me SEO të optimizuar për tregun shqiptar, duke siguruar që biznesi juaj të shfaqet në Google kur klientët kërkojnë shërbimet tuaja. Ofrojmë gjithashtu optimizim të Google Business Profile për dukshmëri lokale.',
       },
     },
   ],

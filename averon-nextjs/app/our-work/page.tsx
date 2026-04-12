@@ -10,6 +10,14 @@ const OurWorkPage = () => {
   // Portfolio projects data
   const demos = [
     {
+      id: 3,
+      title: "Dental Studio Dr. Kedri Peza",
+      description: "A concept showcase built to demonstrate a professional web presence for a family dental clinic",
+      image: "/trusted_logos/dental-studio-kedri-peza-logo.png",
+      tech: ["Next.js", "TypeScript", "Tailwind"],
+      link: "https://dental-studio-dr-kedri-peza.vercel.app/"
+    },
+    {
       id: 1,
       title: "MobilTech",
       description: "A concept showcase built to demonstrate mobile tech solutions for a prospective client",

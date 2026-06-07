@@ -38,13 +38,13 @@ const AvoxPage = () => {
             offers: {
               '@type': 'Offer',
               url: 'https://averon.agency/#contact',
-              price: '99',
+              price: '300',
               priceCurrency: 'EUR',
               priceSpecification: {
                 '@type': 'PriceSpecification',
-                price: '99',
+                price: '300',
                 priceCurrency: 'EUR',
-                description: 'Starting from €99/month. Contact for custom pricing.',
+                description: 'Starting from €300/month. Contact for custom pricing.',
               },
               availability: 'https://schema.org/InStock',
               seller: {

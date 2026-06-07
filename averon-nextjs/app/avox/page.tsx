@@ -40,12 +40,23 @@ const AvoxPage = () => {
               url: 'https://averon.agency/#contact',
               price: '300',
               priceCurrency: 'EUR',
-              priceSpecification: {
-                '@type': 'PriceSpecification',
-                price: '300',
-                priceCurrency: 'EUR',
-                description: 'Starting from €300/month. Contact for custom pricing.',
-              },
+              priceSpecification: [
+                {
+                  '@type': 'UnitPriceSpecification',
+                  price: '300',
+                  priceCurrency: 'EUR',
+                  name: 'Setup & Build',
+                  description: 'One-time setup and build fee starting at €300.',
+                },
+                {
+                  '@type': 'UnitPriceSpecification',
+                  price: '50',
+                  priceCurrency: 'EUR',
+                  unitCode: 'MON',
+                  name: 'Monthly Hosting & Maintenance',
+                  description: 'Monthly hosting, maintenance, and support starting at €50/month.',
+                },
+              ],
               availability: 'https://schema.org/InStock',
               seller: {
                 '@type': 'Organization',

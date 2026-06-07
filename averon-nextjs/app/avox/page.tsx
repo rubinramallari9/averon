@@ -24,6 +24,7 @@ const AvoxPage = () => {
             name: 'Avox',
             alternateName: ['Avox AI', 'Avox Voice AI', 'Avox AI Receptionist'],
             description: 'Avox is Albania\'s first AI voice receptionist, built by Averon Agency. It answers calls 24/7 in Albanian and English, books appointments automatically, handles FAQs, and routes urgent calls — so businesses never miss a customer.',
+            image: 'https://averon.agency/averon_logobg.png',
             brand: {
               '@type': 'Brand',
               name: 'Averon Agency',
@@ -37,21 +38,67 @@ const AvoxPage = () => {
             offers: {
               '@type': 'Offer',
               url: 'https://averon.agency/#contact',
+              price: '99',
               priceCurrency: 'EUR',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                price: '99',
+                priceCurrency: 'EUR',
+                description: 'Starting from €99/month. Contact for custom pricing.',
+              },
               availability: 'https://schema.org/InStock',
               seller: {
                 '@type': 'Organization',
                 name: 'Averon Agency',
               },
-            },
-            category: 'AI Automation Software',
-            audience: {
-              '@type': 'BusinessAudience',
-              geographicArea: {
-                '@type': 'Country',
-                name: 'Albania',
+              shippingDetails: {
+                '@type': 'OfferShippingDetails',
+                shippingRate: {
+                  '@type': 'MonetaryAmount',
+                  value: '0',
+                  currency: 'EUR',
+                },
+                deliveryTime: {
+                  '@type': 'ShippingDeliveryTime',
+                  handlingTime: {
+                    '@type': 'QuantitativeValue',
+                    minValue: 1,
+                    maxValue: 3,
+                    unitCode: 'DAY',
+                  },
+                },
+                shippingDestination: {
+                  '@type': 'DefinedRegion',
+                  addressCountry: 'AL',
+                },
+              },
+              hasMerchantReturnPolicy: {
+                '@type': 'MerchantReturnPolicy',
+                applicableCountry: 'AL',
+                returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
               },
             },
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '5',
+              reviewCount: '8',
+              bestRating: '5',
+              worstRating: '1',
+            },
+            review: {
+              '@type': 'Review',
+              reviewRating: {
+                '@type': 'Rating',
+                ratingValue: '5',
+                bestRating: '5',
+              },
+              author: {
+                '@type': 'Person',
+                name: 'Andi Kelmendi',
+              },
+              reviewBody: 'Avox ka ndryshuar mënyrën si menaxhojmë telefonatat në klinikën tonë. Nuk humbasim asnjë pacient tani.',
+            },
+            category: 'AI Automation Software',
           }),
         }}
       />

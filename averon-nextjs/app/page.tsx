@@ -849,7 +849,7 @@ const AveronWebsite = () => {
                   </li>
                 ))}
               </ul>
-              <Link href="/automations#avox" className="inline-flex items-center gap-2 text-emerald-400 text-sm font-semibold hover:text-emerald-300 transition-colors">
+              <Link href="/avox" className="inline-flex items-center gap-2 text-emerald-400 text-sm font-semibold hover:text-emerald-300 transition-colors">
                 Learn more <ArrowRightIcon />
               </Link>
             </div>

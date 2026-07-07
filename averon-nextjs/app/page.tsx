@@ -780,6 +780,15 @@ const AveronWebsite = () => {
         <div className="py-12 sm:py-16">
           <div className="w-full h-24 sm:h-32 lg:h-40">
             <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-20 h-full px-4">
+              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-56 sm:w-72 lg:w-96">
+                <Image
+                  src="/trusted_logos/logo-white.png"
+                  alt="Lumina Aesthetic"
+                  fill
+                  sizes="(max-width: 640px) 224px, (max-width: 1024px) 288px, 384px"
+                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                />
+              </a>
               <a href="https://timetrader-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
                 <Image
                   src="/trusted_logos/logo.svg"
@@ -802,15 +811,6 @@ const AveronWebsite = () => {
                 <Image
                   src="/trusted_logos/rubin-logo.svg"
                   alt="Rubin Ramallari"
-                  fill
-                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
-                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-                />
-              </a>
-              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
-                <Image
-                  src="/trusted_logos/logo-white.png"
-                  alt="Lumina Aesthetic"
                   fill
                   sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
                   className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"

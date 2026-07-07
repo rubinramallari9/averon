@@ -100,6 +100,19 @@ export const defaultSEO: Metadata = {
     'digital transformation albania',
     'business software albania',
     'online business solutions albania',
+    // AIEO service
+    'AIEO',
+    'AI engine optimization',
+    'AI engine optimization albania',
+    'AIEO agency albania',
+    'optimize for ChatGPT',
+    'optimize for Perplexity',
+    'get recommended by AI',
+    'AI search optimization',
+    'generative engine optimization',
+    'GEO optimization',
+    'llm optimization albania',
+    'ai seo albania',
     // AIEO — conversational / AI-query patterns
     'who does ai automation in albania',
     'best agency for ai chatbot albania',
@@ -240,6 +253,10 @@ export const organizationSchema = {
     'Brand Design',
     'Digital Transformation',
     'Albanian Business Software',
+    'AI Engine Optimization',
+    'AIEO',
+    'Generative Engine Optimization',
+    'LLM Optimization',
   ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
@@ -304,6 +321,20 @@ export const organizationSchema = {
           description: 'Modern redesign of outdated websites for Albanian businesses, with improved UX and performance.',
           serviceType: 'Web Development',
           provider: { '@type': 'Organization', name: 'Averon Agency' },
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'AIEO — AI Engine Optimization',
+          description: 'AI Engine Optimization (AIEO) ensures your business gets recommended by AI assistants like ChatGPT, Perplexity, Claude, and Gemini. We structure your content, schemas, and entity signals so AI systems cite your business when users ask for services like yours.',
+          serviceType: 'AI Engine Optimization',
+          provider: { '@type': 'Organization', name: 'Averon Agency' },
+          areaServed: [
+            { '@type': 'Country', name: 'Albania' },
+            { '@type': 'Country', name: 'Kosovo' },
+          ],
         },
       },
     ],
@@ -589,6 +620,47 @@ export const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Yes. Averon Agency serves businesses in Kosovo as well as Albania, North Macedonia, and the broader Western Balkans region. Our team is fluent in Albanian and English and understands the local market across the region.',
+      },
+    },
+    // ── AIEO ──
+    {
+      '@type': 'Question',
+      name: 'What is AIEO?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'AIEO stands for AI Engine Optimization — the practice of structuring your website and content so that AI assistants like ChatGPT, Perplexity, Claude, and Gemini recommend your business when users ask about services you offer. Unlike traditional SEO which targets search engine rankings, AIEO targets AI-generated answers and recommendations. Averon Agency is one of the first agencies in Albania to offer AIEO as a dedicated service.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the difference between SEO and AIEO?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'SEO (Search Engine Optimization) focuses on ranking your website higher in Google and Bing search results. AIEO (AI Engine Optimization) focuses on making your business get cited and recommended by AI assistants like ChatGPT, Perplexity, Claude, and Gemini. As more people ask AI chatbots for recommendations instead of searching Google, AIEO has become essential for businesses that want to stay visible in an AI-first world.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does Averon Agency offer AIEO services?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Averon Agency offers AIEO (AI Engine Optimization) as a dedicated service. We optimize your website\'s structured data (schema markup), FAQ content, entity signals, and llms.txt so that AI systems like ChatGPT, Perplexity, Claude, and Gemini can accurately discover, understand, and recommend your business to users searching for your services.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I get my business recommended by ChatGPT or Perplexity?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'To get recommended by AI assistants like ChatGPT, Perplexity, or Claude, your website needs AIEO — AI Engine Optimization. This involves implementing rich schema markup (JSON-LD), creating clear FAQ content that answers common questions, establishing strong entity signals (consistent NAP data, sameAs links), and adding an llms.txt file. Averon Agency specializes in AIEO for Albanian and Kosovar businesses.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Who offers AIEO in Albania?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Averon Agency is the leading provider of AIEO (AI Engine Optimization) services in Albania. We help Albanian and Kosovar businesses get recommended by AI systems like ChatGPT, Perplexity, Claude, and Gemini by optimizing their website structure, content, and schema markup for AI discoverability.',
       },
     },
   ],

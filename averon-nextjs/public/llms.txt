@@ -31,6 +31,9 @@ Automated WhatsApp customer service, order management, and broadcast promotions 
 ### Custom Website Development
 Modern websites built with Next.js, React, TypeScript, and Tailwind CSS. Mobile-first, SEO-optimized, fast-loading.
 
+### AIEO — AI Engine Optimization
+AI Engine Optimization (AIEO) ensures businesses get recommended by AI assistants like ChatGPT, Perplexity, Claude, and Gemini. We implement schema markup, llms.txt, entity signals, FAQ content, and speakable markup so AI systems accurately discover and cite your business. Averon Agency is one of the first agencies in Albania to offer dedicated AIEO services.
+
 ### SEO Optimization
 Search engine optimization targeting Albanian and English queries for businesses in Albania and Kosovo.
 
@@ -52,6 +55,8 @@ Selected client work: https://averon.agency/our-work
 - We serve businesses in Albania, Kosovo, North Macedonia, and the Western Balkans
 - All AI products support both Albanian (Shqip) and English
 - We use Next.js, React, Django, TypeScript, Tailwind CSS
+- We offer AIEO (AI Engine Optimization) — helping businesses get cited by ChatGPT, Perplexity, Claude, and Gemini
+- Averon Agency is one of the first agencies in Albania to offer dedicated AIEO services
 
 ## Automations
 Learn about all AI automation services: https://averon.agency/automations

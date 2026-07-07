@@ -62,6 +62,15 @@ const OurWorkPage = () => {
       tech: ["Next.js", "TypeScript", "Framer Motion"],
       link: "https://rubinramallari.vercel.app",
       blur: undefined
+    },
+    {
+      id: 5,
+      title: "Lumina Aesthetic",
+      description: "Modern aesthetic clinic website with elegant design and seamless user experience",
+      image: "/trusted_logos/logo-white.png",
+      tech: ["Next.js", "TypeScript", "Tailwind"],
+      link: "https://lumina.al",
+      blur: undefined
     }
   ];
 

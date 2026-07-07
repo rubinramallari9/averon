@@ -22,7 +22,7 @@ const AutomationsPage = () => {
             <Link href="/">
               <Image
                 src="/averon_logobg.png"
-                alt="Averon Digital"
+                alt="Averon Agency"
                 width={160}
                 height={45}
                 className="w-28 sm:w-32 lg:w-40 cursor-pointer"
@@ -529,7 +529,7 @@ const AutomationsPage = () => {
               <Link href="/" className="inline-block">
                 <Image
                   src="/averon_logobg.png"
-                  alt="Averon Digital"
+                  alt="Averon Agency"
                   width={160}
                   height={45}
                   className="mx-auto mb-4 cursor-pointer"
@@ -540,7 +540,7 @@ const AutomationsPage = () => {
               </p>
               <div className="pt-4 border-t border-purple-500/20">
                 <p className="text-sm text-purple-400/80">
-                  © {new Date().getFullYear()} Averon Digital. All rights reserved.
+                  © {new Date().getFullYear()} Averon Agency. All rights reserved.
                 </p>
               </div>
             </div>

@@ -171,7 +171,7 @@ const techStack = [
 const AveronLogo = memo(({ className = "w-40" }: { className?: string }) => (
   <Image
     src="/averon_logobg.png"
-    alt="Averon Digital"
+    alt="Averon Agency"
     width={560}
     height={160}
     className={className}
@@ -1285,7 +1285,7 @@ const AveronWebsite = () => {
           </form>
 
           <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-purple-300 px-4">
-            Join the list of businesses that trust Averon Digital with their online presence
+            Join the list of businesses that trust Averon Agency with their online presence
           </p>
         </div>
       </section>
@@ -1385,7 +1385,7 @@ const AveronWebsite = () => {
               <div className="pt-6 border-t border-purple-500/20">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                   <p className="text-xs sm:text-sm text-purple-400/70">
-                    © {new Date().getFullYear()} Averon Digital. All rights reserved.
+                    © {new Date().getFullYear()} Averon Agency. All rights reserved.
                   </p>
                   <div className="flex gap-6 text-xs sm:text-sm">
                     <a href="#" className="text-purple-400/70 hover:text-white transition-colors">Privacy Policy</a>

@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Our Work - Averon Digital Portfolio'
+export const alt = 'Our Work - Averon Agency Portfolio'
 export const size = {
   width: 1200,
   height: 630,

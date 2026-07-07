@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { baseUrl } from '@/lib/seo';
+import { baseUrl, generateBreadcrumbSchema, avoxSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Avox — AI Voice Receptionist by Averon | Albania',
@@ -35,6 +35,23 @@ export const metadata: Metadata = {
   },
 };
 
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: baseUrl },
+  { name: 'Avox — AI Voice Receptionist', url: `${baseUrl}/avox` },
+]);
+
 export default function AvoxLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(avoxSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Averon Digital - Web Development Agency in Albania'
+export const alt = 'Averon Agency - AI Automation & Web Development in Albania'
 export const size = {
   width: 1200,
   height: 630,
@@ -73,7 +73,7 @@ export default async function Image() {
               display: 'flex',
             }}
           >
-            Web Development Agency
+            AI Automation & Web Agency
           </div>
 
           {/* Services Pills */}
@@ -85,7 +85,7 @@ export default async function Image() {
               justifyContent: 'center',
             }}
           >
-            {['Next.js', 'React', 'Django', 'E-commerce', 'SEO'].map((tech) => (
+            {['Avox AI', 'Instagram Bot', 'WhatsApp Bot', 'Next.js', 'SEO'].map((tech) => (
               <div
                 key={tech}
                 style={{

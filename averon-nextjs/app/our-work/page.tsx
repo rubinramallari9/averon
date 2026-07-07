@@ -92,7 +92,7 @@ const OurWorkPage = () => {
             <Link href="/">
               <Image
                 src="/averon_logobg.png"
-                alt="Averon Digital"
+                alt="Averon Agency"
                 width={160}
                 height={45}
                 className="w-28 sm:w-32 lg:w-40 cursor-pointer"
@@ -185,7 +185,7 @@ const OurWorkPage = () => {
                     {project.id === 1 ? (
                       <Image
                         src={project.image}
-                        alt={`${project.title} - ${project.description} by Averon Digital`}
+                        alt={`${project.title} - ${project.description} by Averon Agency`}
                         width={260}
                         height={46}
                         className="object-contain group-hover:scale-110 transition-transform duration-500"
@@ -193,7 +193,7 @@ const OurWorkPage = () => {
                     ) : (
                       <Image
                         src={project.image}
-                        alt={`${project.title} - ${project.description} by Averon Digital`}
+                        alt={`${project.title} - ${project.description} by Averon Agency`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         quality={75}
@@ -273,7 +273,7 @@ const OurWorkPage = () => {
                   <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
                     <Image
                       src={demo.image}
-                      alt={`${demo.title} - ${demo.description} by Averon Digital`}
+                      alt={`${demo.title} - ${demo.description} by Averon Agency`}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       quality={75}
@@ -339,7 +339,7 @@ const OurWorkPage = () => {
               <Link href="/" className="inline-block">
                 <Image
                   src="/averon_logobg.png"
-                  alt="Averon Digital"
+                  alt="Averon Agency"
                   width={160}
                   height={45}
                   className="mx-auto mb-4 cursor-pointer"
@@ -350,7 +350,7 @@ const OurWorkPage = () => {
               </p>
               <div className="pt-4 border-t border-purple-500/20">
                 <p className="text-sm text-purple-400/80">
-                  © {new Date().getFullYear()} Averon Digital. All rights reserved.
+                  © {new Date().getFullYear()} Averon Agency. All rights reserved.
                 </p>
               </div>
             </div>

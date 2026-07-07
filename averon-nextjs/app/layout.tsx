@@ -7,6 +7,8 @@ import {
   localBusinessSchema,
   websiteSchema,
   faqSchema,
+  avoxSchema,
+  speakableSchema,
 } from "@/lib/seo";
 import InitialLoadingScreen from "@/components/InitialLoadingScreen";
 import DeferredStyles from "@/components/DeferredStyles";
@@ -106,6 +108,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(faqSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(avoxSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(speakableSchema),
           }}
         />
       </head>

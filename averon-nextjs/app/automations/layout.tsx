@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { baseUrl } from '@/lib/seo';
+import { baseUrl, generateBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'AI Automations Albania — Avox, Instagram DM Bot, WhatsApp Bot',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'AI Business Automations in Albania — Averon',
     description: 'Albania\'s first AI automation agency. Avox voice AI, Instagram DM Bot, WhatsApp Bot — built for Albanian businesses that never want to miss a customer.',
     url: `${baseUrl}/automations`,
-    siteName: 'Averon Digital',
+    siteName: 'Averon Agency',
     locale: 'en_AL',
     alternateLocale: ['sq_AL'],
     type: 'website',
@@ -37,6 +37,19 @@ export const metadata: Metadata = {
   },
 };
 
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: baseUrl },
+  { name: 'AI Automations', url: `${baseUrl}/automations` },
+]);
+
 export default function AutomationsLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {children}
+    </>
+  );
 }

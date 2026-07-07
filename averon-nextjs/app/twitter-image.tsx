@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Averon Digital - Web Development Agency in Albania'
+export const alt = 'Averon Agency - Web Development Agency in Albania'
 export const size = {
   width: 1200,
   height: 630,

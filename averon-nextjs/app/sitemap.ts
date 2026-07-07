@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 /**
- * Enhanced Sitemap Generator for Averon Digital
+ * Enhanced Sitemap Generator for Averon Agency
  * Optimized for maximum SEO visibility
  */
 

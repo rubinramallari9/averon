@@ -55,15 +55,6 @@ const OurWorkPage = () => {
       blur: undefined
     },
     {
-      id: 4,
-      title: "Rubin Ramallari",
-      description: "Professional portfolio website with modern design and smooth animations",
-      image: "/trusted_logos/rubin-logo.svg",
-      tech: ["Next.js", "TypeScript", "Framer Motion"],
-      link: "https://rubinramallari.vercel.app",
-      blur: undefined
-    },
-    {
       id: 5,
       title: "Lumina Aesthetic",
       description: "Modern aesthetic clinic website with elegant design and seamless user experience",

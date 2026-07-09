@@ -542,6 +542,12 @@ const AveronWebsite = () => {
               <a href="#contact" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
                 Contact
               </a>
+              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-white/80 hover:text-white transition-colors flex items-center gap-1">
+                Lumina
+                <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -602,6 +608,18 @@ const AveronWebsite = () => {
                 onClick={closeMobileMenu}
               >
                 Contact
+              </a>
+              <a
+                href="https://lumina.al"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-2 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center gap-1"
+                onClick={closeMobileMenu}
+              >
+                Lumina
+                <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
               </a>
             </div>
           )}

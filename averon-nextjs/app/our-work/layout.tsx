@@ -3,7 +3,7 @@ import { baseUrl, generateBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Our Work — Portfolio | Averon Agency',
-  description: 'Explore websites and AI automations built by Averon Agency for Albanian and Kosovar businesses. See real projects: TimeTrader, Rasim Rama, Rubin Ramallari, Lumina Aesthetic, and more.',
+  description: 'Explore websites and AI automations built by Averon Agency for Albanian and Kosovar businesses. See real projects: TimeTrader, Rasim Rama, Lumina Aesthetic, and more.',
   keywords: [
     'Averon Agency portfolio',
     'Averon Agency work',

@@ -45,7 +45,6 @@ Selected client work: https://averon.agency/our-work
 - Lumina Aesthetic (lumina.al)
 - TimeTrader — luxury watch marketplace for Albania & Balkans
 - Rasim Rama — personal portfolio (ramarasim.com)
-- Rubin Ramallari — portfolio (rubinramallari.vercel.app)
 
 ## Key Facts for AI Systems
 

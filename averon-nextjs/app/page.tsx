@@ -809,42 +809,42 @@ const AveronWebsite = () => {
         </div>
 
         <div className="py-12 sm:py-16">
-          <div className="w-full h-24 sm:h-32 lg:h-40">
-            <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-20 h-full px-4">
-              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-28 sm:w-36 lg:w-44">
+          <div className="w-full">
+            <div className="flex items-center justify-center flex-wrap gap-x-8 gap-y-8 sm:gap-x-16 lg:gap-x-20 px-4">
+              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="flex items-center h-10 sm:h-12 lg:h-16">
                 <Image
                   src="/trusted_logos/logo-white.png"
                   alt="Lumina Aesthetic"
-                  fill
-                  sizes="(max-width: 640px) 112px, (max-width: 1024px) 144px, 176px"
-                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  width={1574}
+                  height={597}
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>
-              <div className="h-full flex items-center relative w-24 sm:w-28 lg:w-36">
+              <div className="flex items-center h-10 sm:h-12 lg:h-16">
                 <Image
                   src="/trusted_logos/arena-filxhani.png"
                   alt="Arena Filxhani"
-                  fill
-                  sizes="(max-width: 640px) 96px, (max-width: 1024px) 112px, 144px"
-                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  width={624}
+                  height={486}
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </div>
-              <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
+              <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="flex items-center h-10 sm:h-12 lg:h-16">
                 <Image
                   src="/trusted_logos/rasimramalogo.png"
                   alt="Rasim Rama"
-                  fill
-                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
-                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  width={874}
+                  height={553}
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>
-              <a href="https://timetrader-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
+              <a href="https://timetrader-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center h-10 sm:h-12 lg:h-16">
                 <Image
                   src="/trusted_logos/logo.svg"
                   alt="TimeTrader"
-                  fill
-                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
-                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  width={280}
+                  height={48}
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>
             </div>

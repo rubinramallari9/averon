@@ -838,6 +838,15 @@ const AveronWebsite = () => {
                   className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>
+              <div className="h-full flex items-center relative w-44 sm:w-56 lg:w-72">
+                <Image
+                  src="/trusted_logos/arena-filxhani.png"
+                  alt="Arena Filxhani"
+                  fill
+                  sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 288px"
+                  className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                />
+              </div>
             </div>
           </div>
         </div>

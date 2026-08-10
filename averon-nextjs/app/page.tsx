@@ -931,7 +931,7 @@ const AveronWebsite = () => {
               <span className="text-green-400 text-xs font-semibold tracking-wider uppercase mb-2 block">WhatsApp</span>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">WhatsApp Bot</h3>
               <p className="text-purple-200/80 text-sm sm:text-base leading-relaxed mb-5">
-                Automate customer service on Albania's most-used messaging app. Handle orders, bookings, and support without lifting a finger.
+                Automate customer service on Albania&apos;s most-used messaging app. Handle orders, bookings, and support without lifting a finger.
               </p>
               <ul className="space-y-2 mb-6">
                 {["Instant customer replies", "Order & booking management", "Broadcast promotions", "Seamless handoff to humans"].map((item) => (

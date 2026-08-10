@@ -154,7 +154,7 @@ const AvoxPage = () => {
             {/* Product badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-400/10 border border-emerald-400/30 rounded-full mb-8">
               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-emerald-400 text-sm font-semibold tracking-wider uppercase">By Averon Agency · Albania's First</span>
+              <span className="text-emerald-400 text-sm font-semibold tracking-wider uppercase">By Averon Agency · Albania&apos;s First</span>
             </div>
 
             {/* Main heading — "Avox" is the H1 Google needs to see */}
@@ -163,7 +163,7 @@ const AvoxPage = () => {
             </h1>
 
             <p className="text-2xl sm:text-3xl font-semibold text-white mb-4">
-              Albania's First AI Voice Receptionist
+              Albania&apos;s First AI Voice Receptionist
             </p>
 
             <motion.div
@@ -214,7 +214,7 @@ const AvoxPage = () => {
               <h2 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
                 <span className="text-white">The AI that </span>
                 <span className="text-emerald-400">picks up</span>
-                <span className="text-white"> when you can't</span>
+                <span className="text-white"> when you can&apos;t</span>
               </h2>
               <p className="text-purple-200 text-lg leading-relaxed mb-6">
                 Avox is an AI voice assistant created by Averon Agency — designed from the ground up for Albanian businesses. It speaks naturally in Albanian and English, understands your services, and handles calls exactly the way a trained receptionist would.
@@ -262,7 +262,7 @@ const AvoxPage = () => {
                         <span className="text-emerald-400 text-xs font-bold">AI</span>
                       </div>
                       <div className="bg-white/5 rounded-xl px-4 py-2 max-w-[80%]">
-                        <p className="text-white text-sm">"Mirëdita! Si mund t'ju ndihmoj?"</p>
+                        <p className="text-white text-sm">&quot;Mirëdita! Si mund t&apos;ju ndihmoj?&quot;</p>
                       </div>
                     </div>
                     <div className="flex gap-3 flex-row-reverse">
@@ -270,7 +270,7 @@ const AvoxPage = () => {
                         <span className="text-purple-300 text-xs font-bold">C</span>
                       </div>
                       <div className="bg-white/10 rounded-xl px-4 py-2 max-w-[75%]">
-                        <p className="text-white text-sm">"Dua të rezervoj një vizitë"</p>
+                        <p className="text-white text-sm">&quot;Dua të rezervoj një vizitë&quot;</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -278,7 +278,7 @@ const AvoxPage = () => {
                         <span className="text-emerald-400 text-xs font-bold">AI</span>
                       </div>
                       <div className="bg-white/5 rounded-xl px-4 py-2 max-w-[75%]">
-                        <p className="text-white text-sm">"Të enjten: 10:00 ose 15:00?"</p>
+                        <p className="text-white text-sm">&quot;Të enjten: 10:00 ose 15:00?&quot;</p>
                       </div>
                     </div>
                   </div>
@@ -304,7 +304,7 @@ const AvoxPage = () => {
               <span className="text-emerald-400">handles for you</span>
             </h2>
             <p className="text-purple-200 text-lg max-w-2xl mx-auto">
-              Avox isn't just an answering machine — it's a full receptionist powered by AI
+              Avox isn&apos;t just an answering machine — it&apos;s a full receptionist powered by AI
             </p>
           </motion.div>
 
@@ -448,7 +448,7 @@ const AvoxPage = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </Link>
-              <p className="text-purple-400 text-sm mt-6">Built by Averon Agency · Albania's First AI Voice Receptionist</p>
+              <p className="text-purple-400 text-sm mt-6">Built by Averon Agency · Albania&apos;s First AI Voice Receptionist</p>
             </div>
           </motion.div>
         </div>
@@ -462,7 +462,7 @@ const AvoxPage = () => {
               <Link href="/" className="inline-block">
                 <Image src="/averon_logobg.png" alt="Averon Agency" width={160} height={45} className="mx-auto mb-4 cursor-pointer" />
               </Link>
-              <p className="text-purple-200 text-sm mb-1">Avox — Albania's First AI Voice Receptionist</p>
+              <p className="text-purple-200 text-sm mb-1">Avox — Albania&apos;s First AI Voice Receptionist</p>
               <p className="text-purple-400 text-sm mb-4">Built by Averon Agency</p>
               <div className="pt-4 border-t border-purple-500/20">
                 <p className="text-sm text-purple-400/80">© {new Date().getFullYear()} Averon Agency. All rights reserved.</p>

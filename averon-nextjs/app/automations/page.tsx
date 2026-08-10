@@ -119,7 +119,7 @@ const AutomationsPage = () => {
                         <span className="text-emerald-400 text-xs font-bold">AI</span>
                       </div>
                       <div className="bg-white/5 rounded-xl px-4 py-2 max-w-[85%]">
-                        <p className="text-white text-sm">"Mirëdita! Si mund t'ju ndihmoj?"</p>
+                        <p className="text-white text-sm">&quot;Mirëdita! Si mund t&apos;ju ndihmoj?&quot;</p>
                       </div>
                     </div>
                     <div className="flex gap-3 flex-row-reverse">
@@ -127,7 +127,7 @@ const AutomationsPage = () => {
                         <span className="text-purple-300 text-xs font-bold">C</span>
                       </div>
                       <div className="bg-white/10 rounded-xl px-4 py-2 max-w-[75%]">
-                        <p className="text-white text-sm">"Dua të rezervoj një vizitë"</p>
+                        <p className="text-white text-sm">&quot;Dua të rezervoj një vizitë&quot;</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -135,7 +135,7 @@ const AutomationsPage = () => {
                         <span className="text-emerald-400 text-xs font-bold">AI</span>
                       </div>
                       <div className="bg-white/5 rounded-xl px-4 py-2 max-w-[75%]">
-                        <p className="text-white text-sm">"Të enjten: 10:00 ose 15:00?"</p>
+                        <p className="text-white text-sm">&quot;Të enjten: 10:00 ose 15:00?&quot;</p>
                       </div>
                     </div>
                   </div>
@@ -506,7 +506,7 @@ const AutomationsPage = () => {
               <span className="text-emerald-400">Automate?</span>
             </h2>
             <p className="text-xl text-purple-200 mb-10 leading-relaxed max-w-2xl mx-auto">
-              Tell us about your business and we'll build the right automation for you. Free consultation, no commitment.
+              Tell us about your business and we&apos;ll build the right automation for you. Free consultation, no commitment.
             </p>
             <Link
               href="/#contact"

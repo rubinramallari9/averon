@@ -1,5 +1,6 @@
 import pytest
-from django.test import TestCase
+from django.test import TestCase, override_settings
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -11,6 +12,28 @@ from .serializers import ContactSerializer, ContactAdminSerializer
 from .views import get_client_ip, get_user_agent
 
 User = get_user_model()
+
+
+class _SyncThread:
+    """
+    Stand-in for threading.Thread that runs the target synchronously.
+    Used to make the background email-notification thread deterministic
+    in tests instead of racing against the test assertions.
+    """
+
+    def __init__(self, target=None, args=(), kwargs=None, daemon=None):
+        self._target = target
+        self._args = args
+        self._kwargs = kwargs or {}
+
+    def start(self):
+        # Real threads never propagate an exception raised in their target
+        # back to the caller - it's logged (via threading.excepthook) and
+        # the thread simply dies. Mirror that isolation here.
+        try:
+            self._target(*self._args, **self._kwargs)
+        except Exception:
+            pass
 
 
 class ContactModelTests(TestCase):
@@ -265,6 +288,10 @@ class ContactAPITests(APITestCase):
 
     def setUp(self):
         """Set up test client and data"""
+        # Clear the throttle cache so contact_submit rate limiting from
+        # earlier tests in this class doesn't bleed into this test.
+        cache.clear()
+
         self.client = APIClient()
         self.contact_url = '/api/contacts/'
 
@@ -359,10 +386,16 @@ class ContactAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('errors', response.data)
 
-    @patch('contact.views.send_mail')
-    def test_email_notification_sent(self, mock_send_mail):
+    @override_settings(
+        CONTACT_EMAIL_RECIPIENT='admin@example.com',
+        DEFAULT_FROM_EMAIL='noreply@example.com',
+        RESEND_API_KEY='test-key',
+    )
+    @patch('contact.views.threading.Thread', _SyncThread)
+    @patch('resend.Emails.send')
+    def test_email_notification_sent(self, mock_send):
         """Test that email notification is sent on contact creation"""
-        mock_send_mail.return_value = 1
+        mock_send.return_value = {'id': 'test-email-id'}
 
         response = self.client.post(
             self.contact_url,
@@ -373,13 +406,19 @@ class ContactAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(response.data['email_sent'])
 
-        # Verify send_mail was called
-        mock_send_mail.assert_called_once()
+        # Verify the notification email was actually sent via Resend
+        mock_send.assert_called_once()
 
-    @patch('contact.views.send_mail')
-    def test_email_failure_does_not_break_submission(self, mock_send_mail):
+    @override_settings(
+        CONTACT_EMAIL_RECIPIENT='admin@example.com',
+        DEFAULT_FROM_EMAIL='noreply@example.com',
+        RESEND_API_KEY='test-key',
+    )
+    @patch('contact.views.threading.Thread', _SyncThread)
+    @patch('resend.Emails.send')
+    def test_email_failure_does_not_break_submission(self, mock_send):
         """Test that contact is still created even if email fails"""
-        mock_send_mail.side_effect = Exception('Email server down')
+        mock_send.side_effect = Exception('Email server down')
 
         response = self.client.post(
             self.contact_url,
@@ -387,10 +426,14 @@ class ContactAPITests(APITestCase):
             format='json'
         )
 
-        # Contact should still be created
+        # Contact should still be created and the request should still
+        # succeed even though sending the notification email failed -
+        # the email is sent in a background thread and never blocks
+        # or fails the submission itself.
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertFalse(response.data['email_sent'])
+        self.assertTrue(response.data['email_sent'])
         self.assertEqual(Contacts.objects.count(), 1)
+        mock_send.assert_called_once()
 
     def test_list_contacts_requires_admin(self):
         """Test that listing contacts requires admin authentication"""

@@ -811,12 +811,12 @@ const AveronWebsite = () => {
         <div className="py-12 sm:py-16">
           <div className="w-full h-24 sm:h-32 lg:h-40">
             <div className="flex items-center justify-center gap-8 sm:gap-16 lg:gap-20 h-full px-4">
-              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-36 sm:w-44 lg:w-56">
+              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="h-full flex items-center relative w-28 sm:w-36 lg:w-44">
                 <Image
                   src="/trusted_logos/logo-white.png"
                   alt="Lumina Aesthetic"
                   fill
-                  sizes="(max-width: 640px) 144px, (max-width: 1024px) 176px, 224px"
+                  sizes="(max-width: 640px) 112px, (max-width: 1024px) 144px, 176px"
                   className="object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                 />
               </a>

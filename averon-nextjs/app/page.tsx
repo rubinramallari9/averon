@@ -861,14 +861,21 @@ const AveronWebsite = () => {
             Trusted By
           </span>
 
-          {/* Endless looping marquee: the logo set is rendered twice and slides -50%,
-              so it reads as smooth, continuous circular motion with no visible seam. */}
-          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          {/* Mobile & tablet: endless looping marquee. The logo set is rendered twice and
+              slides -50%, so it reads as smooth, continuous circular motion with no visible seam. */}
+          <div className="lg:hidden relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div className="flex items-center gap-4 sm:gap-6 w-max animate-marquee">
               {[...trustedLogosData, ...trustedLogosData].map((logo, i) => (
                 <TrustedLogoCard key={`${logo.key}-${i}`} logo={logo} />
               ))}
             </div>
+          </div>
+
+          {/* Desktop: static row, no motion */}
+          <div className="hidden lg:flex items-center justify-center flex-wrap gap-6 px-4">
+            {trustedLogosData.map((logo) => (
+              <TrustedLogoCard key={logo.key} logo={logo} />
+            ))}
           </div>
         </div>
       </section>

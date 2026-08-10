@@ -808,43 +808,65 @@ const AveronWebsite = () => {
           ))}
         </div>
 
-        <div className="py-12 sm:py-16">
-          <div className="w-full">
-            <div className="flex items-center justify-center flex-wrap gap-x-8 gap-y-8 sm:gap-x-16 lg:gap-x-20 px-4">
-              <a href="https://lumina.al" target="_blank" rel="noopener noreferrer" className="flex items-center h-10 sm:h-12 lg:h-16">
+        <div className="py-12 sm:py-16 px-4">
+          <div className="max-w-5xl mx-auto">
+            <span className="block text-center text-purple-400 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-8 sm:mb-10">
+              Trusted By
+            </span>
+            <div className="flex items-center justify-center flex-wrap gap-4 sm:gap-5 lg:gap-6">
+              {/* Lumina: dense single-line wordmark, needs the least height to read at full size */}
+              <a
+                href="https://lumina.al"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center h-24 sm:h-28 w-40 sm:w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6"
+              >
                 <Image
                   src="/trusted_logos/logo-white.png"
                   alt="Lumina Aesthetic"
                   width={1574}
                   height={597}
-                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  className="max-h-9 sm:max-h-10 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
                 />
               </a>
-              <div className="flex items-center h-10 sm:h-12 lg:h-16">
+              {/* Arena: icon sits above the wordmark, so it needs extra height for the text to read at a comparable size */}
+              <div className="group flex items-center justify-center h-24 sm:h-28 w-40 sm:w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6">
                 <Image
                   src="/trusted_logos/arena-filxhani.png"
                   alt="Arena Filxhani"
                   width={624}
                   height={486}
-                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  className="max-h-14 sm:max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
                 />
               </div>
-              <a href="https://ramarasim.com" target="_blank" rel="noopener noreferrer" className="flex items-center h-10 sm:h-12 lg:h-16">
+              {/* Rama Rasim: same icon-over-wordmark layout as Arena */}
+              <a
+                href="https://ramarasim.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center h-24 sm:h-28 w-40 sm:w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6"
+              >
                 <Image
                   src="/trusted_logos/rasimramalogo.png"
                   alt="Rasim Rama"
                   width={874}
                   height={553}
-                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  className="max-h-14 sm:max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
                 />
               </a>
-              <a href="https://timetrader-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center h-10 sm:h-12 lg:h-16">
+              {/* TimeTrader: single-line wordmark with almost no built-in padding, needs the least height */}
+              <a
+                href="https://timetrader-kappa.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center h-24 sm:h-28 w-40 sm:w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6"
+              >
                 <Image
                   src="/trusted_logos/logo.svg"
                   alt="TimeTrader"
                   width={280}
                   height={48}
-                  className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                  className="max-h-7 sm:max-h-8 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
                 />
               </a>
             </div>

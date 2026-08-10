@@ -145,6 +145,46 @@ const servicesData = [
   }
 ] as const;
 
+// Client logos shown in the "Trusted By" strip
+const trustedLogosData = [
+  {
+    key: 'lumina',
+    href: 'https://lumina.al',
+    src: '/trusted_logos/logo-white.png',
+    alt: 'Lumina Aesthetic',
+    width: 1574,
+    height: 597,
+    imgMaxH: 'max-h-7 sm:max-h-10',
+  },
+  {
+    key: 'arena',
+    href: null,
+    src: '/trusted_logos/arena-filxhani.png',
+    alt: 'Arena Filxhani',
+    width: 624,
+    height: 486,
+    imgMaxH: 'max-h-11 sm:max-h-16',
+  },
+  {
+    key: 'rama-rasim',
+    href: 'https://ramarasim.com',
+    src: '/trusted_logos/rasimramalogo.png',
+    alt: 'Rasim Rama',
+    width: 874,
+    height: 553,
+    imgMaxH: 'max-h-11 sm:max-h-16',
+  },
+  {
+    key: 'timetrader',
+    href: 'https://timetrader-kappa.vercel.app/',
+    src: '/trusted_logos/logo.svg',
+    alt: 'TimeTrader',
+    width: 280,
+    height: 48,
+    imgMaxH: 'max-h-6 sm:max-h-8',
+  },
+] as const;
+
 // Helper to render service icon
 const ServiceIcon = memo(({ type }: { type: string }) => {
   switch (type) {
@@ -157,6 +197,32 @@ const ServiceIcon = memo(({ type }: { type: string }) => {
   }
 });
 ServiceIcon.displayName = 'ServiceIcon';
+
+type TrustedLogo = typeof trustedLogosData[number];
+
+const TrustedLogoCard = memo(({ logo }: { logo: TrustedLogo }) => {
+  const className = "group flex-shrink-0 flex items-center justify-center h-20 sm:h-28 w-32 sm:w-44 p-4 sm:p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300";
+
+  const image = (
+    <Image
+      src={logo.src}
+      alt={logo.alt}
+      width={logo.width}
+      height={logo.height}
+      className={`${logo.imgMaxH} w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100`}
+    />
+  );
+
+  if (logo.href) {
+    return (
+      <a href={logo.href} target="_blank" rel="noopener noreferrer" className={className}>
+        {image}
+      </a>
+    );
+  }
+  return <div className={className}>{image}</div>;
+});
+TrustedLogoCard.displayName = 'TrustedLogoCard';
 
 const features = [
   "Ongoing support & maintenance",
@@ -808,130 +874,18 @@ const AveronWebsite = () => {
           ))}
         </div>
 
-        <div className="py-12 sm:py-16 px-4">
-          <div className="max-w-5xl mx-auto">
-            <span className="block text-center text-purple-400 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-8 sm:mb-10">
-              Trusted By
-            </span>
+        <div className="py-12 sm:py-16">
+          <span className="block text-center text-purple-400 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-8 sm:mb-10">
+            Trusted By
+          </span>
 
-            {/* Mobile: single horizontal scrolling line */}
-            <div className="sm:hidden -mx-4 px-4 overflow-x-auto scrollbar-hide">
-              <div className="flex items-center gap-4 w-max">
-                {/* Lumina */}
-                <a
-                  href="https://lumina.al"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex-shrink-0 flex items-center justify-center h-20 w-32 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 active:border-purple-400/40 transition-all duration-300 p-4"
-                >
-                  <Image
-                    src="/trusted_logos/logo-white.png"
-                    alt="Lumina Aesthetic"
-                    width={1574}
-                    height={597}
-                    className="max-h-7 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                  />
-                </a>
-                {/* Arena */}
-                <div className="group flex-shrink-0 flex items-center justify-center h-20 w-32 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 active:border-purple-400/40 transition-all duration-300 p-4">
-                  <Image
-                    src="/trusted_logos/arena-filxhani.png"
-                    alt="Arena Filxhani"
-                    width={624}
-                    height={486}
-                    className="max-h-11 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                  />
-                </div>
-                {/* Rama Rasim */}
-                <a
-                  href="https://ramarasim.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex-shrink-0 flex items-center justify-center h-20 w-32 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 active:border-purple-400/40 transition-all duration-300 p-4"
-                >
-                  <Image
-                    src="/trusted_logos/rasimramalogo.png"
-                    alt="Rasim Rama"
-                    width={874}
-                    height={553}
-                    className="max-h-11 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                  />
-                </a>
-                {/* TimeTrader */}
-                <a
-                  href="https://timetrader-kappa.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex-shrink-0 flex items-center justify-center h-20 w-32 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 active:border-purple-400/40 transition-all duration-300 p-4"
-                >
-                  <Image
-                    src="/trusted_logos/logo.svg"
-                    alt="TimeTrader"
-                    width={280}
-                    height={48}
-                    className="max-h-6 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                  />
-                </a>
-              </div>
-            </div>
-
-            {/* Tablet & up: wrapped grid of cards */}
-            <div className="hidden sm:flex items-center justify-center flex-wrap gap-5 lg:gap-6">
-              {/* Lumina: dense single-line wordmark, needs the least height to read at full size */}
-              <a
-                href="https://lumina.al"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center h-28 w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6"
-              >
-                <Image
-                  src="/trusted_logos/logo-white.png"
-                  alt="Lumina Aesthetic"
-                  width={1574}
-                  height={597}
-                  className="max-h-10 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                />
-              </a>
-              {/* Arena: icon sits above the wordmark, so it needs extra height for the text to read at a comparable size */}
-              <div className="group flex items-center justify-center h-28 w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6">
-                <Image
-                  src="/trusted_logos/arena-filxhani.png"
-                  alt="Arena Filxhani"
-                  width={624}
-                  height={486}
-                  className="max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                />
-              </div>
-              {/* Rama Rasim: same icon-over-wordmark layout as Arena */}
-              <a
-                href="https://ramarasim.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center h-28 w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6"
-              >
-                <Image
-                  src="/trusted_logos/rasimramalogo.png"
-                  alt="Rasim Rama"
-                  width={874}
-                  height={553}
-                  className="max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                />
-              </a>
-              {/* TimeTrader: single-line wordmark with almost no built-in padding, needs the least height */}
-              <a
-                href="https://timetrader-kappa.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center h-28 w-44 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-purple-400/40 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 p-6"
-              >
-                <Image
-                  src="/trusted_logos/logo.svg"
-                  alt="TimeTrader"
-                  width={280}
-                  height={48}
-                  className="max-h-8 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                />
-              </a>
+          {/* Endless looping marquee: the logo set is rendered twice and slides -50%,
+              so it reads as smooth, continuous circular motion with no visible seam. */}
+          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="flex items-center gap-4 sm:gap-6 w-max animate-marquee">
+              {[...trustedLogosData, ...trustedLogosData].map((logo, i) => (
+                <TrustedLogoCard key={`${logo.key}-${i}`} logo={logo} />
+              ))}
             </div>
           </div>
         </div>

@@ -260,14 +260,25 @@ nextjs-portal {
   padding-bottom: 0.25rem;
 }
 
-/* Hide scrollbar while keeping horizontal scroll functional (used by the mobile trusted-logos strip) */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Continuous looping marquee for the trusted-logos strip.
+   The track is rendered twice back-to-back and slides exactly -50%,
+   so the loop point is seamless and the motion reads as an endless circle. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.animate-marquee {
+  animation: marquee 18s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee:active {
+  animation-play-state: paused;
 }
 
 /* Full-width rectangular hover area around logo - Invisible activation zone */

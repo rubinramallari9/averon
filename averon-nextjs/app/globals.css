@@ -260,6 +260,16 @@ nextjs-portal {
   padding-bottom: 0.25rem;
 }
 
+/* Hide scrollbar while keeping horizontal scroll functional (used by the mobile trusted-logos strip) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Full-width rectangular hover area around logo - Invisible activation zone */
 .logo-hover-area {
   position: absolute;

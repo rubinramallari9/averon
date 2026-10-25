@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Sora, Lora } from "next/font/google";
+import { Inter, Space_Grotesk, Sora, Lora, Fraunces } from "next/font/google";
 import "./globals.css";
 import {
   defaultSEO,
@@ -31,7 +31,7 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
-  weight: ['500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
 });
 
 // TERTIARY (10%) - Sora for hero accents, special callouts, stats
@@ -55,6 +55,18 @@ const lora = Lora({
   adjustFontFallback: true,
   weight: ['500', '600'],
   style: ['italic'],
+});
+
+// DISPLAY - Fraunces elegant serif for headline/hero moments — matches the
+// thin, high-contrast editorial serif used on reference sites like Retell AI
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
+  weight: ['400', '500', '600'],
+  style: ['normal'],
 });
 
 // SEO Metadata
@@ -124,7 +136,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} ${lora.variable} antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} ${lora.variable} ${fraunces.variable} antialiased`}
       >
         <InitialLoadingScreen />
         <DeferredStyles />

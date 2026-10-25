@@ -53,14 +53,14 @@ export default function InitialLoadingScreen() {
         isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
       style={{
-        background: 'radial-gradient(ellipse at center top, #2d1b4e, #1a122f, #0a0816, #000000)',
+        background: '#FFFFFF',
       }}
     >
       {/* Ambient glow effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full blur-[120px] motion-safe:animate-pulse"
-          style={{ backgroundColor: 'rgba(139, 92, 246, 0.3)' }}
+          style={{ backgroundColor: 'rgba(62, 106, 239, 0.12)' }}
         />
       </div>
 
@@ -69,7 +69,7 @@ export default function InitialLoadingScreen() {
         {/* Averon Logo Text */}
         <div className="mb-8">
           <span
-            className="text-5xl sm:text-6xl font-medium text-emerald-400"
+            className="text-5xl sm:text-6xl font-medium text-[#3E6AEF]"
             style={{
               fontFamily: 'var(--font-lora), Georgia, serif',
               fontStyle: 'italic',
@@ -84,15 +84,15 @@ export default function InitialLoadingScreen() {
         <div className="relative w-14 h-14">
           {/* Outer ring */}
           <div
-            className="absolute inset-0 rounded-full border-2 border-purple-500/20"
+            className="absolute inset-0 rounded-full border-2 border-[#3E6AEF]/15"
             aria-hidden="true"
           />
           {/* Spinning gradient arc */}
           <div
             className="absolute inset-0 rounded-full border-[3px] border-transparent motion-safe:animate-spin"
             style={{
-              borderTopColor: '#a855f7',
-              borderRightColor: '#8b5cf6',
+              borderTopColor: '#3E6AEF',
+              borderRightColor: '#6B8EFF',
               animationDuration: '0.8s',
               animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
             }}
@@ -100,7 +100,7 @@ export default function InitialLoadingScreen() {
           />
           {/* Center dot */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-purple-400 motion-safe:animate-pulse"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#3E6AEF] motion-safe:animate-pulse"
             aria-hidden="true"
           />
         </div>

@@ -55,14 +55,14 @@ export default function LoadingScreen({
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
-        background: 'radial-gradient(ellipse at center top, #2d1b4e, #1a122f, #0a0816, #000000)',
+        background: '#FFFFFF',
       }}
     >
       {/* Ambient glow effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full blur-[120px] motion-safe:animate-pulse"
-          style={{ backgroundColor: 'rgba(139, 92, 246, 0.3)' }}
+          style={{ backgroundColor: 'rgba(62, 106, 239, 0.12)' }}
         />
       </div>
 
@@ -72,7 +72,7 @@ export default function LoadingScreen({
           <div className="mb-8 motion-safe:animate-fade-in">
             {/* Averon Logo Text */}
             <span
-              className="text-4xl sm:text-5xl font-medium text-emerald-400"
+              className="text-4xl sm:text-5xl font-medium text-[#3E6AEF]"
               style={{
                 fontFamily: 'var(--font-lora), Georgia, serif',
                 fontStyle: 'italic',
@@ -88,15 +88,15 @@ export default function LoadingScreen({
         <div className="relative w-12 h-12">
           {/* Outer ring */}
           <div
-            className="absolute inset-0 rounded-full border-2 border-purple-500/20"
+            className="absolute inset-0 rounded-full border-2 border-[#3E6AEF]/15"
             aria-hidden="true"
           />
           {/* Spinning gradient arc */}
           <div
             className="absolute inset-0 rounded-full border-2 border-transparent motion-safe:animate-spin"
             style={{
-              borderTopColor: '#a855f7',
-              borderRightColor: '#8b5cf6',
+              borderTopColor: '#3E6AEF',
+              borderRightColor: '#6B8EFF',
               animationDuration: '1s',
               animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
             }}
@@ -104,14 +104,14 @@ export default function LoadingScreen({
           />
           {/* Center dot */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-400 motion-safe:animate-pulse"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#3E6AEF] motion-safe:animate-pulse"
             aria-hidden="true"
           />
         </div>
 
         {/* Loading text */}
         {loadingText && (
-          <p className="mt-6 text-sm text-purple-300/80 motion-safe:animate-fade-in">
+          <p className="mt-6 text-sm text-[#6B7280] motion-safe:animate-fade-in">
             {loadingText}
           </p>
         )}
@@ -121,9 +121,9 @@ export default function LoadingScreen({
       </div>
 
       {/* Progress bar at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-purple-900/30 overflow-hidden">
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#3E6AEF]/10 overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-purple-600 via-purple-400 to-emerald-400 motion-safe:animate-loading-bar"
+          className="h-full bg-gradient-to-r from-[#3E6AEF] via-[#6B8EFF] to-[#3E6AEF] motion-safe:animate-loading-bar"
           style={{
             width: '30%',
           }}
@@ -139,7 +139,7 @@ export default function LoadingScreen({
 export function SkeletonLoader({ className = '' }: { className?: string }) {
   return (
     <div
-      className={`bg-purple-900/20 rounded-lg motion-safe:animate-pulse ${className}`}
+      className={`bg-[#F1F1F5] rounded-lg motion-safe:animate-pulse ${className}`}
       aria-hidden="true"
     />
   );
@@ -150,7 +150,7 @@ export function SkeletonLoader({ className = '' }: { className?: string }) {
  */
 export function SkeletonCard() {
   return (
-    <div className="p-6 bg-purple-900/20 rounded-2xl border border-purple-500/10 space-y-4">
+    <div className="p-6 bg-[#F1F1F5] rounded-2xl border border-[rgba(14,23,38,0.08)] space-y-4">
       <SkeletonLoader className="h-12 w-12 rounded-xl" />
       <SkeletonLoader className="h-6 w-3/4" />
       <SkeletonLoader className="h-4 w-full" />

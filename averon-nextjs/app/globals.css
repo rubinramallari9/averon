@@ -3,6 +3,41 @@
 @tailwind utilities;
 
 /* ============================================
+   REDESIGN COLOR SYSTEM (Retell-inspired palette)
+   Fully replaces the previous purple/emerald
+   dual-accent scheme across the site.
+   ============================================ */
+:root {
+  --bg-light: #FFFFFF;
+  --bg-dark: #00122E;
+  --surface-light: #F1F1F5;
+  --surface-dark: #0A1628;
+  --text-primary-light: #171717;
+  --text-primary-dark: #FFFFFF;
+  --text-secondary-light: #5B5B5B;
+  --text-secondary-dark: rgba(255, 255, 255, 0.7);
+  --accent: #3E6AEF;
+  --accent-hover: #2F55D0;
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-dark: rgba(255, 255, 255, 0.12);
+
+  /* Page is now a light theme (matches reference site structure):
+     white page background, dark navy/electric-blue solid cards for
+     contrast, serif display headlines. Hero remains a colorful
+     gradient-mesh card inset from the page edges. */
+  --page-bg: #FFFFFF;
+  --page-bg-alt: #F7F8FC;
+  --text-body: #333333;
+  --text-heading: #0E1726;
+  --text-muted: #6B7280;
+  --card-navy: #00122E;
+  --card-navy-text: rgba(255, 255, 255, 0.85);
+  --card-blue: #3E6AEF;
+  --card-blue-text: rgba(255, 255, 255, 0.9);
+  --hairline: rgba(14, 23, 38, 0.08);
+}
+
+/* ============================================
    CRITICAL ABOVE-THE-FOLD ANIMATIONS
    These MUST be in globals.css (not deferred)
    for Speed Index / LCP optimization
@@ -56,6 +91,125 @@
   transform: translateZ(0);
   will-change: transform, opacity;
   backface-visibility: hidden;
+}
+
+/* ============================================
+   HERO GRADIENT MESH
+   Recreated (not copied) blurred color-mesh look,
+   derived from sampled reference-site hero hues.
+   Base is a static CSS gradient; blob layers drift
+   slowly via transform/opacity only.
+   ============================================ */
+.hero-mesh {
+  background:
+    radial-gradient(ellipse 75% 55% at 12% 15%, rgba(56, 189, 248, 0.55), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 62% 8%, rgba(62, 106, 239, 0.6), transparent 60%),
+    radial-gradient(ellipse 85% 65% at 92% 50%, rgba(37, 99, 235, 0.4), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 18% 92%, rgba(20, 184, 166, 0.4), transparent 60%),
+    radial-gradient(ellipse 80% 70% at 85% 94%, rgba(13, 148, 136, 0.35), transparent 60%),
+    linear-gradient(160deg, #0b2a66 0%, #00122E 55%, #010a24 100%);
+}
+
+@keyframes meshDriftA {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}
+
+@keyframes meshDriftB {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-4%, 3%, 0) scale(1); }
+}
+
+.animate-mesh-drift-a {
+  animation: meshDriftA 14s ease-in-out infinite;
+}
+
+.animate-mesh-drift-b {
+  animation: meshDriftB 18s ease-in-out infinite;
+}
+
+@keyframes ambientPulse1 {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); opacity: 0.6; }
+  50% { transform: scale(1.15) translate3d(2%, -2%, 0); opacity: 0.85; }
+}
+
+@keyframes ambientPulse2 {
+  0%, 100% { transform: scale(1.1) translate3d(0, 0, 0); opacity: 0.5; }
+  50% { transform: scale(0.95) translate3d(-2%, 2%, 0); opacity: 0.75; }
+}
+
+.animate-ambient-pulse-1 {
+  animation: ambientPulse1 10s ease-in-out infinite;
+}
+
+.animate-ambient-pulse-2 {
+  animation: ambientPulse2 12s ease-in-out infinite;
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes floatMedium {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: floatMedium 5s ease-in-out infinite;
+}
+
+/* ============================================
+   AUTOMATIONS CAROUSEL — LIQUID ORB
+   Two blurred gradient blobs drifting inside a clipped
+   circle (same translate+scale approach as the mesh/ambient
+   blobs above) plus a sheen that sweeps across, giving the
+   orb genuine internal motion without a WebGL canvas.
+   ============================================ */
+@keyframes orbDriftA {
+  0%, 100% { transform: translate3d(-6%, -4%, 0) scale(1); }
+  50% { transform: translate3d(8%, 6%, 0) scale(1.18); }
+}
+
+@keyframes orbDriftB {
+  0%, 100% { transform: translate3d(6%, 8%, 0) scale(1.1); }
+  50% { transform: translate3d(-8%, -6%, 0) scale(0.95); }
+}
+
+@keyframes orbSheen {
+  0%, 100% { transform: translate3d(-30%, -40%, 0) rotate(0deg); opacity: 0.5; }
+  50% { transform: translate3d(10%, 20%, 0) rotate(8deg); opacity: 0.85; }
+}
+
+.animate-orb-drift-a {
+  animation: orbDriftA 7s ease-in-out infinite;
+}
+
+.animate-orb-drift-b {
+  animation: orbDriftB 9s ease-in-out infinite;
+}
+
+.animate-orb-sheen {
+  animation: orbSheen 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-mesh-drift-a,
+  .animate-mesh-drift-b,
+  .animate-ambient-pulse-1,
+  .animate-ambient-pulse-2,
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-orb-drift-a,
+  .animate-orb-drift-b,
+  .animate-orb-sheen {
+    animation: none;
+  }
 }
 
 /* Remove all default margins and padding */
@@ -132,7 +286,8 @@ body {
   letter-spacing: -0.025em;
 }
 
-/* BRAND SIGNATURE - Balanced Sophistication "Averon" */
+/* BRAND SIGNATURE - "Averon" elegant italic serif, matches Retell's editorial
+   display-serif treatment for its hero headline */
 .brand-averon {
   font-family: var(--font-lora), Georgia, serif;
   font-weight: 500;
@@ -144,36 +299,43 @@ body {
 }
 
 /* ============================================
-   DUAL TYPOGRAPHY SYSTEM
+   TYPOGRAPHY SYSTEM - matches Retell AI's DNA:
+   a thin, high-contrast editorial serif (Fraunces)
+   for the mega-headline, the body grotesk (tight
+   negative tracking) for everything else.
    ============================================ */
 
-/* TYPOGRAPHY A - Bold & Aggressive (Hero, Process, Contact) */
+/* TYPOGRAPHY A - Hero, Process, Contact
+   Retell reserves the display serif (Denton) for the hero h1 only — every
+   section header below it ("Proven Impact, Real Conversations" etc, class
+   new-heading_small-h2 on retellai.com) renders in their sans (Untitled Sans),
+   confirmed via computed styles on the live site. h2 here must stay sans-serif. */
 .typography-a h1 {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.045em !important;
-  font-weight: 700;
+  font-family: var(--font-fraunces), Georgia, serif;
+  letter-spacing: -0.02em !important;
+  font-weight: 500;
   line-height: 0.95;
 }
 
 .typography-a h2 {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.04em !important;
-  font-weight: 700;
-  line-height: 1;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.02em !important;
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 .typography-a h3 {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.025em !important;
-  font-weight: 700;
-  line-height: 1.1;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.02em !important;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .typography-a p {
   font-family: var(--font-inter), system-ui, sans-serif;
-  letter-spacing: -0.015em;
-  font-weight: 500;
-  line-height: 1.5;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 .typography-a button {
@@ -182,37 +344,37 @@ body {
   text-transform: none;
 }
 
-/* TYPOGRAPHY B - Elegant & Spacious (Services, Work, Features) */
+/* TYPOGRAPHY B - Services, Work, Features */
 .typography-b h1 {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.015em !important;
-  font-weight: 600;
-  line-height: 1.15;
+  font-family: var(--font-fraunces), Georgia, serif;
+  letter-spacing: -0.02em !important;
+  font-weight: 500;
+  line-height: 1.0;
 }
 
 .typography-b h2 {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.01em !important;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.02em !important;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .typography-b h3 {
   font-family: var(--font-inter), system-ui, sans-serif;
-  letter-spacing: 0em !important;
+  letter-spacing: -0.02em !important;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .typography-b p {
   font-family: var(--font-inter), system-ui, sans-serif;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .typography-b button {
-  letter-spacing: -0.005em;
+  letter-spacing: -0.02em;
   font-weight: 600;
 }
 
@@ -223,545 +385,3 @@ nextjs-portal {
   display: none !important;
 }
 
-/* GPU acceleration for animated elements */
-.phone-wrapper,
-.logo-ios15-wrapper,
-.react-orbit-wrapper {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Logo wrapper - no backface-visibility to preserve image quality */
-.logo-ios15-wrapper {
-  will-change: transform;
-}
-
-/* ============================================
-   AGENCY ACCELERATOR iOS15 SECTION STYLES
-   ============================================ */
-
-/* Section Container */
-.section-ios15 {
-  background: transparent;
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  overflow-x: hidden;
-  width: 100%;
-}
-
-.padding-bottom-2 {
-  padding-bottom: 0.25rem;
-}
-
-.padding-xhuge {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-/* Continuous looping marquee for the trusted-logos strip.
-   The track is rendered twice back-to-back and slides exactly -50%,
-   so the loop point is seamless and the motion reads as an endless circle. */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 18s linear infinite;
-}
-
-.animate-marquee:hover,
-.animate-marquee:active {
-  animation-play-state: paused;
-}
-
-/* Full-width rectangular hover area around logo - Invisible activation zone */
-.logo-hover-area {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
-  width: 100vw;
-  height: 600px;
-  border: none;
-  background: transparent;
-  z-index: 5;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Responsive hitbox vertical sizing */
-@media (max-width: 1024px) {
-  .logo-hover-area {
-    height: 500px;
-  }
-}
-
-@media (max-width: 768px) {
-  .logo-hover-area {
-    height: 400px;
-  }
-}
-
-/* Logo Center with Glow Effect */
-.logo-ios15-wrapper {
-  z-index: 6;
-  will-change: transform;
-  transition: all 0.6s ease;
-}
-
-.logo-hover-area:hover .logo-ios15-wrapper,
-.logo-hover-area.active .logo-ios15-wrapper {
-  transform: scale(1.15);
-}
-
-.logo-glow {
-  filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
-  transition: filter 0.6s ease;
-}
-
-.logo-ios15-wrapper:hover .logo-glow {
-  filter: drop-shadow(0 0 50px rgba(168, 85, 247, 0.8));
-}
-
-/* Grid Layout - Circular Pattern Around Logo */
-.section-ios15-grid {
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-  height: 950px;
-  overflow: hidden;
-}
-
-/* Row containers - absolute positioning for circular layout */
-.phones-row-1,
-.phones-row-2 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* All phone wrappers - base positioning */
-.phone-wrapper {
-  position: absolute;
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background: none !important;
-  padding: 0;
-  margin: 0;
-  pointer-events: auto;
-  width: 320px;
-}
-
-/* Landscape images */
-.phone-wrapper:has(.phone-image-horizontal) {
-  width: 500px;
-}
-
-/* Row 1 - Top row - ALL ALIGNED ON SAME LINE */
-/* Position 1: Top left - vertical (half off-screen) */
-.phones-row-1 .phone-wrapper:nth-child(1) {
-  top: 5%;
-  left: 0;
-  transform: translateX(-200%) scale(0.5);
-}
-
-/* Position 2: Top center-left - vertical */
-.phones-row-1 .phone-wrapper:nth-child(2) {
-  top: 5%;
-  left: 12%;
-  transform: translateX(-150%) scale(0.5);
-}
-
-/* Position 3: Top center-right - horizontal */
-.phones-row-1 .phone-wrapper:nth-child(3) {
-  top: 5%;
-  right: 26%;
-  transform: translateX(150%) scale(0.5);
-}
-
-/* Position 4: Top right - horizontal (half off-screen) */
-.phones-row-1 .phone-wrapper:nth-child(4) {
-  top: 5%;
-  right: 0;
-  transform: translateX(200%) scale(0.5);
-}
-
-/* Row 2 - Bottom row - ALL ALIGNED ON SAME LINE */
-/* Position 1: Bottom left - horizontal (half off-screen) */
-.phones-row-2 .phone-wrapper:nth-child(1) {
-  bottom: 5%;
-  left: 0;
-  transform: translateX(-200%) scale(0.5);
-}
-
-/* Position 2: Bottom center-left - horizontal */
-.phones-row-2 .phone-wrapper:nth-child(2) {
-  bottom: 5%;
-  left: 26%;
-  transform: translateX(-150%) scale(0.5);
-}
-
-/* Position 3: Bottom center-right - vertical */
-.phones-row-2 .phone-wrapper:nth-child(3) {
-  bottom: 5%;
-  right: 12%;
-  transform: translateX(150%) scale(0.5);
-}
-
-/* Position 4: Bottom right - vertical (half off-screen) */
-.phones-row-2 .phone-wrapper:nth-child(4) {
-  bottom: 5%;
-  right: 0;
-  transform: translateX(200%) scale(0.5);
-}
-
-/* Hover-triggered animations - Row 1 - all slide in horizontally */
-/* Edge phones (1 and 4) end up half off-screen */
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(1),
-.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(1) {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);
-}
-
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(2),
-.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(2) {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
-
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(3),
-.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(3) {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
-
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-1 .phone-wrapper:nth-child(4),
-.section-ios15-grid.show-images .phones-row-1 .phone-wrapper:nth-child(4) {
-  opacity: 1;
-  transform: translateX(50%) scale(1);
-}
-
-/* Hover-triggered animations - Row 2 - all slide in horizontally */
-/* Edge phones (1 and 4) end up half off-screen */
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(1),
-.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(1) {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);
-}
-
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(2),
-.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(2) {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
-
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(3),
-.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(3) {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
-
-.logo-hover-area:hover ~ .section-ios15-grid .phones-row-2 .phone-wrapper:nth-child(4),
-.section-ios15-grid.show-images .phones-row-2 .phone-wrapper:nth-child(4) {
-  opacity: 1;
-  transform: translateX(50%) scale(1);
-}
-
-/* Phone Images */
-.phone-image,
-.phone-image-horizontal {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Remove any background or borders from wrappers */
-.phone-image-vertical-wrapper,
-.phone-image-horizontal-wrapper {
-  background: transparent !important;
-  border: none !important;
-  overflow: visible;
-  box-shadow: none !important;
-}
-
-/* Ensure phone wrappers also have no effects */
-.phone-wrapper {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* iPhone Mockup Frames */
-.iphone-mockup {
-  width: 100%;
-  will-change: transform;
-  transform-style: preserve-3d;
-}
-
-.iphone-mockup.vertical {
-  aspect-ratio: 9 / 19;
-}
-
-.iphone-mockup.horizontal {
-  aspect-ratio: 19 / 9;
-}
-
-/* Vertical iPhone Frame */
-.iphone-frame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-  border-radius: 3rem;
-  padding: 0.75rem;
-  box-shadow:
-    0 25px 60px rgba(168, 85, 247, 0.4),
-    0 15px 40px rgba(0, 0, 0, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.1);
-  transition: all 0.6s cubic-bezier(.165,.84,.44,1);
-}
-
-.iphone-frame:hover {
-  box-shadow:
-    0 35px 80px rgba(168, 85, 247, 0.6),
-    0 20px 50px rgba(0, 0, 0, 0.8),
-    inset 0 1px 2px rgba(255, 255, 255, 0.15);
-  transform: scale(1.02);
-}
-
-.iphone-notch {
-  position: absolute;
-  top: 0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 35%;
-  height: 1.5rem;
-  background: #000;
-  border-radius: 0 0 1rem 1rem;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-.iphone-screen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  border-radius: 2.25rem;
-  overflow: hidden;
-}
-
-.screen-content {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Horizontal iPhone Frame */
-.iphone-frame-horizontal {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-  border-radius: 2rem;
-  padding: 0.5rem;
-  box-shadow:
-    0 25px 60px rgba(168, 85, 247, 0.4),
-    0 15px 40px rgba(0, 0, 0, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.1);
-  transition: all 0.6s cubic-bezier(.165,.84,.44,1);
-}
-
-.iphone-frame-horizontal:hover {
-  box-shadow:
-    0 35px 80px rgba(168, 85, 247, 0.6),
-    0 20px 50px rgba(0, 0, 0, 0.8),
-    inset 0 1px 2px rgba(255, 255, 255, 0.15);
-  transform: scale(1.02);
-}
-
-.iphone-notch-horizontal {
-  position: absolute;
-  top: 50%;
-  left: 0.5rem;
-  transform: translateY(-50%);
-  width: 1rem;
-  height: 25%;
-  background: #000;
-  border-radius: 0 0.75rem 0.75rem 0;
-  z-index: 10;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
-}
-
-.iphone-screen-horizontal {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  border-radius: 1.5rem;
-  overflow: hidden;
-}
-
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
-
-/* Large Desktop (1440px and up) - Larger images */
-@media (min-width: 1440px) {
-  .phone-wrapper {
-    width: 380px;
-  }
-
-  .phone-wrapper:has(.phone-image-horizontal) {
-    width: 580px;
-  }
-
-  .section-ios15-grid {
-    height: 1050px;
-  }
-}
-
-/* Standard Desktop (1200px - 1439px) */
-@media (max-width: 1439px) {
-  .phone-wrapper {
-    width: 320px;
-  }
-
-  .phone-wrapper:has(.phone-image-horizontal) {
-    width: 500px;
-  }
-
-  .section-ios15-grid {
-    height: 950px;
-  }
-}
-
-/* Small Desktop (1024px - 1199px) */
-@media (max-width: 1199px) {
-  .phone-wrapper {
-    width: 280px;
-  }
-
-  .phone-wrapper:has(.phone-image-horizontal) {
-    width: 440px;
-  }
-
-  .section-ios15-grid {
-    height: 850px;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(1) {
-    top: 6%;
-    left: 0;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(2) {
-    top: 6%;
-    left: 10%;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(3) {
-    top: 6%;
-    right: 24%;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(4) {
-    top: 6%;
-    right: 0;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(1) {
-    bottom: 6%;
-    left: 0;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(2) {
-    bottom: 6%;
-    left: 24%;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(3) {
-    bottom: 6%;
-    right: 10%;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(4) {
-    bottom: 6%;
-    right: 0;
-  }
-}
-
-/* Tablet (769px - 1023px) */
-@media (max-width: 1023px) {
-  .section-ios15-grid {
-    max-width: 950px;
-    height: 750px;
-  }
-
-  .phone-wrapper {
-    width: 240px;
-  }
-
-  .phone-wrapper:has(.phone-image-horizontal) {
-    width: 360px;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(1) {
-    top: 7%;
-    left: 0;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(2) {
-    top: 7%;
-    left: 8%;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(3) {
-    top: 7%;
-    right: 22%;
-  }
-
-  .phones-row-1 .phone-wrapper:nth-child(4) {
-    top: 7%;
-    right: 0;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(1) {
-    bottom: 7%;
-    left: 0;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(2) {
-    bottom: 7%;
-    left: 22%;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(3) {
-    bottom: 7%;
-    right: 8%;
-  }
-
-  .phones-row-2 .phone-wrapper:nth-child(4) {
-    bottom: 7%;
-    right: 0;
-  }
-}
-
-/* Mobile - Hide section completely */
-@media (max-width: 768px) {
-  .section-ios15 {
-    display: none !important;
-  }
-}

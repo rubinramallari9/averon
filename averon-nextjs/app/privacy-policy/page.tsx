@@ -1,59 +1,29 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowLeft } from 'lucide-react';
+import { PageShell, SiteNav, SiteFooter } from '@/components/site/SiteChrome';
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="mb-10">
-    <h2 className="text-2xl font-bold text-white mb-3">{title}</h2>
-    <div className="text-white/70 leading-relaxed space-y-3">{children}</div>
+  <div className="py-8 border-t border-[var(--hairline)] first:border-t-0 first:pt-0">
+    <h2 className="text-xl sm:text-2xl font-semibold text-[var(--text-heading)] mb-3">{title}</h2>
+    <div className="text-[var(--text-body)] text-[15px] sm:text-base leading-relaxed space-y-3 [&_li]:marker:text-[var(--text-muted)]">{children}</div>
   </div>
 );
 
 const PrivacyPolicyPage = () => {
   return (
-    <div className="min-h-screen text-white overflow-x-hidden relative w-full">
-      {/* Global Continuous Gradient Background - Same as home page */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#2d1b4e] via-[#1a0f2e] via-[#0f0f12] to-black pointer-events-none"></div>
-
-      {/* Radial Glow */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center_top,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent pointer-events-none"></div>
-
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-4">
-        <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
-          <div className="flex justify-between items-center h-14 sm:h-16">
-            <Link href="/">
-              <Image
-                src="/averon_logobg.png"
-                alt="Averon Agency"
-                width={160}
-                height={45}
-                className="w-28 sm:w-32 lg:w-40 cursor-pointer"
-                priority
-              />
-            </Link>
-
-            <Link
-              href="/"
-              className="flex items-center space-x-2 px-6 py-2 bg-emerald-400/10 hover:bg-emerald-400/20 text-emerald-400 rounded-full font-semibold transition-all border border-emerald-400/30 hover:border-emerald-400/50"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Home</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <PageShell>
+      <SiteNav backHref="/" backLabel="Back to Home" />
 
       {/* Content */}
-      <section className="pt-40 pb-24 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="typography-a pt-32 sm:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-extrabold mb-2 text-white">
-            Privacy <span className="text-emerald-400">Policy</span>
+          <h1 className="text-5xl sm:text-6xl font-medium mb-4 text-[var(--text-heading)] tracking-tight">
+            Privacy <span className="brand-averon text-[var(--accent)]">Policy</span>
           </h1>
-          <p className="text-white/50 mb-12">Averon Agency — Last updated: September 17, 2026</p>
+          <p className="text-[var(--text-muted)] mb-10 sm:mb-14">Averon Agency — Last updated: September 17, 2026</p>
+
+          <div className="rounded-[2rem] bg-[var(--surface-light)] p-6 sm:p-10">
 
           <Section title="Overview">
             <p>
@@ -112,7 +82,7 @@ const PrivacyPolicyPage = () => {
             <p>
               You may request access to, correction of, or deletion of your data at any time by
               contacting us at{' '}
-              <a href="mailto:rubinramallari9@gmail.com" className="text-emerald-400 hover:underline">
+              <a href="mailto:rubinramallari9@gmail.com" className="text-[var(--accent)] font-medium hover:underline underline-offset-2">
                 rubinramallari9@gmail.com
               </a>.
             </p>
@@ -122,14 +92,17 @@ const PrivacyPolicyPage = () => {
             <p>
               Averon Agency<br />
               Email:{' '}
-              <a href="mailto:rubinramallari9@gmail.com" className="text-emerald-400 hover:underline">
+              <a href="mailto:rubinramallari9@gmail.com" className="text-[var(--accent)] font-medium hover:underline underline-offset-2">
                 rubinramallari9@gmail.com
               </a>
             </p>
           </Section>
+          </div>
         </div>
       </section>
-    </div>
+
+      <SiteFooter tagline="Transforming businesses through innovative digital solutions & AI automations" />
+    </PageShell>
   );
 };
 

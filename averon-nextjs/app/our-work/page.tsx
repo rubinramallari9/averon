@@ -3,8 +3,41 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
+import {
+  PageShell, SiteNav, PageHero, Reveal, CtaCard, SiteFooter, ArrowRightIcon,
+} from '@/components/site/SiteChrome';
+
+const ExternalArrow = () => (
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+  </svg>
+);
+
+// Shared card body: title, description, tech chips and an always-visible
+// link label (the affordance isn't hidden behind hover, so touch gets it too).
+const CardBody = ({ title, description, tech, linkLabel }: { title: string; description: string; tech: string[]; linkLabel: string }) => (
+  <div className="p-6 sm:p-7 flex flex-col flex-1">
+    <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-[var(--text-heading)]">{title}</h3>
+    <p className="text-[var(--text-muted)] text-[15px] mb-6 leading-relaxed">{description}</p>
+    <div className="mt-auto flex items-end justify-between gap-4">
+      <div className="flex flex-wrap gap-2">
+        {tech.map((t, techIndex) => (
+          <span key={techIndex} className="px-3 py-1 bg-[var(--surface-light)] rounded-full text-[var(--text-heading)]/75 text-xs font-medium">
+            {t}
+          </span>
+        ))}
+      </div>
+      <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--accent)] whitespace-nowrap">
+        {linkLabel}
+        <span className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"><ExternalArrow /></span>
+      </span>
+    </div>
+  </div>
+);
+
+const cardShell =
+  "group h-full flex flex-col overflow-hidden rounded-[1.75rem] bg-white border border-[var(--hairline)] transition-[box-shadow,transform] duration-300 hover:shadow-[0_24px_48px_-24px_rgba(14,23,38,0.25)] hover:-translate-y-1 active:scale-[0.99]";
 
 const OurWorkPage = () => {
   // Portfolio projects data
@@ -37,12 +70,21 @@ const OurWorkPage = () => {
 
   const projects = [
     {
-      id: 1,
-      title: "TimeTrader",
-      description: "Luxury watch marketplace for Albania & the Balkans — connecting verified buyers and sellers of premium timepieces across Southeast Europe",
-      image: "/trusted_logos/logo.svg",
+      id: 6,
+      title: "Arena Restaurant",
+      description: "Restaurant & cocktail bar website with the full menu, table reservations and one-tap calling",
+      image: "/trusted_logos/arena-filxhani.png",
       tech: ["Next.js", "TypeScript", "Tailwind"],
-      link: "https://timetrader-kappa.vercel.app/",
+      link: "https://arenarestaurant.al",
+      blur: undefined
+    },
+    {
+      id: 5,
+      title: "Lumina Aesthetic",
+      description: "Modern aesthetic clinic website with elegant design and seamless user experience",
+      image: "/trusted_logos/logo-white.png",
+      tech: ["Next.js", "TypeScript", "Tailwind"],
+      link: "https://lumina.al",
       blur: undefined
     },
     {
@@ -55,300 +97,130 @@ const OurWorkPage = () => {
       blur: undefined
     },
     {
-      id: 5,
-      title: "Lumina Aesthetic",
-      description: "Modern aesthetic clinic website with elegant design and seamless user experience",
-      image: "/trusted_logos/logo-white.png",
+      id: 1,
+      title: "TimeTrader",
+      description: "Luxury watch marketplace for Albania & the Balkans — connecting verified buyers and sellers of premium timepieces across Southeast Europe",
+      image: "/trusted_logos/logo.svg",
       tech: ["Next.js", "TypeScript", "Tailwind"],
-      link: "https://lumina.al",
+      link: "https://timetrader-kappa.vercel.app/",
       blur: undefined
     }
   ];
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden relative w-full">
-      {/* Global Continuous Gradient Background - Same as home page */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#2d1b4e] via-[#1a0f2e] via-[#0f0f12] to-black pointer-events-none"></div>
+    <MotionConfig reducedMotion="user">
+    <PageShell>
+      <SiteNav backHref="/" backLabel="Back to Home" />
 
-      {/* Radial Glow */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center_top,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent pointer-events-none"></div>
-
-      {/* Subtle Ambient Overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none"></div>
-
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 w-full px-4 pt-4">
-        <div className="bg-black/80 backdrop-blur-lg rounded-2xl border border-purple-500/20 px-4 sm:px-6 lg:px-8 shadow-2xl shadow-purple-500/10">
-          <div className="flex justify-between items-center h-14 sm:h-16">
-            <Link href="/">
-              <Image
-                src="/averon_logobg.png"
-                alt="Averon Agency"
-                width={160}
-                height={45}
-                className="w-28 sm:w-32 lg:w-40 cursor-pointer"
-                priority
-              />
-            </Link>
-
-            <Link
-              href="/"
-              className="flex items-center space-x-2 px-6 py-2 bg-emerald-400/10 hover:bg-emerald-400/20 text-emerald-400 rounded-full font-semibold transition-all border border-emerald-400/30 hover:border-emerald-400/50"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Home</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="min-h-[50vh] flex flex-col items-center justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Main Heading */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 leading-tight tracking-tight">
-              <span className="text-white">Our </span>
-              <span className="text-emerald-400">Work</span>
-            </h1>
-
-            {/* Hand-drawn Squiggle Decoration */}
-            <motion.div
-              className="flex justify-center mb-8"
-              initial={{ opacity: 0, pathLength: 0 }}
-              animate={{ opacity: 1, pathLength: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              <svg width="200" height="20" viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M 5 10
-                     Q 15 5, 25 10
-                     T 45 10
-                     Q 55 12, 65 8
-                     T 85 10
-                     Q 95 6, 105 10
-                     T 125 10
-                     Q 135 12, 145 8
-                     T 165 10
-                     Q 175 7, 185 10
-                     L 195 10"
-                  stroke="#10b981"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeDasharray="4 6"
-                  opacity="0.6"
-                  fill="none"
-                />
-              </svg>
-            </motion.div>
-
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto leading-relaxed">
-              Explore our portfolio of cutting-edge digital solutions crafted for ambitious businesses
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero>
+        <h1 className="text-[2.75rem] sm:text-6xl lg:text-7xl xl:text-8xl font-medium mb-6 leading-[1.05] tracking-tight text-white">
+          Our <span className="brand-averon text-[#8FABFF]">Work</span>
+        </h1>
+        <p className="text-base sm:text-xl text-white/75 max-w-3xl mx-auto leading-relaxed">
+          Explore our portfolio of cutting-edge digital solutions crafted for ambitious businesses
+        </p>
+      </PageHero>
 
       {/* Portfolio Grid */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <motion.a
-                key={project.id}
+      <section className="typography-b py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          {projects.map((project, index) => (
+            <Reveal key={project.id} delay={index * 0.06} className="h-full">
+              <a
                 href={project.link}
                 target={project.link !== "#" ? "_blank" : "_self"}
                 rel={project.link !== "#" ? "noopener noreferrer" : ""}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative block"
+                className={cardShell}
               >
-                {/* Glassmorphism Card */}
-                <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer">
-                  {/* Project Thumbnail */}
-                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
-                    {project.id === 1 ? (
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} - ${project.description} by Averon Agency`}
-                        width={260}
-                        height={46}
-                        className="object-contain group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
+                {/* Client logos are white marks, so they sit on the navy card */}
+                <div className="relative h-56 sm:h-64 overflow-hidden bg-[var(--card-navy)] flex items-center justify-center">
+                  <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_30%_20%,rgba(62,106,239,0.35),transparent_60%)]" />
+                  {project.id === 1 ? (
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} - ${project.description} by Averon Agency`}
+                      width={260}
+                      height={46}
+                      className="relative object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <div className="absolute inset-8 sm:inset-10">
                       <Image
                         src={project.image}
                         alt={`${project.title} - ${project.description} by Averon Agency`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         quality={75}
-                        className="object-contain group-hover:scale-110 transition-transform duration-500"
+                        className="object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                         {...(project.blur ? { placeholder: "blur" as const, blurDataURL: project.blur } : {})}
                       />
-                    )}
-
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
-                        <span>View Project</span>
-                        <ExternalLink className="w-5 h-5" />
-                      </div>
                     </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-6 relative">
-                    <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-emerald-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-purple-200 mb-6 leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack Chips - Bottom Corner */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-3 py-1 bg-emerald-400/10 border border-emerald-400/30 rounded-full text-emerald-400 text-xs font-semibold backdrop-blur-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  )}
                 </div>
-              </motion.a>
-            ))}
-          </div>
+                <CardBody title={project.title} description={project.description} tech={project.tech} linkLabel="View Project" />
+              </a>
+            </Reveal>
+          ))}
         </div>
       </section>
 
       {/* Concept Showcases Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-12 text-center"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              <span className="text-white">Concept </span>
-              <span className="text-emerald-400">Showcases</span>
+      <section className="typography-b py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="mb-12 sm:mb-16 text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--text-heading)]">
+              Concept <span className="text-[var(--accent)]">Showcases</span>
             </h2>
-            <p className="text-purple-200 text-lg max-w-2xl mx-auto">
+            <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
               Prototype builds crafted to demonstrate our capabilities to future clients
             </p>
-          </motion.div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {demos.map((demo, index) => (
-              <motion.a
-                key={demo.id}
-                href={demo.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative block"
-              >
-                <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer">
-                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-900/30 to-black/30 flex items-center justify-center">
-                    <Image
-                      src={demo.image}
-                      alt={`${demo.title} - ${demo.description} by Averon Agency`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      quality={75}
-                      className="object-contain group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
-                        <span>View Showcase</span>
-                        <ExternalLink className="w-5 h-5" />
-                      </div>
+              <Reveal key={demo.id} delay={index * 0.06} className="h-full">
+                <a href={demo.link} target="_blank" rel="noopener noreferrer" className={cardShell}>
+                  {/* Square brand marks shown as app-icon tiles */}
+                  <div className="relative h-56 sm:h-64 bg-[var(--surface-light)] flex items-center justify-center">
+                    <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-[1.75rem] overflow-hidden bg-white shadow-[0_12px_32px_-12px_rgba(14,23,38,0.25)] transition-transform duration-500 group-hover:scale-[1.04]">
+                      <Image
+                        src={demo.image}
+                        alt={`${demo.title} - ${demo.description} by Averon Agency`}
+                        fill
+                        sizes="144px"
+                        quality={75}
+                        className="object-contain"
+                      />
                     </div>
                   </div>
-
-                  <div className="p-6 relative">
-                    <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-emerald-400 transition-colors">
-                      {demo.title}
-                    </h3>
-                    <p className="text-purple-200 mb-6 leading-relaxed">
-                      {demo.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {demo.tech.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-3 py-1 bg-emerald-400/10 border border-emerald-400/30 rounded-full text-emerald-400 text-xs font-semibold backdrop-blur-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.a>
+                  <CardBody title={demo.title} description={demo.description} tech={demo.tech} linkLabel="View Showcase" />
+                </a>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-xl text-purple-200 mb-8 leading-relaxed">
-            Let&apos;s create something amazing together. Get in touch to discuss your vision.
-          </p>
+      <CtaCard>
+        <h2 className="text-3xl sm:text-5xl font-bold mb-5 text-white">
+          Ready to Start Your Project?
+        </h2>
+        <p className="text-base sm:text-xl text-[var(--card-navy-text)] mb-10 leading-relaxed">
+          Let&apos;s create something amazing together. Get in touch to discuss your vision.
+        </p>
+        <Link
+          href="/#contact"
+          className="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-white/90 text-[var(--card-navy)] rounded-full font-semibold text-base sm:text-lg transition-[background-color,transform] duration-150 active:scale-[0.97]"
+        >
+          <span>Contact Us</span>
+          <ArrowRightIcon />
+        </Link>
+      </CtaCard>
 
-          <Link
-            href="/#contact"
-            className="inline-flex items-center space-x-2 px-8 py-4 bg-emerald-400 hover:bg-emerald-500 text-gray-900 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg shadow-emerald-500/50 text-lg"
-          >
-            <span>Contact Us</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="pt-12 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-b from-purple-900/40 via-purple-950/60 to-black backdrop-blur-xl rounded-t-3xl border-t border-x border-purple-500/20 pt-8 pb-6">
-            <div className="text-center">
-              <Link href="/" className="inline-block">
-                <Image
-                  src="/averon_logobg.png"
-                  alt="Averon Agency"
-                  width={160}
-                  height={45}
-                  className="mx-auto mb-4 cursor-pointer"
-                />
-              </Link>
-              <p className="text-purple-200 text-sm mb-4">
-                Transforming businesses through innovative digital solutions
-              </p>
-              <div className="pt-4 border-t border-purple-500/20">
-                <p className="text-sm text-purple-400/80">
-                  © {new Date().getFullYear()} Averon Agency. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <SiteFooter tagline="Transforming businesses through innovative digital solutions" />
+    </PageShell>
+    </MotionConfig>
   );
 };
 

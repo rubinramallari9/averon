@@ -165,8 +165,12 @@ const nextConfig: NextConfig = {
   },
 
   // Turbopack configuration (Next.js 16+)
-  // Empty config to silence webpack/turbopack warning
-  turbopack: {},
+  // Explicit root to prevent Next.js from inferring the monorepo root
+  // (parent dir has its own package-lock.json, which was causing Turbopack
+  // to resolve/cache modules against the wrong root)
+  turbopack: {
+    root: __dirname,
+  },
 
   // Webpack optimization (fallback for --webpack flag)
   webpack: (config, { isServer }) => {

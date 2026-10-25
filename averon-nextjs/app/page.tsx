@@ -1324,7 +1324,7 @@ const AveronWebsite = () => {
       </section>
 
       {/* Automations Section */}
-      <section id="automations" className="typography-b relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <section id="automations" className="typography-b relative overflow-x-clip py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <FadeIn className="text-center mb-12 sm:mb-16">
             <span className="text-[#3E6AEF] text-sm font-semibold tracking-wider uppercase mb-4 block">AI-Powered</span>

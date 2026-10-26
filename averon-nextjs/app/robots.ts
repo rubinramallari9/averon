@@ -11,16 +11,29 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        // Allow all search engines
+        // Allow all search engines. /_next/ stays crawlable: it holds the
+        // CSS/JS crawlers need to render the page the way visitors see it.
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/', '/admin/'],
+        disallow: ['/api/', '/admin/'],
       },
       {
         // Specific rules for Googlebot
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/api/', '/_next/'],
+        disallow: ['/api/'],
+      },
+      {
+        // AI assistants' search and answer crawlers: explicitly welcome, so
+        // ChatGPT, Claude, Perplexity, Gemini, Copilot and Apple can cite us.
+        userAgent: [
+          'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',
+          'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+          'PerplexityBot', 'Perplexity-User',
+          'Google-Extended', 'Bingbot', 'Applebot', 'Applebot-Extended',
+        ],
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
       },
       {
         // Allow Google Image bot

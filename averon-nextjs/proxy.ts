@@ -17,7 +17,13 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 // Rate limit configuration
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10; // 10 requests per minute per IP
+// Each page view also fires Next's route prefetches (~5 requests per homepage
+// load), so the budget has to cover a normal visitor clicking around.
+const RATE_LIMIT_MAX_REQUESTS = 120; // 120 requests per minute per IP
+
+// Search engines and AI assistants' crawlers fetch many pages quickly from
+// shared IPs; throttling them means they index a 429 instead of the site.
+const CRAWLER_UA = /Googlebot|Google-InspectionTool|bingbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|Claude-User|PerplexityBot|Perplexity-User|Applebot|DuckDuckBot/i;
 
 /**
  * Get client IP address from request
@@ -100,8 +106,9 @@ export function proxy(request: NextRequest) {
   const response = NextResponse.next();
   const ip = getClientIp(request);
 
-  // 1. Rate limiting check
-  if (!checkRateLimit(ip)) {
+  // 1. Rate limiting check (skipped in dev, and for search/AI crawlers)
+  const isCrawler = CRAWLER_UA.test(request.headers.get('user-agent') ?? '');
+  if (process.env.NODE_ENV !== 'development' && !isCrawler && !checkRateLimit(ip)) {
     return new NextResponse(
       JSON.stringify({
         error: 'Too many requests. Please try again later.',
@@ -189,6 +196,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public folder
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|mp4|webm)$).*)',
   ],
 };

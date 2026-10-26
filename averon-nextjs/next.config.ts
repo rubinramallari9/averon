@@ -143,6 +143,10 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Long-lived immutable caching only in production. In dev, Turbopack
+      // serves chunks under stable (non-hashed) names, so an immutable header
+      // pins the browser to stale JS/CSS and edits never show up.
+      ...(isDevelopment ? [] : [
       {
         source: '/images/:path*',
         headers: [
@@ -161,6 +165,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      ]),
     ];
   },
 

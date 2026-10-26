@@ -85,7 +85,7 @@ export default async function Image() {
               justifyContent: 'center',
             }}
           >
-            {['Avox AI', 'Instagram Bot', 'WhatsApp Bot', 'Next.js', 'SEO'].map((tech) => (
+            {['Avox AI', 'Avtext Instagram', 'Avtext WhatsApp', 'Next.js', 'SEO'].map((tech) => (
               <div
                 key={tech}
                 style={{

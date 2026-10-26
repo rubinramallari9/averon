@@ -88,26 +88,6 @@ const AvoxPage = () => {
                 returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
               },
             },
-            aggregateRating: {
-              '@type': 'AggregateRating',
-              ratingValue: '5',
-              reviewCount: '8',
-              bestRating: '5',
-              worstRating: '1',
-            },
-            review: {
-              '@type': 'Review',
-              reviewRating: {
-                '@type': 'Rating',
-                ratingValue: '5',
-                bestRating: '5',
-              },
-              author: {
-                '@type': 'Person',
-                name: 'Andi Kelmendi',
-              },
-              reviewBody: 'Avox ka ndryshuar mënyrën si menaxhojmë telefonatat në klinikën tonë. Nuk humbasim asnjë pacient tani.',
-            },
             category: 'AI Automation Software',
           }),
         }}

@@ -6,7 +6,6 @@ import {
   organizationSchema,
   localBusinessSchema,
   websiteSchema,
-  faqSchema,
   avoxSchema,
   speakableSchema,
 } from "@/lib/seo";
@@ -114,12 +113,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqSchema),
           }}
         />
         <script

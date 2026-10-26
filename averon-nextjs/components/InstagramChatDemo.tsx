@@ -134,7 +134,7 @@ const InstagramChatDemo = () => {
               {isUser ? (
                 <p className="text-white/70 text-xs mt-1 text-right">{msg.time}</p>
               ) : (
-                <p className="text-[var(--text-muted)] text-xs mt-1">🤖 DM Bot • {msg.time}</p>
+                <p className="text-[var(--text-muted)] text-xs mt-1">🤖 Avtext • {msg.time}</p>
               )}
             </motion.div>
           </div>

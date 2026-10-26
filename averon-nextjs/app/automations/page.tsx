@@ -9,6 +9,7 @@ import {
   ArrowRightIcon, CheckIcon, primaryPill,
 } from '@/components/site/SiteChrome';
 import { MockPanel, MockStats, AvoxCallMock, PhoneGlyph } from '@/components/site/Mocks';
+import { automationFaqs } from './faq';
 
 type Feature = { title: string; desc: string };
 
@@ -195,12 +196,12 @@ const AutomationsPage = () => {
         <SiteNav backHref="/" backLabel="Back to Home" />
 
         <PageHero>
-          <HeroEyebrow>AI-Powered Solutions</HeroEyebrow>
+          <HeroEyebrow>AI Assistants / Receptionists for Businesses in Albania</HeroEyebrow>
           <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-medium mb-6 sm:mb-8 leading-[1.05] tracking-tight text-white">
             Business <span className="brand-averon text-[#8FABFF]">Automations</span>
           </h1>
           <p className="text-base sm:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed">
-            Stop losing customers to missed messages and unanswered calls. Our AI automations work around the clock so your business never sleeps.
+            Stop losing customers to missed messages and unanswered calls. Our AI assistants and receptionists answer phone calls, Instagram DMs and WhatsApp messages in Albanian and English, around the clock.
           </p>
         </PageHero>
 
@@ -242,15 +243,15 @@ const AutomationsPage = () => {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div className="h-px bg-[var(--hairline)]" /></div>
 
-        {/* 02 — INSTAGRAM DM BOT */}
+        {/* 02 — AVTEXT INSTAGRAM */}
         <ProductSection
           id="instagram-dm-bot"
           icon={<InstagramGlyph />}
           iconClass="bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]"
           label="Instagram Automation"
-          title="Instagram "
-          accent="DM Bot"
-          description="Every comment, every story reply, every DM — answered instantly. Our Instagram DM Bot turns your followers into customers by engaging them the moment they reach out, even at 3am."
+          title="Avtext "
+          accent="Instagram"
+          description="Every comment, every story reply, every DM — answered instantly. Avtext Instagram turns your followers into customers by engaging them the moment they reach out, even at 3am."
           features={[
             { title: "Instant DM & Comment Replies", desc: "Responds to every incoming message in seconds, keeping followers engaged and feeling heard." },
             { title: "Lead Capture Sequences", desc: "Collects phone numbers, emails, and preferences through natural conversation flows." },
@@ -259,21 +260,21 @@ const AutomationsPage = () => {
             { title: "Appointment & Booking Links", desc: "Directs interested followers to your booking page or collects details for you to follow up." },
           ]}
           tags={["E-commerce", "Restaurants", "Salons & Spas", "Clothing Stores", "Real Estate", "Clinics"]}
-          cta="Get Your DM Bot"
+          cta="Get Avtext Instagram"
           visual={<InstagramMock />}
         />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div className="h-px bg-[var(--hairline)]" /></div>
 
-        {/* 03 — WHATSAPP BOT */}
+        {/* 03 — AVTEXT WHATSAPP */}
         <ProductSection
           id="whatsapp-bot"
           icon={<WhatsAppGlyph />}
           iconClass="bg-[#25D366]"
           label="WhatsApp Automation"
-          title="WhatsApp "
-          accent="Bot"
-          description="WhatsApp is where Albanian customers live. Our bot handles customer service, orders, bookings, and promotions directly inside the app your customers already use every day."
+          title="Avtext "
+          accent="WhatsApp"
+          description="WhatsApp is where Albanian customers live. Avtext WhatsApp handles customer service, orders, bookings, and promotions directly inside the app your customers already use every day."
           features={[
             { title: "Instant Customer Replies", desc: "Responds to every message in under 2 seconds — price inquiries, availability, directions, and more." },
             { title: "Order & Booking Management", desc: "Collects order details, confirms bookings, and sends reminders automatically — no staff required." },
@@ -282,10 +283,35 @@ const AutomationsPage = () => {
             { title: "Human Handoff", desc: "When a conversation needs a human touch, the bot seamlessly transfers it to your team." },
           ]}
           tags={["Delivery Services", "Restaurants", "Online Shops", "Travel Agencies", "Pharmacies", "Repair Services"]}
-          cta="Get Your WhatsApp Bot"
+          cta="Get Avtext WhatsApp"
           reverse
           visual={<WhatsAppMock />}
         />
+
+        {/* FAQ — the same text feeds the FAQPage JSON-LD in layout.tsx */}
+        <section id="faq" className="typography-b py-16 sm:py-24 px-4 sm:px-6 lg:px-8 scroll-mt-20">
+          <div className="max-w-3xl mx-auto">
+            <Reveal className="text-center mb-10 sm:mb-14">
+              <span className="text-[var(--accent)] text-sm font-semibold tracking-wider uppercase mb-4 block">FAQ</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-heading)]">
+                AI Assistants / Receptionists in Albania, <span className="text-[var(--accent)]">Answered</span>
+              </h2>
+            </Reveal>
+            <div className="divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
+              {automationFaqs.map(({ question, answer }) => (
+                <details key={question} className="group py-5">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-left text-base sm:text-lg font-semibold text-[var(--text-heading)] [&::-webkit-details-marker]:hidden">
+                    <h3>{question}</h3>
+                    <svg className="mt-1 h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14M5 12h14" />
+                    </svg>
+                  </summary>
+                  <p className="mt-3 pr-10 text-[var(--text-muted)] text-sm sm:text-base leading-relaxed">{answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <CtaCard>
           <h2 className="text-3xl sm:text-5xl font-bold mb-5 text-white">

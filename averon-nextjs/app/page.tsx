@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { createPortal } from 'react-dom';
+import { homeFaqs, homeFaqSchema } from '@/lib/homeFaq';
 import { apiClient } from '@/lib/api';
 import {
   BLUR_ARENA_MOCKUP,
@@ -159,6 +161,7 @@ const automationSlidesData = [
     key: 'avox',
     industry: 'Voice AI',
     title: 'Avox',
+    video: '/videos_agencts/avox.mp4',
     description: 'An AI receptionist that answers calls, books appointments, and handles FAQs in Albanian and English — never misses a customer.',
     orbBase: 'radial-gradient(circle at 35% 30%, #DCE6FF 0%, #5C84F5 35%, #15245C 85%)',
     blobA: 'radial-gradient(circle, #B9CBFF 0%, transparent 70%)',
@@ -167,7 +170,8 @@ const automationSlidesData = [
   {
     key: 'dm-bot',
     industry: 'Instagram',
-    title: 'DM Bot',
+    title: 'Avtext Instagram',
+    video: '/videos_agencts/avtext-instagram.mp4',
     description: 'Auto-reply to DMs and comments instantly. Capture leads, send product catalogs, and convert followers into customers — 24/7.',
     orbBase: 'radial-gradient(circle at 35% 30%, #FFD9C2 0%, #E1306C 40%, #4A1457 85%)',
     blobA: 'radial-gradient(circle, #F77737 0%, transparent 70%)',
@@ -176,7 +180,8 @@ const automationSlidesData = [
   {
     key: 'whatsapp-bot',
     industry: 'WhatsApp',
-    title: 'WhatsApp Bot',
+    title: 'Avtext WhatsApp',
+    video: '/videos_agencts/avtext-whatsapp.mp4',
     description: "Automate customer service on Albania's most-used messaging app. Handle orders, bookings, and support without lifting a finger.",
     orbBase: 'radial-gradient(circle at 35% 30%, #D9FFE8 0%, #25D366 40%, #0B4A28 85%)',
     blobA: 'radial-gradient(circle, #B4FFD2 0%, transparent 70%)',
@@ -519,14 +524,87 @@ type AutomationSlide = {
   key: string;
   industry: string;
   title: string;
+  video: string;
   description: string;
   orbBase: string;
   blobA: string;
   blobB: string;
 };
 
+// Demo video popup for an automation card. Portaled to <body> because the
+// carousel sits inside transformed ancestors (FadeIn, 3D perspective), which
+// would otherwise trap a `position: fixed` overlay inside them.
+const AutomationVideoModal = ({ slide, onClose }: { slide: AutomationSlide; onClose: () => void }) => {
+  const [shown, setShown] = useState(false);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setShown(true));
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${slide.title} demo video`}
+      onClick={onClose}
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none ${
+        shown ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full max-w-[min(420px,calc((100dvh-7rem)*720/840))] transition-transform duration-200 ease-out motion-reduce:transition-none ${
+          shown ? 'scale-100' : 'scale-95'
+        }`}
+      >
+        <div className="mb-3 flex items-center justify-between gap-4 text-white">
+          <div className="min-w-0">
+            <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-white/60">{slide.industry}</span>
+            <span className="block truncate text-lg font-semibold tracking-tight">{slide.title}</span>
+          </div>
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            aria-label="Close video"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <video
+          key={slide.video}
+          src={slide.video}
+          autoPlay
+          controls
+          playsInline
+          className="block aspect-[720/840] w-full rounded-2xl bg-black shadow-2xl"
+        />
+      </div>
+    </div>,
+    document.body
+  );
+};
+
 const AutomationsCarousel = memo(({ slides }: { slides: AutomationSlide[] }) => {
   const [current, setCurrent] = useState(0);
+  const [playing, setPlaying] = useState<AutomationSlide | null>(null);
+  const closeVideo = useCallback(() => setPlaying(null), []);
   const total = slides.length;
 
   const go = useCallback((dir: 1 | -1) => {
@@ -566,8 +644,11 @@ const AutomationsCarousel = memo(({ slides }: { slides: AutomationSlide[] }) => 
             <button
               key={slide.key}
               type="button"
-              onClick={() => !isActive && setCurrent(index)}
-              aria-label={`Show ${slide.title}`}
+              onClick={() => {
+                setCurrent(index);
+                setPlaying(slide);
+              }}
+              aria-label={`Play ${slide.title} demo video`}
               aria-hidden={hidden}
               tabIndex={hidden ? -1 : 0}
               style={{
@@ -624,6 +705,7 @@ const AutomationsCarousel = memo(({ slides }: { slides: AutomationSlide[] }) => 
           );
         })}
       </div>
+      {playing && <AutomationVideoModal slide={playing} onClose={closeVideo} />}
     </div>
   );
 });
@@ -1442,6 +1524,42 @@ const AveronWebsite = () => {
           <FadeIn delay={0.15}>
             <RadialAgentsHub />
           </FadeIn>
+        </div>
+      </section>
+
+      {/* FAQ — the same text feeds the FAQPage JSON-LD right below it */}
+      <section id="faq" className="typography-b py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchema) }}
+        />
+        <div className="max-w-3xl mx-auto">
+          <FadeIn className="text-center mb-10 sm:mb-14">
+            <span className="text-[#3E6AEF] text-sm font-semibold tracking-wider uppercase mb-4 block">FAQ</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+              <span className="text-[var(--text-heading)]">Questions, </span>
+              <span className="text-[#3E6AEF]">Answered</span>
+            </h2>
+          </FadeIn>
+          <div className="divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
+            {homeFaqs.map(({ question, answer }) => (
+              <details key={question} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-left text-base sm:text-lg font-semibold text-[var(--text-heading)] [&::-webkit-details-marker]:hidden">
+                  <h3>{question}</h3>
+                  <svg className="mt-1 h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14M5 12h14" />
+                  </svg>
+                </summary>
+                <p className="mt-3 pr-10 text-[var(--text-muted)] text-sm sm:text-base leading-relaxed">{answer}</p>
+              </details>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-sm sm:text-base text-[var(--text-muted)]">
+            Questions about our AI assistants, pricing or Albanian support?{' '}
+            <Link href="/automations#faq" className="font-semibold text-[#3E6AEF] hover:text-[#2F55D0]">
+              See the AI automations FAQ
+            </Link>
+          </p>
         </div>
       </section>
 

@@ -175,13 +175,30 @@ const socialLinks = [
   { href: 'https://facebook.com', label: 'Facebook', icon: <FacebookIcon /> },
 ];
 
-const quickLinks = [
-  { href: '/#services', label: 'Services' },
-  { href: '/automations', label: 'Automations' },
-  { href: '/our-work', label: 'Our Work' },
-  { href: '/#process-section', label: 'Process' },
-  { href: '/#agents', label: 'Agents' },
-];
+const quickLinks = {
+  en: [
+    { href: '/#services', label: 'Services' },
+    { href: '/automations', label: 'Automations' },
+    { href: '/ai-receptionist-albania', label: 'AI Receptionist' },
+    { href: '/our-work', label: 'Our Work' },
+    { href: '/guides', label: 'Guides' },
+    { href: '/about', label: 'About' },
+    { href: '/sq/recepsionist-ai', label: 'Shqip' },
+  ],
+  sq: [
+    { href: '/sq/recepsionist-ai', label: 'Recepsionist AI' },
+    { href: '/sq/avox', label: 'Avox' },
+    { href: '/sq/avtext-instagram', label: 'Avtext Instagram' },
+    { href: '/sq/avtext-whatsapp', label: 'Avtext WhatsApp' },
+    { href: '/guides/sa-kushton-recepsionist-ai', label: 'Sa kushton?' },
+    { href: '/about', label: 'Rreth nesh (English)' },
+  ],
+};
+
+const footerText = {
+  en: { links: 'Quick Links', partners: 'Partners', rights: 'All rights reserved.', privacy: 'Privacy Policy' },
+  sq: { links: 'Lidhje', partners: 'Partnerë', rights: 'Të gjitha të drejtat e rezervuara.', privacy: 'Politika e privatësisë' },
+};
 
 const partnerLinks = [
   { href: 'https://ramarasim.com', label: 'Rama Rasim' },
@@ -191,7 +208,7 @@ const partnerLinks = [
 ];
 
 // `tagline` keeps each page's own footer copy (e.g. Avox's product line).
-export const SiteFooter = ({ tagline }: { tagline: React.ReactNode }) => (
+export const SiteFooter = ({ tagline, lang = 'en' }: { tagline: React.ReactNode; lang?: 'en' | 'sq' }) => (
   <footer className="pt-12 sm:pt-16 px-4 sm:px-6 lg:px-8 relative z-10">
     <div className="max-w-7xl mx-auto">
       <div className="relative bg-[var(--card-navy)] rounded-t-[2rem] sm:rounded-t-[2.5rem] pt-10 sm:pt-12 pb-6 overflow-hidden">
@@ -222,9 +239,9 @@ export const SiteFooter = ({ tagline }: { tagline: React.ReactNode }) => (
             </div>
 
             <div>
-              <h3 className="text-white font-semibold text-base mb-4">Quick Links</h3>
+              <h3 className="text-white font-semibold text-base mb-4">{footerText[lang].links}</h3>
               <ul className="space-y-3">
-                {quickLinks.map((l) => (
+                {quickLinks[lang].map((l) => (
                   <li key={l.label}>
                     <Link href={l.href} className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">{l.label}</Link>
                   </li>
@@ -233,7 +250,7 @@ export const SiteFooter = ({ tagline }: { tagline: React.ReactNode }) => (
             </div>
 
             <div>
-              <h3 className="text-white font-semibold text-base mb-4">Partners</h3>
+              <h3 className="text-white font-semibold text-base mb-4">{footerText[lang].partners}</h3>
               <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
                 {partnerLinks.map((p) => (
                   <li key={p.label}>
@@ -246,9 +263,9 @@ export const SiteFooter = ({ tagline }: { tagline: React.ReactNode }) => (
 
           <div className="pt-6 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-xs sm:text-sm text-white/50">© {new Date().getFullYear()} Averon Agency. All rights reserved.</p>
+              <p className="text-xs sm:text-sm text-white/50">© {new Date().getFullYear()} Averon Agency. {footerText[lang].rights}</p>
               <div className="flex gap-6 text-xs sm:text-sm">
-                <Link href="/privacy-policy" className="text-white/50 hover:text-white transition-colors">Privacy Policy</Link>
+                <Link href="/privacy-policy" className="text-white/50 hover:text-white transition-colors">{footerText[lang].privacy}</Link>
               </div>
             </div>
           </div>
@@ -262,6 +279,7 @@ export const SiteFooter = ({ tagline }: { tagline: React.ReactNode }) => (
 /* Page shell                                                          */
 /* ------------------------------------------------------------------ */
 
-export const PageShell = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen text-[var(--text-body)] relative w-full bg-[var(--page-bg)]">{children}</div>
+// `lang` marks an Albanian page's content as Albanian (the <html> tag is "en").
+export const PageShell = ({ children, lang }: { children: React.ReactNode; lang?: 'en' | 'sq' }) => (
+  <div lang={lang} className="min-h-screen text-[var(--text-body)] relative w-full bg-[var(--page-bg)]">{children}</div>
 );

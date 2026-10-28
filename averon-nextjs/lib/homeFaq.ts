@@ -26,7 +26,7 @@ export const homeFaqs: FaqItem[] = [
   {
     question: 'Does Averon build AI assistants, receptionists and chatbots?',
     answer:
-      'Yes. Avox answers your business phone 24/7 and books appointments; Avtext answers Instagram DMs and WhatsApp messages, takes orders and captures leads. Both speak Albanian and English. Prices and details are on our AI automations page.',
+      'Yes. Avox answers your business phone 24/7 and books appointments; Avtext answers Instagram DMs and WhatsApp messages, takes orders and captures leads. Both speak Albanian and English. The price is set based on your needs; details are on our AI automations page.',
   },
   {
     question: 'How long does it take to build a website with Averon?',

@@ -7,19 +7,21 @@ import {
   PageShell, SiteNav, PageHero, HeroEyebrow, Reveal, Eyebrow, CtaCard, SiteFooter, ArrowRightIcon,
 } from '@/components/site/SiteChrome';
 import { MockPanel, AvoxCallMock } from '@/components/site/Mocks';
+import { PageMeta } from '@/components/site/FaqList';
+import { pageUpdated } from '@/lib/pages';
 
 const AvoxPage = () => {
   return (
     <MotionConfig reducedMotion="user">
     <PageShell>
 
-      {/* Structured Data for Avox as a named product */}
+      {/* Structured Data for Avox as a named service (no prices: priced per business) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Product',
+            '@type': 'Service',
             name: 'Avox',
             alternateName: ['Avox AI', 'Avox Voice AI', 'Avox AI Receptionist'],
             description: 'Avox is Albania\'s first AI voice receptionist, built by Averon Agency. It answers calls 24/7 in Albanian and English, books appointments automatically, handles FAQs, and routes urgent calls — so businesses never miss a customer.',
@@ -28,67 +30,13 @@ const AvoxPage = () => {
               '@type': 'Brand',
               name: 'Averon Agency',
             },
-            manufacturer: {
+            provider: {
               '@type': 'Organization',
               name: 'Averon Agency',
               url: 'https://averon.agency',
             },
             url: 'https://averon.agency/avox',
-            offers: {
-              '@type': 'Offer',
-              url: 'https://averon.agency/#contact',
-              price: '300',
-              priceCurrency: 'EUR',
-              priceSpecification: [
-                {
-                  '@type': 'UnitPriceSpecification',
-                  price: '300',
-                  priceCurrency: 'EUR',
-                  name: 'Setup & Build',
-                  description: 'One-time setup and build fee starting at €300.',
-                },
-                {
-                  '@type': 'UnitPriceSpecification',
-                  price: '50',
-                  priceCurrency: 'EUR',
-                  unitCode: 'MON',
-                  name: 'Monthly Hosting & Maintenance',
-                  description: 'Monthly hosting, maintenance, and support starting at €50/month.',
-                },
-              ],
-              availability: 'https://schema.org/InStock',
-              seller: {
-                '@type': 'Organization',
-                name: 'Averon Agency',
-              },
-              shippingDetails: {
-                '@type': 'OfferShippingDetails',
-                shippingRate: {
-                  '@type': 'MonetaryAmount',
-                  value: '0',
-                  currency: 'EUR',
-                },
-                deliveryTime: {
-                  '@type': 'ShippingDeliveryTime',
-                  handlingTime: {
-                    '@type': 'QuantitativeValue',
-                    minValue: 1,
-                    maxValue: 3,
-                    unitCode: 'DAY',
-                  },
-                },
-                shippingDestination: {
-                  '@type': 'DefinedRegion',
-                  addressCountry: 'AL',
-                },
-              },
-              hasMerchantReturnPolicy: {
-                '@type': 'MerchantReturnPolicy',
-                applicableCountry: 'AL',
-                returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-              },
-            },
-            category: 'AI Automation Software',
+            serviceType: 'AI Voice Receptionist',
           }),
         }}
       />
@@ -130,6 +78,8 @@ const AvoxPage = () => {
           </Link>
         </div>
       </PageHero>
+
+      <PageMeta updated={pageUpdated['/avox']} switchTo={{ href: '/sq/avox', label: 'Shqip', hrefLang: 'sq' }} />
 
       {/* What is Avox */}
       <section className="typography-b py-16 sm:py-24 px-4 sm:px-6 lg:px-8">

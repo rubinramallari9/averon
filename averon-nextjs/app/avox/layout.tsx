@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { baseUrl, generateBreadcrumbSchema, avoxSchema } from '@/lib/seo';
+import { baseUrl, generateBreadcrumbSchema, avoxSchema, pageAlternates } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Avox — AI Voice Receptionist by Averon | Albania',
@@ -17,9 +17,7 @@ export const metadata: Metadata = {
     'avox shqiperi',
     'Averon Avox',
   ],
-  alternates: {
-    canonical: `${baseUrl}/avox`,
-  },
+  alternates: pageAlternates('/avox'),
   openGraph: {
     title: 'Avox — AI Voice Receptionist by Averon',
     description: 'Albania\'s first AI voice receptionist. Answers calls 24/7 in Albanian & English, books appointments, never misses a customer.',

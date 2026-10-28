@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { baseUrl, generateBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Our Work — Portfolio | Averon Agency',
+  title: 'Our Work — Portfolio',
   description: 'Explore websites and AI automations built by Averon Agency for Albanian and Kosovar businesses. See real projects: TimeTrader, Rasim Rama, Lumina Aesthetic, and more.',
   keywords: [
     'Averon Agency portfolio',

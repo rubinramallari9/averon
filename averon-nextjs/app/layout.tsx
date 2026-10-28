@@ -79,7 +79,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sq-AL" dir="ltr">
+    <html lang="en" dir="ltr">
       <head>
         {/* Preload critical resources for faster Speed Index */}
         <link
@@ -91,10 +91,6 @@ export default function RootLayout({
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-        {/* hreflang for Albanian/English bilingual targeting */}
-        <link rel="alternate" hrefLang="sq" href="https://averon.agency" />
-        <link rel="alternate" hrefLang="en" href="https://averon.agency" />
-        <link rel="alternate" hrefLang="x-default" href="https://averon.agency" />
 
         {/* Schema.org JSON-LD */}
         <script

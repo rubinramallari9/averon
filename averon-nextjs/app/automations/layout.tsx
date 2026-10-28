@@ -52,22 +52,21 @@ export const metadata: Metadata = {
 };
 
 // The three assistants as named services, so AI systems can cite each one
-// with its channel, languages, area and (where we have one) price.
+// with its channel, languages and area.
 const assistantServices = [
   {
     name: 'Avox — AI Voice Assistant',
     url: `${baseUrl}/avox`,
     description: 'AI voice assistant that answers business phone calls 24/7 in Albanian and English, books appointments, answers FAQs and transfers urgent calls to staff.',
-    offers: { '@type': 'Offer', price: '300', priceCurrency: 'EUR', description: '€300 one-time setup plus €50/month' },
   },
   {
     name: 'Avtext Instagram — AI Chat Assistant for Instagram',
-    url: `${baseUrl}/automations#instagram-dm-bot`,
+    url: `${baseUrl}/avtext-instagram`,
     description: 'AI assistant that replies to Instagram DMs, story replies and comment keywords 24/7 in Albanian and English, captures leads and sends catalogs and booking links.',
   },
   {
     name: 'Avtext WhatsApp — AI Chat Assistant for WhatsApp',
-    url: `${baseUrl}/automations#whatsapp-bot`,
+    url: `${baseUrl}/avtext-whatsapp`,
     description: 'AI assistant for WhatsApp that answers customers, takes orders and bookings, and sends broadcast promotions 24/7 in Albanian and English, with human handoff.',
   },
 ];

@@ -1,8 +1,11 @@
 // SEO & AIEO Configuration for Averon Agency
 // AIEO = AI Engine Optimization — structured to be cited by ChatGPT, Perplexity, Claude, Gemini
 import { Metadata } from 'next';
+import { languagePairs } from '@/lib/pages';
 
-export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://averon.agency';
+// Fixed to the live domain on purpose: an env override (e.g. averon.al) would
+// point every canonical, hreflang and schema URL at the wrong site.
+export const baseUrl = 'https://averon.agency';
 
 // ─────────────────────────────────────────────
 // DEFAULT METADATA
@@ -176,9 +179,9 @@ export const organizationSchema = {
   url: baseUrl,
   logo: {
     '@type': 'ImageObject',
-    url: `${baseUrl}/averon_logobg.png`,
-    width: 400,
-    height: 100,
+    url: `${baseUrl}/averon_icon.png`,
+    width: 512,
+    height: 512,
   },
   image: `${baseUrl}/averon_logobg.png`,
   description: 'Averon Agency is Albania\'s first and leading AI automation agency. We build Avox (Albania\'s first AI voice receptionist), Avtext AI chat assistants for Instagram and WhatsApp, and professional websites for Albanian businesses. Founded in Tirana in 2024, we serve businesses in Albania, Kosovo, and the broader Western Balkans region.',
@@ -199,7 +202,7 @@ export const organizationSchema = {
   contactPoint: [
     {
       '@type': 'ContactPoint',
-      telephone: '+355-69-123-4567',
+      telephone: '+355-68-272-8760',
       contactType: 'customer service',
       email: 'averonagencyal@gmail.com',
       areaServed: ['AL', 'XK', 'MK', 'ME', 'RS'],
@@ -215,6 +218,14 @@ export const organizationSchema = {
       '@type': 'ContactPoint',
       contactType: 'sales',
       email: 'averonagencyal@gmail.com',
+      availableLanguage: ['Albanian', 'English'],
+    },
+    {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      name: 'WhatsApp',
+      telephone: '+355-68-454-6370',
+      url: 'https://wa.me/355684546370',
       availableLanguage: ['Albanian', 'English'],
     },
   ],
@@ -269,7 +280,7 @@ export const organizationSchema = {
         itemOffered: {
           '@type': 'Service',
           name: 'Avox — AI Voice Receptionist',
-          description: 'Albania\'s first AI-powered voice receptionist. Answers calls 24/7 in Albanian and English, books appointments, handles FAQs, and routes urgent calls. Starting at €300 setup + €50/month.',
+          description: 'Albania\'s first AI-powered voice receptionist. Answers calls 24/7 in Albanian and English, books appointments, handles FAQs, and routes urgent calls.',
           serviceType: 'AI Automation',
           provider: { '@type': 'Organization', name: 'Averon Agency' },
           areaServed: { '@type': 'Country', name: 'Albania' },
@@ -352,7 +363,7 @@ export const localBusinessSchema = {
   '@id': `${baseUrl}/#localbusiness`,
   name: 'Averon Agency',
   image: `${baseUrl}/averon_logobg.png`,
-  telephone: '+355-69-123-4567',
+  telephone: '+355-68-272-8760',
   email: 'averonagencyal@gmail.com',
   address: {
     '@type': 'PostalAddress',
@@ -388,25 +399,12 @@ export const localBusinessSchema = {
 // ─────────────────────────────────────────────
 export const avoxSchema = {
   '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
+  '@type': 'Service',
   '@id': `${baseUrl}/avox#software`,
+  serviceType: 'AI Voice Receptionist',
   name: 'Avox',
   alternateName: 'Avox AI Voice Receptionist',
   description: 'Avox is Albania\'s first AI voice receptionist. It answers phone calls 24/7 in both Albanian and English, books appointments, handles frequently asked questions, and forwards urgent calls. Built by Averon Agency in Tirana, Albania.',
-  applicationCategory: 'BusinessApplication',
-  operatingSystem: 'Cloud',
-  offers: {
-    '@type': 'Offer',
-    price: '300',
-    priceCurrency: 'EUR',
-    priceSpecification: {
-      '@type': 'UnitPriceSpecification',
-      price: 50,
-      priceCurrency: 'EUR',
-      unitText: 'month',
-      description: 'Monthly hosting fee after €300 setup',
-    },
-  },
   provider: {
     '@type': 'Organization',
     name: 'Averon Agency',
@@ -423,7 +421,6 @@ export const avoxSchema = {
   inLanguage: ['sq', 'en'],
   url: `${baseUrl}/avox`,
   datePublished: '2024-01-01',
-  applicationSubCategory: 'AI Voice Receptionist',
 };
 
 // ─────────────────────────────────────────────
@@ -441,14 +438,6 @@ export const websiteSchema = {
     '@type': 'Organization',
     '@id': `${baseUrl}/#organization`,
     name: 'Averon Agency',
-  },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${baseUrl}/search?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
   },
 };
 
@@ -517,4 +506,39 @@ export function getSchemaScript(...schemas: object[]) {
     type: 'application/ld+json' as const,
     children: JSON.stringify(schema),
   }));
+}
+
+// ─────────────────────────────────────────────
+// PER-PAGE HELPERS
+// ─────────────────────────────────────────────
+
+/** canonical + hreflang for a page; pages without a translation get canonical only. */
+export function pageAlternates(path: string): Metadata['alternates'] {
+  const pair = languagePairs.find(([en, sq]) => en === path || sq === path);
+  return {
+    canonical: `${baseUrl}${path}`,
+    ...(pair && {
+      languages: {
+        en: `${baseUrl}${pair[0]}`,
+        sq: `${baseUrl}${pair[1]}`,
+        'x-default': `${baseUrl}${pair[0]}`,
+      },
+    }),
+  };
+}
+
+export type QA = { question: string; answer: string };
+
+/** FAQPage JSON-LD for a list that is also rendered visibly on the same page. */
+export function faqSchemaFor(items: QA[], path: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${baseUrl}${path}#faq`,
+    mainEntity: items.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  };
 }

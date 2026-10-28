@@ -18,7 +18,7 @@ export const automationFaqs: AutomationFaq[] = [
   {
     question: 'How much does an AI assistant / receptionist cost in Albania?',
     answer:
-      'Avox, the AI voice receptionist, costs €300 one-time setup plus €50/month. Avtext for Instagram and WhatsApp is priced per business after a free consultation, depending on what it needs to handle.',
+      'It depends on what your business needs: which channels (phone calls, Instagram, WhatsApp) and what the assistant should handle, from answering questions to bookings and orders. Averon sets the price based on your needs, after a free consultation.',
   },
   {
     question: 'Does the AI assistant speak Albanian?',
@@ -43,7 +43,7 @@ export const automationFaqs: AutomationFaq[] = [
   {
     question: 'Sa kushton një asistent / recepsionist AI për biznesin tim në Shqipëri?',
     answer:
-      'Avox, recepsionisti zanor AI që u përgjigjet telefonatave, kushton €300 për instalimin dhe €50 në muaj. Çmimi i Avtext për Instagram dhe WhatsApp përcaktohet sipas biznesit, pas një konsultimi falas.',
+      'Varet nga nevojat e biznesit tuaj: cilat kanale (telefonata, Instagram, WhatsApp) dhe çfarë duhet të bëjë asistenti, nga përgjigjet e pyetjeve te rezervimet dhe porositë. Averon e përcakton çmimin sipas nevojave tuaja, pas një konsultimi falas.',
   },
   {
     question: 'A flet shqip asistenti / recepsionisti AI?',

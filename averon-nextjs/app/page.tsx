@@ -1686,6 +1686,10 @@ const AveronWebsite = () => {
                     <li><a href="#work" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">Our Work</a></li>
                     <li><a href="#process-section" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">Process</a></li>
                     <li><a href="#agents" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">Agents</a></li>
+                    <li><Link href="/ai-receptionist-albania" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">AI Receptionist</Link></li>
+                    <li><Link href="/guides" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">Guides</Link></li>
+                    <li><Link href="/about" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">About</Link></li>
+                    <li><Link href="/sq/recepsionist-ai" hrefLang="sq" className="text-[var(--card-navy-text)] hover:text-white text-sm transition-colors">Shqip</Link></li>
                   </ul>
                 </div>
 
